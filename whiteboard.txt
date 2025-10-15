@@ -1,0 +1,15 @@
+Theme color used - Warm and Cozy
+https://www.canva.com/colors/color-palettes/warm-and-cozy/
+
+| Role           | Color (Hex)        | Color Name                    | Mood / Meaning                  | Purpose                                                                                                           |
+| -------------- | ------------------ | ----------------------------- | ------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| **Primary**    | `#A66041`          | **Tan Clay**                  | Warm, grounded, trustworthy     | Core brand color. Represents **comfort, stability, and earthy warmth**. Excellent for CTAs and headings.          |
+| **Secondary**  | `#EFCCD2`          | **Scallop Seashell**          | Gentle, nurturing, approachable | Balances the strong primary tone with **softness**. Great for highlights, backgrounds, or supportive sections.    |
+| **Accent**     | `#EFCCD2`          | **Scallop Seashell (reused)** | Calm, elegant, and welcoming    | Reinforces consistency. Used for subtle UI accents (hover states, dividers, subtle fills).                        |
+| **Background** | `#FDF2ED`          | **Cream**                     | Light, open, and homely         | Evokes **warmth and clarity**; keeps the interface breathable and soft on the eyes.                               |
+| **Foreground** | `#2A5965`          | **Teal Green**                | Balance, calm, sophistication   | Used for text and main visuals; conveys **trust, creativity, and balance** — vital in interior design branding.   |
+| **Muted**      | `#E7E0DA` (approx) | **Soft Warm Gray**            | Subtle, neutral support         | Helps separate content visually without drawing attention. Used for secondary text, dividers, and subtle borders. |
+
+🏁 Overall Brand Impression
+
+“Warm modern living. A design that feels personal, calm, and crafted — where every detail has intention.”

@@ -4,260 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DreamSpace - Interior Design Studio</title>
+    <link rel="stylesheet" href="globals.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="./assets/fonts/Inter-VariableFont.woff2"
+      as="font"
+      type="font/woff2"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
+      href="./assets/fonts/PlaywriteUSModern.woff2"
+      rel="preload"
+      as="font"
+      type="font/woff2"
     />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playwrite+US+Modern:wght@100..400&display=swap"
-      rel="stylesheet"
-    />
+
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="./script.js"></script>
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      /* Light Mode */
-      :root {
-        --background: 20 70% 97%;
-        --foreground: 200 20% 15%;
-        --card: 0 0% 100%;
-        --card-foreground: 200 20% 15%;
-
-        --primary: 16 44% 45%;
-        --secondary: 351 50% 85%;
-        --accent: 351 50% 85%;
-
-        --primary-foreground: 20 70% 97%;
-        --secondary-foreground: 20 70% 97%;
-        --accent-foreground: 200 20% 15%;
-
-        --muted: 20 20% 90%;
-        --muted-foreground: 16 10% 40%;
-
-        --border: 20 15% 85%;
-        --input: 20 15% 85%;
-        --ring: 16 44% 45%;
-
-        --radius: 0.5rem;
-      }
-
-      /* Dark Mode */
-      [data-theme="dark"] {
-        --background: 200 20% 10%;
-        --foreground: 20 70% 95%;
-        --card: 200 20% 13%;
-        --card-foreground: 20 70% 95%;
-
-        --primary: 16 44% 50%;
-        --secondary: 351 45% 70%;
-        --accent: 351 45% 70%;
-
-        --primary-foreground: 20 70% 97%;
-        --secondary-foreground: 20 70% 97%;
-        --accent-foreground: 200 20% 10%;
-
-        --muted: 200 20% 15%;
-        --muted-foreground: 20 15% 75%;
-
-        --border: 200 20% 18%;
-        --input: 200 20% 18%;
-        --ring: 16 44% 50%;
-      }
-
-      /* Smooth theme transitions - FIXED */
-      html {
-        transition: none;
-      }
-
-      body {
-        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-        line-height: 1.6;
-        color: hsl(var(--foreground));
-        background-color: hsl(var(--background));
-        transition: background-color 0.4s ease, color 0.4s ease;
-      }
-
-      h1,
-      h2,
-      h3,
-      h4 {
-        font-family: "Playfair Display", serif;
-        font-family: "Playwrite US Modern", cursive;
-      }
-
-      input,
-      button {
-        font-family: inherit;
-      }
-
-      /* Utility Classes */
-      .container {
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 0 1.5rem;
-      }
-
-      /* Lucide Icon Styling */
-      .lucide {
-        width: 20px;
-        height: 20px;
-        stroke-width: 2;
-      }
-
-      .lucide-lg {
-        width: 24px;
-        height: 24px;
-      }
-
-      .lucide-xl {
-        width: 28px;
-        height: 28px;
-      }
-
-      /* Navigation */
-      nav {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        background-color: hsl(var(--background) / 0.95);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid hsl(var(--border));
-        z-index: 50;
-        transition: background-color 0.4s ease, border-color 0.4s ease;
-      }
-
-      .nav-container {
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 1rem 1.5rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .logo {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: hsl(var(--foreground));
-        letter-spacing: 0.025em;
-        transition: color 0.4s ease;
-        font-family: "Playwrite US Modern", cursive;
-      }
-
-      .nav-links {
-        display: flex;
-        list-style: none;
-        gap: 2rem;
-        align-items: center;
-      }
-
-      .nav-links.active {
-        transform: translateY(0);
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .nav-links a {
-        text-decoration: none;
-        color: hsl(var(--muted-foreground));
-        font-weight: 500;
-        font-size: 0.875rem;
-        transition: color 0.2s ease;
-      }
-
-      .nav-links a:hover {
-        color: hsl(var(--foreground));
-      }
-
-      /* Mobile Menu Toggle with Lucide Icons */
-      .menu-toggle {
-        display: none;
-        cursor: pointer;
-        z-index: 51;
-        background: none;
-        border: none;
-        color: hsl(var(--foreground));
-        padding: 0.5rem;
-        transition: color 0.4s ease;
-      }
-
-      .menu-toggle svg {
-        width: 28px;
-        height: 28px;
-      }
-
-      .menu-icon {
-        display: block;
-      }
-
-      .close-icon,
-      .menu-text {
-        display: none;
-      }
-
-      .menu-toggle.active .menu-icon {
-        display: none;
-      }
-
-      .menu-toggle.active .close-icon,
-      .menu-toggle.active .menu-text {
-        display: block;
-      }
-
-      /* Theme Toggle */
-      .theme-toggle {
-        width: 40px;
-        height: 40px;
-        background: transparent;
-        border: none;
-        border-radius: var(--radius);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        color: hsl(var(--muted-foreground));
-        transition: color 0.2s ease;
-        position: relative;
-      }
-
-      .theme-text {
-        display: none;
-        font-size: 0.875rem;
-        font-weight: 500;
-      }
-
-      .theme-toggle:hover {
-        background-color: hsl(var(--primary));
-        color: hsl(var(--primary-foreground));
-      }
-
-      .theme-icon {
-        position: absolute;
-        transition: opacity 0.3s ease, transform 0.3s ease;
-        will-change: opacity, transform;
-      }
-
-      .theme-icon.hidden {
-        opacity: 0;
-        transform: rotate(90deg) scale(0.5);
-        pointer-events: none;
-      }
-
-      .theme-icon.visible {
-        opacity: 1;
-        transform: rotate(0deg) scale(1);
-      }
-
       /* Hero Section */
       .hero {
         min-height: 100vh;
@@ -305,30 +70,6 @@
         gap: 1rem;
         justify-content: center;
         flex-wrap: wrap;
-      }
-
-      .btn {
-        padding: 0.625rem 1.5rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        border-radius: var(--radius);
-        cursor: pointer;
-        transition: all 0.2s ease;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        border: 1px solid transparent;
-      }
-
-      .btn-primary {
-        background: hsl(var(--primary));
-        color: hsl(var(--primary-foreground));
-        border-color: hsl(var(--primary));
-      }
-
-      .btn-primary:hover {
-        background: hsl(var(--primary) / 0.9);
       }
 
       .btn-outline {
@@ -817,136 +558,21 @@
         transition: color 0.4s ease;
       }
 
+      .contact-item a,
       .contact-item p {
         color: hsl(var(--muted-foreground));
         font-size: 0.875rem;
         transition: color 0.4s ease;
+        text-decoration: none;
+      }
+
+      .contact-item a:hover {
+        text-decoration: underline;
       }
 
       .contact-cta {
         text-align: center;
         margin-top: 2rem;
-      }
-
-      /* Footer */
-      footer {
-        background: hsl(var(--muted));
-        padding: 3rem 1.5rem 2rem;
-        border-top: 1px solid hsl(var(--border));
-        transition: all 0.4s ease;
-      }
-
-      .footer-grid {
-        max-width: 1280px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-        margin-bottom: 2rem;
-      }
-
-      .footer-section h3 {
-        font-size: 1rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
-        color: hsl(var(--foreground));
-        transition: color 0.4s ease;
-      }
-
-      .footer-section p {
-        color: hsl(var(--muted-foreground));
-        font-size: 0.875rem;
-        line-height: 1.6;
-        margin-bottom: 1rem;
-        transition: color 0.4s ease;
-      }
-
-      .footer-section ul {
-        list-style: none;
-      }
-
-      .footer-section ul li {
-        margin-bottom: 0.5rem;
-      }
-
-      .footer-section a {
-        color: hsl(var(--muted-foreground));
-        text-decoration: none;
-        font-size: 0.875rem;
-        transition: color 0.2s ease;
-      }
-
-      .footer-section a:hover {
-        color: hsl(var(--foreground));
-      }
-
-      /* Social Links */
-      .social-links {
-        display: flex;
-        gap: 0.5rem;
-        margin-top: 1rem;
-      }
-
-      .social-links a {
-        width: 36px;
-        height: 36px;
-        background: transparent;
-        border: 1px solid hsl(var(--border));
-        border-radius: calc(var(--radius) - 2px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: hsl(var(--foreground));
-        transition: all 0.2s ease;
-      }
-
-      .social-links a:hover {
-        background: hsl(var(--primary));
-        color: hsl(var(--primary-foreground));
-        border-color: hsl(var(--primary));
-        transform: translateY(-2px);
-      }
-
-      /* Newsletter Form */
-      .newsletter-form {
-        margin-top: 1rem;
-      }
-
-      .form-group {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-
-      .form-input {
-        padding: 0.625rem 0.75rem;
-        border: 1px solid hsl(var(--input));
-        border-radius: calc(var(--radius) - 2px);
-        background: hsl(var(--background));
-        color: hsl(var(--foreground));
-        font-size: 0.875rem;
-        transition: all 0.2s ease;
-      }
-
-      .form-input:focus {
-        outline: none;
-        border-color: hsl(var(--ring));
-        box-shadow: 0 0 0 3px hsl(var(--ring) / 0.1);
-      }
-
-      .form-input::placeholder {
-        color: hsl(var(--muted-foreground));
-      }
-
-      .footer-bottom {
-        max-width: 1280px;
-        margin: 0 auto;
-        padding-top: 2rem;
-        border-top: 1px solid hsl(var(--border));
-        text-align: center;
-        color: hsl(var(--muted-foreground));
-        font-size: 0.875rem;
-        transition: all 0.4s ease;
       }
 
       /* Responsive */
@@ -957,37 +583,6 @@
       }
 
       @media (max-width: 768px) {
-        .menu-toggle {
-          display: block;
-        }
-
-        .theme-text {
-          display: inline-block;
-        }
-
-        .nav-links {
-          position: fixed;
-          top: 0;
-          right: -100%;
-          width: 280px;
-          height: 100vh;
-          background: hsl(var(--background));
-          border-left: 1px solid hsl(var(--border));
-          flex-direction: column;
-          padding: 5rem 2rem 2rem;
-          gap: 1.5rem;
-          transition: right 0.3s ease;
-          align-items: flex-start;
-        }
-
-        .nav-links.active {
-          right: 0;
-        }
-
-        .nav-links a {
-          font-size: 1rem;
-        }
-
         .about-grid {
           grid-template-columns: 1fr;
           gap: 2rem;
@@ -1062,22 +657,21 @@
   </head>
   <body>
     <!-- Navigation -->
-    <nav>
-      <div class="nav-container">
-        <div class="logo">DreamSpace</div>
+    <header class="top-header">
+      <nav class="nav-container">
+        <a class="logo" href="./index.html">DreamSpace</a>
 
         <!-- Menu Toggle with Lucide Icons -->
         <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
           <i data-lucide="menu" class="menu-icon"></i>
           <i data-lucide="x" class="close-icon"></i>
-          <span class="menu-text">Menu</span>
         </button>
 
         <ul class="nav-links" id="navLinks">
-          <li><a href="#home">Home</a></li>
+          <li><a href="./index.html">Home</a></li>
           <li><a href="#about">About</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#process">Process</a></li>
+          <li><a href="./projects.html">Projects</a></li>
+          <li><a href="./services.html">Services</a></li>
           <li><a href="#contact">Contact</a></li>
           <li>
             <button
@@ -1095,8 +689,8 @@
             </button>
           </li>
         </ul>
-      </div>
-    </nav>
+      </nav>
+    </header>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
@@ -1111,7 +705,7 @@
             Get Started
             <i data-lucide="arrow-right" class="lucide"></i>
           </a>
-          <a href="#projects" class="btn btn-outline"> View Portfolio </a>
+          <a href="./projects.html" class="btn btn-outline"> View Projects </a>
         </div>
       </div>
     </section>
@@ -1297,7 +891,7 @@
               <div class="ba-image-wrapper">
                 <span class="ba-label">After</span>
                 <img
-                  src="https://images.unsplash.com/photo-1556912167-f556f1f39faa?w=800"
+                  src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800"
                   alt="After"
                 />
               </div>
@@ -1533,25 +1127,31 @@
               <i data-lucide="phone"></i>
             </div>
             <h4>Call Us</h4>
-            <p>(555) 123-4567</p>
+            <a href="tel:+918762684336">+91 8762684336</a>
           </div>
           <div class="contact-item">
             <div class="contact-item-icon">
               <i data-lucide="mail"></i>
             </div>
             <h4>Email Us</h4>
-            <p>hello@dreamspace.com</p>
+            <a href="mailto:hello@dreamspace.com">hello@dreamspace.com</a>
           </div>
           <div class="contact-item">
             <div class="contact-item-icon">
               <i data-lucide="map-pin"></i>
             </div>
             <h4>Visit Us</h4>
-            <p>123 Design Street, NY</p>
+            <a
+              href="https://www.google.com/maps/place/Arise+Studio/@13.3507555,74.7875712,20.5z/data=!4m6!3m5!1s0x3bbca5005543bc03:0xa0041dbb3ca8dea0!8m2!3d13.3508191!4d74.7875864!16s%2Fg%2F11w42kr50z?entry=ttu&g_ep=EgoyMDI1MTAxMi4wIKXMDSoASAFQAw%3D%3D"
+              target="_blank"
+              >DreamSpace, 1st floor, Arise Studio, Manipal 57104</a
+            >
           </div>
         </div>
         <div class="contact-cta">
-          <a href="#" class="btn btn-primary">Schedule a Consultation</a>
+          <a href="./booking.html" class="btn btn-primary"
+            >Schedule a Consultation</a
+          >
         </div>
       </div>
     </section>
@@ -1582,10 +1182,11 @@
         <div class="footer-section">
           <h3>Quick Links</h3>
           <ul>
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#projects">Portfolio</a></li>
-            <li><a href="#process">Our Process</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="./about.html">About Us</a></li>
+            <li><a href="./projects.html">Projects</a></li>
+            <li><a href="./booking.html">Book Consultation</a></li>
+            <li><a href="./feedback.html">Feedback</a></li>
+            <li><a href="./contact.html">Contact Us</a></li>
           </ul>
         </div>
         <div class="footer-section">
@@ -1614,75 +1215,13 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2024 DreamSpace Interior Design. All rights reserved.</p>
+        <p>&copy; 2025 DreamSpace Interior Design. All rights reserved.</p>
       </div>
     </footer>
 
+    <div id="toast" class="toast"></div>
+
     <script>
-      // Initialize Lucide icons ONCE
-      lucide.createIcons();
-
-      // Mobile Menu Toggle
-      const menuToggle = document.getElementById("menuToggle");
-      const navLinks = document.getElementById("navLinks");
-
-      menuToggle.addEventListener("click", () => {
-        menuToggle.classList.toggle("active");
-        navLinks.classList.toggle("active");
-      });
-
-      // Close menu when clicking on a link
-      document.querySelectorAll(".nav-links a").forEach((link) => {
-        link.addEventListener("click", () => {
-          menuToggle.classList.remove("active");
-          navLinks.classList.remove("active");
-        });
-      });
-
-      // Dark Mode Toggle
-      const themeToggle = document.getElementById("themeToggle");
-      const html = document.documentElement;
-      const moonIcon = document.getElementById("moonIcon");
-      const sunIcon = document.getElementById("sunIcon");
-
-      // Load saved theme immediately (before page renders)
-      const savedTheme = localStorage.getItem("theme") || "light";
-      html.setAttribute("data-theme", savedTheme);
-
-      // Set initial icon visibility
-      if (savedTheme === "dark") {
-        moonIcon.classList.add("hidden");
-        sunIcon.classList.add("visible");
-      } else {
-        moonIcon.classList.add("visible");
-        sunIcon.classList.add("hidden");
-      }
-
-      themeToggle.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const currentTheme = html.getAttribute("data-theme");
-        const newTheme = currentTheme === "light" ? "dark" : "light";
-
-        // Update theme
-        html.setAttribute("data-theme", newTheme);
-        localStorage.setItem("theme", newTheme);
-
-        // Toggle icons
-        if (newTheme === "dark") {
-          moonIcon.classList.remove("visible");
-          moonIcon.classList.add("hidden");
-          sunIcon.classList.remove("hidden");
-          sunIcon.classList.add("visible");
-        } else {
-          sunIcon.classList.remove("visible");
-          sunIcon.classList.add("hidden");
-          moonIcon.classList.remove("hidden");
-          moonIcon.classList.add("visible");
-        }
-      });
-
       // FAQ Accordion
       document.querySelectorAll(".faq-question").forEach((question) => {
         question.addEventListener("click", () => {
@@ -1703,9 +1242,11 @@
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
           e.preventDefault();
-          const target = document.querySelector(this.getAttribute("href"));
+          const targetId = this.getAttribute("href");
+          const target = document.querySelector(targetId);
+
           if (target) {
-            const navHeight = document.querySelector("nav").offsetHeight;
+            const navHeight = document.querySelector("nav").offsetHeight || 0;
             const targetPosition = target.offsetTop - navHeight;
 
             window.scrollTo({
@@ -1716,12 +1257,26 @@
         });
       });
 
+      // Toast Notification Function
+      function showToast(message, type = "success") {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.className = `toast show ${type}`;
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000);
+      }
+
       // Newsletter form
       document
         .querySelector(".newsletter-form")
         .addEventListener("submit", (e) => {
           e.preventDefault();
-          alert("Thank you for subscribing!");
+          const email = e.target.querySelector('input[type="email"]').value;
+
+          // Simulate API call
+          showToast("Successfully subscribed to newsletter!", "success");
           e.target.reset();
         });
     </script>
