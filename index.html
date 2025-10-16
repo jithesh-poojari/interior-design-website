@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DreamSpace - Interior Design Studio</title>
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      href="./assets/fonts/Inter-VariableFont.woff2"
+      as="font"
+      type="font/woff2"
+    />
+    <link
+      href="./assets/fonts/PlaywriteUSModern.woff2"
+      rel="preload"
+      as="font"
+      type="font/woff2"
+    />
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="./script.js"></script>
+    <style>
+      /* Hero Section */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(
+          to bottom,
+          hsl(var(--background)),
+          hsl(var(--muted))
+        );
+        padding: 6rem 1.5rem 4rem;
+        position: relative;
+        overflow: hidden;
+        transition: background 0.4s ease;
+      }
+
+      .hero-content {
+        max-width: 800px;
+        text-align: center;
+        z-index: 1;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 700;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        color: hsl(var(--foreground));
+        letter-spacing: 0.05em;
+        transition: color 0.4s ease;
+      }
+
+      .hero p {
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        color: hsl(var(--muted-foreground));
+        margin-bottom: 2.5rem;
+        line-height: 1.6;
+        transition: color 0.4s ease;
+      }
+
+      /* Buttons */
+      .btn-group {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn-outline {
+        background: transparent;
+        color: hsl(var(--foreground));
+        border-color: hsl(var(--border));
+      }
+
+      .btn-outline:hover {
+        background: hsl(var(--muted));
+      }
+
+      /* Section */
+      section {
+        padding: 5rem 1.5rem;
+        transition: background-color 0.4s ease;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .section-header h2 {
+        font-size: clamp(1.875rem, 3vw, 2.5rem);
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        color: hsl(var(--foreground));
+        letter-spacing: 0.05em;
+        transition: color 0.4s ease;
+      }
+
+      .section-header p {
+        font-size: 1rem;
+        color: hsl(var(--muted-foreground));
+        transition: color 0.4s ease;
+      }
+
+      /* Card Component */
+      .card {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: var(--radius);
+        overflow: hidden;
+        transition: all 0.2s ease;
+      }
+
+      .card:hover {
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+          0 2px 4px -2px rgb(0 0 0 / 0.1);
+      }
+
+      /* About Section */
+      .about {
+        background: hsl(var(--background));
+      }
+
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+      }
+
+      .about-image {
+        border-radius: var(--radius);
+        overflow: hidden;
+        border: 1px solid hsl(var(--border));
+        transition: border-color 0.4s ease;
+      }
+
+      .about-image img {
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+        display: block;
+      }
+
+      .about-text h3 {
+        font-size: clamp(1.5rem, 2.5vw, 2rem);
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: hsl(var(--foreground));
+        letter-spacing: 0.05em;
+        transition: color 0.4s ease;
+      }
+
+      .about-text p {
+        color: hsl(var(--muted-foreground));
+        margin-bottom: 1rem;
+        line-height: 1.7;
+        transition: color 0.4s ease;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid hsl(var(--border));
+        transition: border-color 0.4s ease;
+      }
+
+      .stat-item {
+        text-align: center;
+      }
+
+      .stat-item h4 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+        color: hsl(var(--foreground));
+        transition: color 0.4s ease;
+      }
+
+      .stat-item p {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.875rem;
+        transition: color 0.4s ease;
+      }
+
+      /* Projects Section */
+      .projects {
+        background: hsl(var(--muted));
+      }
+
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .project-card {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: var(--radius);
+        overflow: hidden;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+
+      .project-card:hover {
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+          0 4px 6px -4px rgb(0 0 0 / 0.1);
+      }
+
+      .project-image {
+        position: relative;
+        overflow: hidden;
+        height: 300px;
+      }
+
+      .project-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .project-card:hover .project-image img {
+        transform: scale(1.05);
+      }
+
+      .project-content {
+        padding: 1.5rem;
+      }
+
+      .project-content h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: hsl(var(--foreground));
+        transition: color 0.4s ease;
+      }
+
+      .project-meta {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.875rem;
+        transition: color 0.4s ease;
+      }
+
+      /* Before & After */
+      .before-after {
+        background: hsl(var(--background));
+      }
+
+      .ba-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+      }
+
+      .ba-card {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: var(--radius);
+        overflow: hidden;
+        transition: all 0.2s ease;
+      }
+
+      .ba-card:hover {
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+          0 4px 6px -4px rgb(0 0 0 / 0.1);
+      }
+
+      .ba-images {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .ba-image-wrapper {
+        position: relative;
+        height: 250px;
+      }
+
+      .ba-image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .ba-label {
+        position: absolute;
+        top: 0.75rem;
+        left: 0.75rem;
+        background: hsl(var(--background) / 0.9);
+        color: hsl(var(--foreground));
+        padding: 0.25rem 0.75rem;
+        border-radius: calc(var(--radius) - 2px);
+        font-size: 0.75rem;
+        font-weight: 600;
+        border: 1px solid hsl(var(--border));
+        transition: all 0.4s ease;
+      }
+
+      .ba-content {
+        padding: 1.5rem;
+      }
+
+      .ba-content h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: hsl(var(--foreground));
+        transition: color 0.4s ease;
+      }
+
+      .ba-content p {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.875rem;
+        line-height: 1.6;
+        transition: color 0.4s ease;
+      }
+
+      /* Process Section */
+      .process {
+        background: hsl(var(--muted));
+      }
+
+      .process-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+
+      .process-step {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: var(--radius);
+        padding: 2rem;
+        transition: all 0.2s ease;
+      }
+
+      .process-step:hover {
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+          0 2px 4px -2px rgb(0 0 0 / 0.1);
+      }
+
+      .process-icon {
+        width: 48px;
+        height: 48px;
+        background: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+        border-radius: calc(var(--radius) - 2px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        transition: all 0.4s ease;
+      }
+
+      .process-icon svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      .process-step h3 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: hsl(var(--foreground));
+        transition: color 0.4s ease;
+      }
+
+      .process-step p {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.875rem;
+        line-height: 1.6;
+        transition: color 0.4s ease;
+      }
+
+      /* Testimonials */
+      .testimonials {
+        background: hsl(var(--background));
+      }
+
+      .testimonials-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .testimonial-card {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        transition: all 0.2s ease;
+      }
+
+      .testimonial-card:hover {
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+          0 2px 4px -2px rgb(0 0 0 / 0.1);
+      }
+
+      .stars {
+        color: #fbbf24;
+        margin-bottom: 1rem;
+        display: flex;
+        gap: 0.25rem;
+      }
+
+      .testimonial-text {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.875rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        transition: color 0.4s ease;
+      }
+
+      .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .author-image {
+        width: 40px;
+        height: 40px;
+        border-radius: var(--radius);
+        object-fit: cover;
+        border: 1px solid hsl(var(--border));
+        transition: border-color 0.4s ease;
+      }
+
+      .author-info h4 {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: hsl(var(--foreground));
+        transition: color 0.4s ease;
+      }
+
+      .author-info p {
+        font-size: 0.75rem;
+        color: hsl(var(--muted-foreground));
+        transition: color 0.4s ease;
+      }
+
+      /* FAQ Section */
+      .faq {
+        background: hsl(var(--muted));
+      }
+
+      .faq-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .faq-item {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: var(--radius);
+        margin-bottom: 1rem;
+        overflow: hidden;
+        transition: all 0.2s ease;
+      }
+
+      .faq-question {
+        padding: 1.25rem 1.5rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 500;
+        color: hsl(var(--foreground));
+        font-size: 0.9375rem;
+        transition: all 0.2s ease;
+      }
+
+      .faq-question svg {
+        color: hsl(var(--muted-foreground));
+        transition: transform 0.2s ease, color 0.4s ease;
+      }
+
+      .faq-item.active .faq-question svg {
+        transform: rotate(180deg);
+      }
+
+      .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+
+      .faq-item.active .faq-answer {
+        max-height: 300px;
+      }
+
+      .faq-answer p {
+        padding: 0 1.5rem 1.25rem;
+        color: hsl(var(--muted-foreground));
+        font-size: 0.875rem;
+        line-height: 1.6;
+        transition: color 0.4s ease;
+      }
+
+      /* Contact Section */
+      .contact {
+        background: hsl(var(--background));
+      }
+
+      .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        max-width: 900px;
+        margin: 2rem auto;
+      }
+
+      .contact-item {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: var(--radius);
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.2s ease;
+      }
+
+      .contact-item:hover {
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+          0 2px 4px -2px rgb(0 0 0 / 0.1);
+      }
+
+      .contact-item-icon {
+        width: 48px;
+        height: 48px;
+        background: hsl(var(--muted));
+        color: hsl(var(--foreground));
+        border-radius: calc(var(--radius) - 2px);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        transition: all 0.4s ease;
+      }
+
+      .contact-item h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: hsl(var(--foreground));
+        transition: color 0.4s ease;
+      }
+
+      .contact-item a,
+      .contact-item p {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.875rem;
+        transition: color 0.4s ease;
+        text-decoration: none;
+      }
+
+      .contact-item a:hover {
+        text-decoration: underline;
+      }
+
+      .contact-cta {
+        text-align: center;
+        margin-top: 2rem;
+      }
+
+      /* Responsive */
+      @media (max-width: 1024px) {
+        .about-grid {
+          gap: 2rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .about-grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .about-image img {
+          height: 350px;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+
+        .projects-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .ba-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .process-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .testimonials-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .contact-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-grid {
+          grid-template-columns: 1fr;
+        }
+
+        section {
+          padding: 3rem 1.5rem;
+        }
+
+        .ba-images {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .hero h1 {
+          font-size: 2rem;
+        }
+
+        .btn-group {
+          flex-direction: column;
+          width: 100%;
+        }
+
+        .btn {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .project-image {
+          height: 250px;
+        }
+
+        .ba-image-wrapper {
+          height: 200px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <header class="top-header">
+      <nav class="nav-container">
+        <a class="logo" href="./index.html">DreamSpace</a>
+
+        <!-- Menu Toggle with Lucide Icons -->
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+          <i data-lucide="menu" class="menu-icon"></i>
+          <i data-lucide="x" class="close-icon"></i>
+        </button>
+
+        <ul class="nav-links" id="navLinks">
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="./projects.html">Projects</a></li>
+          <li><a href="./services.html">Services</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li>
+            <button
+              class="theme-toggle"
+              id="themeToggle"
+              aria-label="Toggle theme"
+            >
+              <span class="theme-icon moon-icon" id="moonIcon">
+                <i data-lucide="moon"></i>
+              </span>
+              <span class="theme-icon sun-icon" id="sunIcon">
+                <i data-lucide="sun"></i>
+              </span>
+              <span class="theme-text" id="themeText">Dark Mode</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <h1>Transform Your Space Into Something Extraordinary</h1>
+        <p>
+          Award-winning interior design studio creating timeless, elegant spaces
+          that reflect your unique style and personality
+        </p>
+        <div class="btn-group">
+          <a href="#contact" class="btn btn-primary">
+            Get Started
+            <i data-lucide="arrow-right" class="lucide"></i>
+          </a>
+          <a href="./projects.html" class="btn btn-outline"> View Projects </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+      <div class="container">
+        <div class="section-header">
+          <h2>About Us</h2>
+          <p>Crafting beautiful interiors since 2010</p>
+        </div>
+        <div class="about-grid">
+          <div class="about-image">
+            <img
+              src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800"
+              alt="About Us"
+            />
+          </div>
+          <div class="about-text">
+            <h3>Creating Spaces That Tell Your Story</h3>
+            <p>
+              At DreamSpace, we believe that great design goes beyond
+              aesthetics. It's about creating environments that enhance your
+              daily life, reflect your personality, and stand the test of time.
+            </p>
+            <p>
+              Our team of experienced designers works closely with each client
+              to understand their vision, lifestyle, and needs. We blend
+              creativity with functionality to deliver spaces that are not only
+              beautiful but also practical and comfortable.
+            </p>
+            <p>
+              From concept to completion, we handle every detail with precision
+              and care, ensuring a seamless design experience that exceeds your
+              expectations.
+            </p>
+
+            <div class="stats-grid">
+              <div class="stat-item">
+                <h4>500+</h4>
+                <p>Projects Completed</p>
+              </div>
+              <div class="stat-item">
+                <h4>15+</h4>
+                <p>Awards Won</p>
+              </div>
+              <div class="stat-item">
+                <h4>100%</h4>
+                <p>Client Satisfaction</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Projects -->
+    <section class="projects" id="projects">
+      <div class="container">
+        <div class="section-header">
+          <h2>Featured Projects</h2>
+          <p>Explore our latest interior design masterpieces</p>
+        </div>
+        <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-image">
+              <img
+                src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800"
+                alt="Modern Living Room"
+              />
+            </div>
+            <div class="project-content">
+              <h3>Modern Minimalist Living</h3>
+              <p class="project-meta">Contemporary • Residential</p>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-image">
+              <img
+                src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800"
+                alt="Luxury Bedroom"
+              />
+            </div>
+            <div class="project-content">
+              <h3>Luxury Master Suite</h3>
+              <p class="project-meta">Classic • Residential</p>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-image">
+              <img
+                src="https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?w=800"
+                alt="Kitchen Design"
+              />
+            </div>
+            <div class="project-content">
+              <h3>Gourmet Kitchen</h3>
+              <p class="project-meta">Modern • Residential</p>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-image">
+              <img
+                src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800"
+                alt="Office Space"
+              />
+            </div>
+            <div class="project-content">
+              <h3>Executive Office</h3>
+              <p class="project-meta">Contemporary • Commercial</p>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-image">
+              <img
+                src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800"
+                alt="Dining Room"
+              />
+            </div>
+            <div class="project-content">
+              <h3>Elegant Dining Space</h3>
+              <p class="project-meta">Traditional • Residential</p>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-image">
+              <img
+                src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800"
+                alt="Bathroom"
+              />
+            </div>
+            <div class="project-content">
+              <h3>Spa-Like Bathroom</h3>
+              <p class="project-meta">Modern • Residential</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Before & After -->
+    <section class="before-after">
+      <div class="container">
+        <div class="section-header">
+          <h2>Before & After Transformations</h2>
+          <p>See the incredible transformations we've created</p>
+        </div>
+        <div class="ba-grid">
+          <div class="ba-card">
+            <div class="ba-images">
+              <div class="ba-image-wrapper">
+                <span class="ba-label">Before</span>
+                <img
+                  src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800"
+                  alt="Before"
+                />
+              </div>
+              <div class="ba-image-wrapper">
+                <span class="ba-label">After</span>
+                <img
+                  src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800"
+                  alt="After"
+                />
+              </div>
+            </div>
+            <div class="ba-content">
+              <h3>Downtown Loft Renovation</h3>
+              <p>
+                Complete transformation of a dated space into a modern,
+                light-filled sanctuary.
+              </p>
+            </div>
+          </div>
+          <div class="ba-card">
+            <div class="ba-images">
+              <div class="ba-image-wrapper">
+                <span class="ba-label">Before</span>
+                <img
+                  src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800"
+                  alt="Before"
+                />
+              </div>
+              <div class="ba-image-wrapper">
+                <span class="ba-label">After</span>
+                <img
+                  src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800"
+                  alt="After"
+                />
+              </div>
+            </div>
+            <div class="ba-content">
+              <h3>Kitchen Remodel</h3>
+              <p>
+                From cramped and outdated to an open, functional chef's dream.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Our Process -->
+    <section class="process" id="process">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our Process</h2>
+          <p>A seamless journey from concept to completion</p>
+        </div>
+        <div class="process-grid">
+          <div class="process-step">
+            <div class="process-icon">
+              <i data-lucide="messages-square"></i>
+            </div>
+            <h3>Consultation</h3>
+            <p>We listen to your ideas, needs, and vision for your space</p>
+          </div>
+          <div class="process-step">
+            <div class="process-icon">
+              <i data-lucide="pencil-ruler"></i>
+            </div>
+            <h3>Design</h3>
+            <p>Our team creates detailed plans and 3D renderings</p>
+          </div>
+          <div class="process-step">
+            <div class="process-icon">
+              <i data-lucide="clipboard-check"></i>
+            </div>
+            <h3>Approval</h3>
+            <p>Review and refine until the design is perfect</p>
+          </div>
+          <div class="process-step">
+            <div class="process-icon">
+              <i data-lucide="hammer"></i>
+            </div>
+            <h3>Execution</h3>
+            <p>We bring your vision to life with expert craftsmanship</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+      <div class="container">
+        <div class="section-header">
+          <h2>What Our Clients Say</h2>
+          <p>Don't just take our word for it</p>
+        </div>
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="stars">
+              <i data-lucide="star" fill="#fbbf24"></i>
+              <i data-lucide="star" fill="#fbbf24"></i>
+              <i data-lucide="star" fill="#fbbf24"></i>
+              <i data-lucide="star" fill="#fbbf24"></i>
+              <i data-lucide="star" fill="#fbbf24"></i>
+            </div>
+            <p class="testimonial-text">
+              "DreamSpace transformed our house into a home. Their attention to
+              detail and creative vision exceeded all our expectations. We
+              couldn't be happier!"
+            </p>
+            <div class="testimonial-author">
+              <img
+                src="https://i.pravatar.cc/150?img=1"
+                alt="Sarah Johnson"
+                class="author-image"
+              />
+              <div class="author-info">
+                <h4>Sarah Johnson</h4>
+                <p>Homeowner, Brooklyn</p>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="stars">
+              <i data-lucide="star" fill="#fbbf24"></i>
+              <i data-lucide="star" fill="#fbbf24"></i>
+              <i data-lucide="star" fill="#fbbf24"></i>
+              <i data-lucide="star" fill="#fbbf24"></i>
+              <i data-lucide="star" fill="#fbbf24"></i>
+            </div>
+            <p class="testimonial-text">
+              "Professional, creative, and a pleasure to work with. They
+              understood our style perfectly and delivered a stunning office
+              space that our team loves."
+            </p>
+            <div class="testimonial-author">
+              <img
+                src="https://i.pravatar.cc/150?img=12"
+                alt="Michael Chen"
+                class="author-image"
+              />
+              <div class="author-info">
+                <h4>Michael Chen</h4>
+                <p>CEO, Tech Startup</p>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="stars">
+              <i data-lucide="star" fill="#fbbf24"></i>
+              <i data-lucide="star" fill="#fbbf24"></i>
+              <i data-lucide="star" fill="#fbbf24"></i>
+              <i data-lucide="star" fill="#fbbf24"></i>
+              <i data-lucide="star" fill="#fbbf24"></i>
+            </div>
+            <p class="testimonial-text">
+              "From start to finish, the experience was flawless. They handled
+              everything and kept us informed every step of the way. Highly
+              recommend!"
+            </p>
+            <div class="testimonial-author">
+              <img
+                src="https://i.pravatar.cc/150?img=5"
+                alt="Emily Rodriguez"
+                class="author-image"
+              />
+              <div class="author-info">
+                <h4>Emily Rodriguez</h4>
+                <p>Homeowner, Manhattan</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+      <div class="container">
+        <div class="section-header">
+          <h2>Frequently Asked Questions</h2>
+          <p>Everything you need to know about working with us</p>
+        </div>
+        <div class="faq-container">
+          <div class="faq-item">
+            <div class="faq-question">
+              <span>How long does a typical project take?</span>
+              <i data-lucide="chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>
+                Project timelines vary depending on scope and complexity. A
+                single room redesign typically takes 4-6 weeks, while full home
+                renovations can take 3-6 months. We'll provide a detailed
+                timeline during our initial consultation.
+              </p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">
+              <span>What is your design fee structure?</span>
+              <i data-lucide="chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>
+                We offer flexible pricing options including hourly rates, flat
+                fees, and percentage-based fees. Our initial consultation is
+                complimentary, and we'll provide a detailed proposal based on
+                your specific project needs.
+              </p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">
+              <span>Do you work with existing furniture?</span>
+              <i data-lucide="chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>
+                Absolutely! We're happy to incorporate your existing pieces into
+                the new design. We'll assess what works with the new aesthetic
+                and suggest updates or additions as needed.
+              </p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">
+              <span>Can you work within my budget?</span>
+              <i data-lucide="chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>
+                Yes! We work with various budgets and will always be transparent
+                about costs. We'll help you prioritize and make smart decisions
+                to get the most impact from your investment.
+              </p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">
+              <span>Do you handle all aspects of the renovation?</span>
+              <i data-lucide="chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>
+                We offer full-service project management, coordinating with
+                contractors, ordering materials, and overseeing installation.
+                You'll have a single point of contact throughout the entire
+                process.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="section-header">
+          <h2>Ready to Transform Your Space?</h2>
+          <p>Let's start creating your dream interior today</p>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <i data-lucide="phone"></i>
+            </div>
+            <h4>Call Us</h4>
+            <a href="tel:+918762684336">+91 8762684336</a>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <i data-lucide="mail"></i>
+            </div>
+            <h4>Email Us</h4>
+            <a href="mailto:hello@dreamspace.com">hello@dreamspace.com</a>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <h4>Visit Us</h4>
+            <a
+              href="https://www.google.com/maps/place/Arise+Studio/@13.3507555,74.7875712,20.5z/data=!4m6!3m5!1s0x3bbca5005543bc03:0xa0041dbb3ca8dea0!8m2!3d13.3508191!4d74.7875864!16s%2Fg%2F11w42kr50z?entry=ttu&g_ep=EgoyMDI1MTAxMi4wIKXMDSoASAFQAw%3D%3D"
+              target="_blank"
+              >DreamSpace, 1st floor, Arise Studio, Manipal 57104</a
+            >
+          </div>
+        </div>
+        <div class="contact-cta">
+          <a href="./booking.html" class="btn btn-primary"
+            >Schedule a Consultation</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h3>DreamSpace</h3>
+          <p>
+            Creating exceptional interiors that inspire and delight since 2010.
+          </p>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook">
+              <i data-lucide="facebook"></i>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <i data-lucide="instagram"></i>
+            </a>
+            <a href="#" aria-label="Twitter">
+              <i data-lucide="twitter"></i>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <i data-lucide="linkedin"></i>
+            </a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="./about.html">About Us</a></li>
+            <li><a href="./projects.html">Projects</a></li>
+            <li><a href="./booking.html">Book Consultation</a></li>
+            <li><a href="./feedback.html">Feedback</a></li>
+            <li><a href="./contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Services</h3>
+          <ul>
+            <li><a href="#">Residential Design</a></li>
+            <li><a href="#">Commercial Design</a></li>
+            <li><a href="#">Space Planning</a></li>
+            <li><a href="#">Renovation</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Newsletter</h3>
+          <p>Subscribe for design tips and inspiration</p>
+          <form class="newsletter-form">
+            <div class="form-group">
+              <input
+                type="email"
+                class="form-input"
+                placeholder="Enter your email"
+                required
+              />
+              <button type="submit" class="btn btn-primary">Subscribe</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 DreamSpace Interior Design. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+      // FAQ Accordion
+      document.querySelectorAll(".faq-question").forEach((question) => {
+        question.addEventListener("click", () => {
+          const faqItem = question.parentElement;
+          const isActive = faqItem.classList.contains("active");
+
+          document.querySelectorAll(".faq-item").forEach((item) => {
+            item.classList.remove("active");
+          });
+
+          if (!isActive) {
+            faqItem.classList.add("active");
+          }
+        });
+      });
+
+      // Smooth scrolling
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute("href");
+          const target = document.querySelector(targetId);
+
+          if (target) {
+            const navHeight = document.querySelector("nav").offsetHeight || 0;
+            const targetPosition = target.offsetTop - navHeight;
+
+            window.scrollTo({
+              top: targetPosition,
+              behavior: "smooth",
+            });
+          }
+        });
+      });
+
+      // Toast Notification Function
+      function showToast(message, type = "success") {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.className = `toast show ${type}`;
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000);
+      }
+
+      // Newsletter form
+      document
+        .querySelector(".newsletter-form")
+        .addEventListener("submit", (e) => {
+          e.preventDefault();
+          const email = e.target.querySelector('input[type="email"]').value;
+
+          // Simulate API call
+          showToast("Successfully subscribed to newsletter!", "success");
+          e.target.reset();
+        });
+    </script>
+  </body>
+</html>

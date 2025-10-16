@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Projects - Interior Design | Manipal, Udupi</title>
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      href="./assets/fonts/Inter-VariableFont.woff2"
+      as="font"
+      type="font/woff2"
+    />
+    <link
+      href="./assets/fonts/PlaywriteUSModern.woff2"
+      rel="preload"
+      as="font"
+      type="font/woff2"
+    />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="./script.js"></script>
+    <style>
+      /* Header */
+      .header {
+        text-align: center;
+        padding: 6rem 1.5rem 4rem;
+      }
+
+      .header-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+      }
+
+      .header-location {
+        font-size: 0.9375rem;
+        color: hsl(var(--muted-foreground));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      /* Filter Tabs */
+      .filter-tabs {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 2.5rem;
+      }
+
+      .filter-tab {
+        padding: 0.5rem 1.25rem;
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: var(--radius);
+        cursor: pointer;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        color: hsl(var(--foreground));
+      }
+
+      .filter-tab:hover {
+        background: hsl(var(--muted));
+      }
+
+      .filter-tab.active {
+        background: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+        border-color: hsl(var(--primary));
+      }
+
+      /* Projects Grid */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      /* Project Card */
+      .project-card {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: calc(var(--radius) * 1.5);
+        overflow: hidden;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .project-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px hsla(var(--foreground), 0.1);
+        border-color: hsl(var(--primary));
+      }
+
+      .project-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        background: hsl(var(--muted));
+      }
+
+      .project-content {
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.875rem;
+      }
+
+      .project-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        gap: 0.75rem;
+      }
+
+      .project-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+        color: hsl(var(--card-foreground));
+      }
+
+      .project-type {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        background: hsl(var(--muted));
+        color: hsl(var(--muted-foreground));
+        border-radius: calc(var(--radius) * 0.75);
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        white-space: nowrap;
+      }
+
+      .project-type.residential {
+        background: hsl(var(--primary) / 0.15);
+        color: hsl(var(--primary));
+      }
+
+      .project-type.commercial {
+        background: hsl(var(--secondary) / 0.3);
+        color: hsl(var(--accent-foreground));
+      }
+
+      .project-type.renovation {
+        background: hsl(var(--accent) / 0.3);
+        color: hsl(var(--accent-foreground));
+      }
+
+      .project-location {
+        font-size: 0.8125rem;
+        color: hsl(var(--muted-foreground));
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
+      .project-description {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+
+      .project-specs {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+        padding: 0.75rem;
+        background: hsl(var(--muted));
+        border-radius: var(--radius);
+      }
+
+      .spec-item {
+        font-size: 0.8125rem;
+      }
+
+      .spec-label {
+        color: hsl(var(--muted-foreground));
+        display: block;
+        font-size: 0.75rem;
+      }
+
+      .spec-value {
+        color: hsl(var(--foreground));
+        font-weight: 600;
+      }
+
+      .project-feedback {
+        background: hsl(var(--muted));
+        padding: 0.875rem;
+        border-radius: var(--radius);
+        border-left: 3px solid hsl(var(--primary));
+        font-style: italic;
+        color: hsl(var(--card-foreground));
+        font-size: 0.8125rem;
+        line-height: 1.5;
+      }
+
+      .feedback-author {
+        margin-top: 0.375rem;
+        font-weight: 600;
+        font-style: normal;
+        color: hsl(var(--foreground));
+        font-size: 0.75rem;
+      }
+
+      .project-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.625rem 1rem;
+        background: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+        text-decoration: none;
+        border-radius: var(--radius);
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        margin-top: 0.5rem;
+      }
+
+      .project-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px hsla(var(--primary), 0.3);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .projects-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .header-title {
+          font-size: 1.75rem;
+        }
+
+        .project-specs {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Loading Animation */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          display: none;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          display: flex;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        to {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+      }
+
+      /* .project-card {
+        animation: fadeIn 2s ease;
+      }
+
+      .project-card:nth-child(1) {
+        animation-delay: 0.05s;
+      }
+      .project-card:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+      .project-card:nth-child(3) {
+        animation-delay: 0.15s;
+      }
+      .project-card:nth-child(4) {
+        animation-delay: 0.2s;
+      }
+      .project-card:nth-child(5) {
+        animation-delay: 0.25s;
+      }
+      .project-card:nth-child(6) {
+        animation-delay: 0.3s;
+      } */
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <heade class="top-header">
+      <nav class="nav-container">
+        <a class="logo" href="./index.html">DreamSpace</a>
+
+        <!-- Menu Toggle with Lucide Icons -->
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+          <i data-lucide="menu" class="menu-icon"></i>
+          <i data-lucide="x" class="close-icon"></i>
+        </button>
+
+        <ul class="nav-links" id="navLinks">
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./index.html#about">About</a></li>
+          <li><a href="./projects.html">Projects</a></li>
+          <li><a href="./services.html">Services</a></li>
+          <li><a href="./index.html#contact">Contact</a></li>
+          <li>
+            <button
+              class="theme-toggle"
+              id="themeToggle"
+              aria-label="Toggle theme"
+            >
+              <span class="theme-icon moon-icon" id="moonIcon">
+                <i data-lucide="moon"></i>
+              </span>
+              <span class="theme-icon sun-icon" id="sunIcon">
+                <i data-lucide="sun"></i>
+              </span>
+              <span class="theme-text" id="themeText">Dark Mode</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </heade>
+    <div class="container">
+      <header class="header">
+        <h1 class="header-title">Our Projects</h1>
+        <div class="header-location">
+          <i data-lucide="map-pin"></i>
+          <span>Manipal, Udupi & Surrounding Areas</span>
+        </div>
+      </header>
+
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">
+          All Projects
+        </button>
+        <button class="filter-tab" data-filter="residential">
+          Residential
+        </button>
+        <button class="filter-tab" data-filter="commercial">Commercial</button>
+        <button class="filter-tab" data-filter="renovation">Renovation</button>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Project 1 -->
+        <article class="project-card" data-type="residential">
+          <img
+            src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&q=80"
+            alt="Modern Villa Interior"
+            class="project-image"
+          />
+          <div class="project-content">
+            <div class="project-header">
+              <div style="flex: 1">
+                <h2 class="project-title">Modern Villa Interior</h2>
+                <div class="project-location"><i data-lucide="map-pin"></i> Manipal</div>
+              </div>
+              <span class="project-type residential">Residential</span>
+            </div>
+
+            <p class="project-description">
+              Complete interior design for a 3BHK villa with contemporary
+              aesthetics and traditional Karnataka elements.
+            </p>
+
+            <div class="project-specs">
+              <div class="spec-item">
+                <span class="spec-label">Area</span>
+                <span class="spec-value">2,400 sq.ft</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Style</span>
+                <span class="spec-value">Contemporary</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Duration</span>
+                <span class="spec-value">3 months</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Type</span>
+                <span class="spec-value">3 BHK</span>
+              </div>
+            </div>
+
+            <div class="project-feedback">
+              They transformed our house into a dream home! The attention to
+              detail exceeded our expectations.
+              <div class="feedback-author">— Priya & Rajesh Sharma</div>
+            </div>
+
+            <a href="#" class="project-link">View Gallery →</a>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="project-card" data-type="commercial">
+          <img
+            src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80"
+            alt="Café Interior Design"
+            class="project-image"
+          />
+          <div class="project-content">
+            <div class="project-header">
+              <div style="flex: 1">
+                <h2 class="project-title">Café Interior Design</h2>
+                <div class="project-location"><i data-lucide="map-pin"></i> MIT Campus, Manipal</div>
+              </div>
+              <span class="project-type commercial">Commercial</span>
+            </div>
+
+            <p class="project-description">
+              Vibrant café interior with Instagram-worthy aesthetics, designed
+              for college students and young professionals.
+            </p>
+
+            <div class="project-specs">
+              <div class="spec-item">
+                <span class="spec-label">Area</span>
+                <span class="spec-value">1,200 sq.ft</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Style</span>
+                <span class="spec-value">Industrial-Chic</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Duration</span>
+                <span class="spec-value">2 months</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Seating</span>
+                <span class="spec-value">45 people</span>
+              </div>
+            </div>
+
+            <div class="project-feedback">
+              Our café has become the most popular spot in Manipal! Footfall
+              increased by 200% after the renovation.
+              <div class="feedback-author">— Arun Kumar, Café Owner</div>
+            </div>
+
+            <a href="#" class="project-link">View Gallery →</a>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="project-card" data-type="residential">
+          <img
+            src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80"
+            alt="Coastal Apartment Makeover"
+            class="project-image"
+          />
+          <div class="project-content">
+            <div class="project-header">
+              <div style="flex: 1">
+                <h2 class="project-title">Coastal Apartment</h2>
+                <div class="project-location"><i data-lucide="map-pin"></i> Malpe, Udupi</div>
+              </div>
+              <span class="project-type residential">Residential</span>
+            </div>
+
+            <p class="project-description">
+              Breezy coastal-themed apartment with natural materials, maximizing
+              sea views and beach house atmosphere.
+            </p>
+
+            <div class="project-specs">
+              <div class="spec-item">
+                <span class="spec-label">Area</span>
+                <span class="spec-value">1,800 sq.ft</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Style</span>
+                <span class="spec-value">Coastal Modern</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Duration</span>
+                <span class="spec-value">2.5 months</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Type</span>
+                <span class="spec-value">2 BHK</span>
+              </div>
+            </div>
+
+            <div class="project-feedback">
+              Coming home feels like a vacation every day! They understood our
+              beach house vision perfectly.
+              <div class="feedback-author">— Meera & Karthik Rao</div>
+            </div>
+
+            <a href="#" class="project-link">View Gallery →</a>
+          </div>
+        </article>
+
+        <!-- Project 4 -->
+        <article class="project-card" data-type="renovation">
+          <img
+            src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80"
+            alt="Traditional Home Renovation"
+            class="project-image"
+          />
+          <div class="project-content">
+            <div class="project-header">
+              <div style="flex: 1">
+                <h2 class="project-title">Traditional Renovation</h2>
+                <div class="project-location"><i data-lucide="map-pin"></i> Udupi City</div>
+              </div>
+              <span class="project-type renovation">Renovation</span>
+            </div>
+
+            <p class="project-description">
+              Complete renovation of a traditional Udupi home, preserving
+              heritage while adding modern conveniences.
+            </p>
+
+            <div class="project-specs">
+              <div class="spec-item">
+                <span class="spec-label">Area</span>
+                <span class="spec-value">3,000 sq.ft</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Style</span>
+                <span class="spec-value">Traditional-Modern</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Duration</span>
+                <span class="spec-value">4 months</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Type</span>
+                <span class="spec-value">4 BHK</span>
+              </div>
+            </div>
+
+            <div class="project-feedback">
+              They respected our ancestral home's heritage while making it
+              comfortable for modern living.
+              <div class="feedback-author">— Shenoy Family</div>
+            </div>
+
+            <a href="#" class="project-link">View Gallery →</a>
+          </div>
+        </article>
+
+        <!-- Project 5 -->
+        <article class="project-card" data-type="commercial">
+          <img
+            src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80"
+            alt="Dental Clinic Interior"
+            class="project-image"
+          />
+          <div class="project-content">
+            <div class="project-header">
+              <div style="flex: 1">
+                <h2 class="project-title">Dental Clinic Interior</h2>
+                <div class="project-location"><i data-lucide="map-pin"></i> Manipal</div>
+              </div>
+              <span class="project-type commercial">Commercial</span>
+            </div>
+
+            <p class="project-description">
+              Welcoming dental clinic interior designed to reduce patient
+              anxiety with soothing colors and comfortable spaces.
+            </p>
+
+            <div class="project-specs">
+              <div class="spec-item">
+                <span class="spec-label">Area</span>
+                <span class="spec-value">1,500 sq.ft</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Style</span>
+                <span class="spec-value">Medical-Modern</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Duration</span>
+                <span class="spec-value">6 weeks</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Rooms</span>
+                <span class="spec-value">3 Chambers</span>
+              </div>
+            </div>
+
+            <div class="project-feedback">
+              Patients constantly compliment the clinic's ambiance. It has
+              definitely helped in growing our practice.
+              <div class="feedback-author">— Dr. Suresh Bhat</div>
+            </div>
+
+            <a href="#" class="project-link">View Gallery →</a>
+          </div>
+        </article>
+
+        <!-- Project 6 -->
+        <article class="project-card" data-type="residential">
+          <img
+            src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80"
+            alt="Compact Studio Design"
+            class="project-image"
+          />
+          <div class="project-content">
+            <div class="project-header">
+              <div style="flex: 1">
+                <h2 class="project-title">Compact Studio</h2>
+                <div class="project-location"><i data-lucide="map-pin"></i> Student Housing, Manipal</div>
+              </div>
+              <span class="project-type residential">Residential</span>
+            </div>
+
+            <p class="project-description">
+              Space-efficient studio apartment for students, maximizing storage
+              and functionality in a compact footprint.
+            </p>
+
+            <div class="project-specs">
+              <div class="spec-item">
+                <span class="spec-label">Area</span>
+                <span class="spec-value">450 sq.ft</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Style</span>
+                <span class="spec-value">Minimalist</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Duration</span>
+                <span class="spec-value">1 month</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Type</span>
+                <span class="spec-value">Studio</span>
+              </div>
+            </div>
+
+            <div class="project-feedback">
+              Perfect for student living! Every inch is utilized smartly. Great
+              value for money.
+              <div class="feedback-author">— Ananya, Medical Student</div>
+            </div>
+
+            <a href="#" class="project-link">View Gallery →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h3>DreamSpace</h3>
+          <p>
+            Creating exceptional interiors that inspire and delight since 2010.
+          </p>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook">
+              <i data-lucide="facebook"></i>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <i data-lucide="instagram"></i>
+            </a>
+            <a href="#" aria-label="Twitter">
+              <i data-lucide="twitter"></i>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <i data-lucide="linkedin"></i>
+            </a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="./about.html">About Us</a></li>
+            <li><a href="./projects.html">Projects</a></li>
+            <li><a href="./booking.html">Book Consultation</a></li>
+            <li><a href="./feedback.html">Feedback</a></li>
+            <li><a href="./contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Services</h3>
+          <ul>
+            <li><a href="#">Residential Design</a></li>
+            <li><a href="#">Commercial Design</a></li>
+            <li><a href="#">Space Planning</a></li>
+            <li><a href="#">Renovation</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Newsletter</h3>
+          <p>Subscribe for design tips and inspiration</p>
+          <form class="newsletter-form">
+            <div class="form-group">
+              <input
+                type="email"
+                class="form-input"
+                placeholder="Enter your email"
+                required
+              />
+              <button type="submit" class="btn btn-primary">Subscribe</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 DreamSpace Interior Design. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Filter functionality
+      const filterTabs = document.querySelectorAll(".filter-tab");
+      const projectCards = document.querySelectorAll(".project-card");
+
+      filterTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const filter = tab.getAttribute("data-filter");
+
+          // Update active tab
+          filterTabs.forEach((t) => t.classList.remove("active"));
+          tab.classList.add("active");
+
+          // Filter projects with smooth animation
+          projectCards.forEach((card, index) => {
+            const cardType = card.getAttribute("data-type");
+            const shouldShow = filter === "all" || filter === cardType;
+
+            if (shouldShow) {
+              // Show the card
+              card.style.display = "flex";
+              // Force reflow to restart animation
+              // void card.offsetWidth;
+              // card.style.animation = "none";
+              // // setTimeout(() => {
+              //   card.style.animation = `fadeIn 2s ease forwards ${
+              //     index * 0.05
+              //   }s`;
+              // // }, 10);
+            } else {
+              // Hide the card with fade out
+              // card.style.animation = "fadeOut 2s ease forwards";
+              // setTimeout(() => {
+                card.style.display = "none";
+              // }, 300);
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
