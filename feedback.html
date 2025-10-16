@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Share your feedback with DreamSpace Interiors - We value your opinions and suggestions"
+    />
+    <title>DreamSpace | Feedback</title>
+
+    <style>
+      :root {
+        --radius: 0.5rem;
+        --background: #f8f4ec;
+        --foreground: #2e2e2e;
+        --card: #ffffff;
+        --primary: #8b5e3c;
+        --primary-foreground: #fffaf2;
+        --secondary: #b98d68;
+        --accent: #e9d7b9;
+        --muted: #f0e5d8;
+        --muted-foreground: #5a4a3c;
+        --border: #d6c3aa;
+        --input: #fffaf2;
+        --error: #c41e3a;
+        --success: #2e8b57;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: var(--background);
+        color: var(--foreground);
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        line-height: 1.5;
+      }
+
+      /* Screen reader only content */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+
+      /* Skip to main content for accessibility */
+      .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: var(--primary);
+        color: var(--primary-foreground);
+        padding: 0.4rem 0.8rem;
+        z-index: 100;
+        text-decoration: none;
+        border-radius: var(--radius);
+        font-weight: 600;
+      }
+
+      .skip-link:focus {
+        top: 0.5rem;
+        left: 0.5rem;
+        outline: 3px solid var(--primary-foreground);
+        outline-offset: 2px;
+      }
+
+      /* Icon styles - using Unicode symbols */
+      .icon {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        line-height: 1;
+        font-style: normal;
+      }
+
+      header {
+        background: var(--primary);
+        color: var(--primary-foreground);
+        padding: 0.7rem 1.2rem;
+        font-size: clamp(1rem, 3.5vw, 1.4rem);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .container {
+        width: min(95%, 600px);
+        margin: 1.5rem auto;
+        flex: 1;
+        padding: 0 1rem;
+      }
+
+      .hero {
+        text-align: left;
+        padding: clamp(1.2rem, 4vw, 1.8rem) 1.2rem;
+        border-radius: var(--radius);
+        background: linear-gradient(
+            rgba(139, 94, 60, 0.55),
+            rgba(139, 94, 60, 0.55)
+          ),
+          linear-gradient(135deg, #8b5e3c 0%, #b98d68 100%);
+        color: #fff;
+        animation: fadeIn 1.5s ease-in;
+      }
+
+      .hero h1 {
+        font-size: clamp(1.3rem, 4vw, 1.6rem);
+        margin-bottom: 0.3rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+
+      .hero p {
+        font-size: clamp(0.85rem, 2vw, 0.95rem);
+      }
+
+      form {
+        background: var(--card);
+        color: var(--foreground);
+        padding: clamp(1.2rem, 3vw, 1.8rem);
+        margin-top: 1.5rem;
+        border-radius: var(--radius);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        animation: slideUp 1s ease-in-out;
+      }
+
+      .form-group {
+        margin-bottom: 1.2rem;
+      }
+
+      label, .label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 0.3rem;
+        color: var(--foreground);
+        font-size: 0.9rem;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 0.5rem 0.7rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--input);
+        font-family: inherit;
+        font-size: 0.9rem;
+        transition: 0.3s;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: 2px solid var(--primary);
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(139, 94, 60, 0.25);
+      }
+
+      /* Error state styling */
+      input[aria-invalid="true"],
+      select[aria-invalid="true"],
+      textarea[aria-invalid="true"] {
+        border-color: var(--error);
+      }
+
+      input[aria-invalid="true"]:focus,
+      select[aria-invalid="true"]:focus,
+      textarea[aria-invalid="true"]:focus {
+        box-shadow: 0 0 0 2px rgba(196, 30, 58, 0.25);
+      }
+
+      textarea {
+        min-height: 80px;
+        resize: vertical;
+      }
+
+      /* Rating group styles */
+      .rating-group {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+        gap: 0.4rem;
+        margin-top: 0.4rem;
+      }
+
+      .rating-group input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .rating-group label {
+        background: var(--muted);
+        padding: 0.45rem 0.6rem;
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 500;
+        text-align: center;
+        border: 2px solid transparent;
+        display: block;
+        font-size: 0.85rem;
+      }
+
+      .rating-group label:hover {
+        border-color: var(--primary);
+        transform: translateY(-2px);
+      }
+
+      .rating-group input[type="radio"]:checked + label {
+        background: var(--primary);
+        color: var(--primary-foreground);
+        transform: scale(1.05);
+        border-color: var(--primary);
+      }
+
+      .rating-group input[type="radio"]:focus + label {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+
+      /* Checkbox group styles */
+      .checkbox-group {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 0.6rem;
+        margin-top: 0.4rem;
+      }
+
+      .checkbox-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+
+      input[type="checkbox"] {
+        accent-color: var(--primary);
+        cursor: pointer;
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+      }
+
+      input[type="checkbox"]:focus {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+
+      .checkbox-wrapper label {
+        margin: 0;
+        cursor: pointer;
+        font-weight: 400;
+        font-size: 0.85rem;
+      }
+
+      /* Buttons */
+      .btn {
+        background: var(--primary);
+        color: var(--primary-foreground);
+        border: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition: 0.3s;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.3rem;
+        font-size: 0.9rem;
+        min-width: 100px;
+      }
+
+      .btn:hover {
+        transform: scale(1.05);
+        background: var(--secondary);
+      }
+
+      .btn:focus {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+
+      .btn.secondary {
+        background: var(--accent);
+        color: var(--foreground);
+      }
+
+      .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.8rem;
+        margin-top: 1.2rem;
+        flex-wrap: wrap;
+      }
+
+      /* Error messages */
+      .error-msg {
+        color: var(--error);
+        font-size: 0.8rem;
+        margin-top: 0.2rem;
+        font-weight: 500;
+        display: block;
+      }
+
+      /* Success messages */
+      .success-msg {
+        color: var(--success);
+        font-size: 0.8rem;
+        margin-top: 0.2rem;
+        font-weight: 500;
+        display: block;
+      }
+
+      /* Toast notification */
+      .toast {
+        position: fixed;
+        bottom: 1.2rem;
+        right: 1.2rem;
+        background: var(--primary);
+        color: var(--primary-foreground);
+        padding: 0.8rem 1.2rem;
+        border-radius: var(--radius);
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+        animation: fadeInUp 0.5s ease, fadeOut 0.5s ease 3s;
+        z-index: 1000;
+        max-width: 90%;
+        font-size: 0.9rem;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(15px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          transform: translateY(8px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeOut {
+        to {
+          opacity: 0;
+        }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .container {
+          width: 95%;
+          padding: 0 0.5rem;
+        }
+
+        header {
+          justify-content: flex-start;
+          padding-left: 0.8rem;
+        }
+
+        .rating-group {
+          grid-template-columns: 1fr;
+        }
+
+        .checkbox-group {
+          grid-template-columns: 1fr;
+        }
+
+        .form-actions {
+          flex-direction: column;
+          justify-content: stretch;
+        }
+
+        .btn {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        header {
+          padding: 0.6rem 0.8rem;
+          font-size: 1rem;
+        }
+
+        .hero {
+          padding: 1rem 0.8rem;
+        }
+
+        form {
+          padding: 1rem;
+        }
+
+        .rating-group label {
+          padding: 0.4rem 0.5rem;
+          font-size: 0.8rem;
+        }
+      }
+
+      /* Large screens */
+      @media (min-width: 1200px) {
+        .container {
+          max-width: 650px;
+        }
+
+        .rating-group {
+          grid-template-columns: repeat(5, 1fr);
+        }
+      }
+
+      /* Print styles */
+      @media print {
+        header,
+        footer,
+        .btn {
+          display: none;
+        }
+
+        body {
+          background: white;
+        }
+
+        form {
+          box-shadow: none;
+          border: 1px solid #ccc;
+        }
+      }
+
+      /* High contrast mode support */
+      @media (prefers-contrast: more) {
+        :root {
+          --primary: #6b4226;
+          --border: #8b6f47;
+        }
+      }
+
+      /* Reduced motion support */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <main id="main" class="container">
+      <section class="hero" aria-labelledby="hero-title">
+        <h1 id="hero-title">
+          <span class="icon" aria-hidden="true">💬</span>
+          Share Your Feedback
+        </h1>
+        <p>Your opinions matter! Help us improve our services.</p>
+      </section>
+
+      <form id="feedbackForm" novalidate aria-label="Feedback Form">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            placeholder="e.g. Riya"
+            required
+            aria-required="true"
+            aria-describedby="errorName"
+            autocomplete="name"
+          />
+          <span
+            id="errorName"
+            class="error-msg"
+            role="alert"
+            aria-live="polite"
+          ></span>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="e.g. riya@email.com"
+            required
+            aria-required="true"
+            aria-describedby="errorEmail"
+            autocomplete="email"
+          />
+          <span
+            id="errorEmail"
+            class="error-msg"
+            role="alert"
+            aria-live="polite"
+          ></span>
+        </div>
+
+        <div
+          class="form-group"
+          role="radiogroup"
+          aria-required="true"
+          aria-describedby="errorRating"
+        >
+          <div class="label">Overall Experience</div>
+          <div class="rating-group">
+            <input type="radio" id="rate5" name="rating" value="5" />
+            <label for="rate5">Excellent</label>
+
+            <input type="radio" id="rate4" name="rating" value="4" />
+            <label for="rate4">Good</label>
+
+            <input type="radio" id="rate3" name="rating" value="3" />
+            <label for="rate3">Average</label>
+
+            <input type="radio" id="rate2" name="rating" value="2" />
+            <label for="rate2">Poor</label>
+
+            <input type="radio" id="rate1" name="rating" value="1" />
+            <label for="rate1">Very Poor</label>
+          </div>
+          <span
+            id="errorRating"
+            class="error-msg"
+            role="alert"
+            aria-live="polite"
+          ></span>
+        </div>
+
+        <div class="form-group">
+          <label for="serviceType">Service You Used</label>
+          <select
+            id="serviceType"
+            name="serviceType"
+            required
+            aria-required="true"
+            aria-describedby="errorService"
+          >
+            <option value="">Select a service</option>
+            <option value="consultation">Consultation</option>
+            <option value="home-design">Home Design</option>
+            <option value="office-design">Office Design</option>
+            <option value="renovation">Renovation</option>
+            <option value="3d-design">3D Design</option>
+            <option value="custom-furniture">Custom Furniture</option>
+          </select>
+          <span
+            id="errorService"
+            class="error-msg"
+            role="alert"
+            aria-live="polite"
+          ></span>
+        </div>
+
+        <div class="form-group">
+          <p class="label">What Did You Like?</p>
+          <div
+            class="checkbox-group"
+            role="group"
+            aria-describedby="errorLikes"
+          >
+            <div class="checkbox-wrapper">
+              <input
+                type="checkbox"
+                id="quality"
+                name="likes"
+                value="quality"
+              />
+              <label for="quality">Quality of Work</label>
+            </div>
+            <div class="checkbox-wrapper">
+              <input
+                type="checkbox"
+                id="professionalism"
+                name="likes"
+                value="professionalism"
+              />
+              <label for="professionalism">Professionalism</label>
+            </div>
+            <div class="checkbox-wrapper">
+              <input
+                type="checkbox"
+                id="communication"
+                name="likes"
+                value="communication"
+              />
+              <label for="communication">Communication</label>
+            </div>
+            <div class="checkbox-wrapper">
+              <input
+                type="checkbox"
+                id="timeliness"
+                name="likes"
+                value="timeliness"
+              />
+              <label for="timeliness">Timeliness</label>
+            </div>
+            <div class="checkbox-wrapper">
+              <input
+                type="checkbox"
+                id="creativity"
+                name="likes"
+                value="creativity"
+              />
+              <label for="creativity">Creativity</label>
+            </div>
+          </div>
+          <span
+            id="errorLikes"
+            class="error-msg"
+            role="alert"
+            aria-live="polite"
+          ></span>
+        </div>
+
+        <div class="form-group">
+          <label for="comments">Additional Comments (optional)</label>
+          <textarea
+            id="comments"
+            name="comments"
+            placeholder="Share your feedback..."
+            aria-describedby="comments-hint"
+          ></textarea>
+          <span id="comments-hint" class="sr-only"
+            >Optional field for additional feedback</span
+          >
+        </div>
+
+        <div class="form-actions">
+          <button type="reset" class="btn secondary" aria-label="Reset form">
+            <span class="icon" aria-hidden="true">↺</span>
+            Reset
+          </button>
+          <button type="submit" class="btn" aria-label="Submit feedback form">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+            Submit Feedback
+          </button>
+        </div>
+      </form>
+    </main>
+
+    <script>
+      // Form and field references
+      const form = document.getElementById("feedbackForm");
+      const fields = {
+        name: document.getElementById("name"),
+        email: document.getElementById("email"),
+        serviceType: document.getElementById("serviceType"),
+        rating: document.getElementsByName("rating"),
+        likes: document.getElementsByName("likes"),
+        comments: document.getElementById("comments"),
+      };
+
+      // Validation functions
+      const validateName = (name) => {
+        const trimmedName = name.trim();
+        if (trimmedName.length < 2) {
+          return {
+            valid: false,
+            message: "Name must be at least 2 characters",
+          };
+        }
+        if (!/^[a-zA-Z\s\-']+$/.test(trimmedName)) {
+          return {
+            valid: false,
+            message:
+              "Name can only contain letters, spaces, hyphens, and apostrophes",
+          };
+        }
+        return { valid: true };
+      };
+
+      const validateEmail = (email) => {
+        const trimmedEmail = email.trim();
+        if (!trimmedEmail) {
+          return { valid: false, message: "Email is required" };
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+          return {
+            valid: false,
+            message: "Please enter a valid email address",
+          };
+        }
+        return { valid: true };
+      };
+
+      const validateRating = () => {
+        const ratingSelected = document.querySelector(
+          'input[name="rating"]:checked'
+        );
+        if (!ratingSelected) {
+          return { valid: false, message: "Please select a rating" };
+        }
+        return { valid: true };
+      };
+
+      const validateService = (service) => {
+        if (!service) {
+          return { valid: false, message: "Please select a service" };
+        }
+        return { valid: true };
+      };
+
+      const validateLikes = () => {
+        const likesSelected =
+          document.querySelectorAll('input[name="likes"]:checked').length > 0;
+        if (!likesSelected) {
+          return { valid: false, message: "Please select at least one option" };
+        }
+        return { valid: true };
+      };
+
+      // Error handling functions
+      const showError = (id, msg) => {
+        const errorElement = document.getElementById(id);
+        errorElement.textContent = msg;
+
+        // Add error styling to the input
+        const inputId = id.replace("error", "").toLowerCase();
+        const inputElement = document.getElementById(inputId);
+        if (inputElement) {
+          inputElement.setAttribute("aria-invalid", "true");
+        }
+      };
+
+      const clearError = (id) => {
+        const errorElement = document.getElementById(id);
+        errorElement.textContent = "";
+
+        // Remove error styling from the input
+        const inputId = id.replace("error", "").toLowerCase();
+        const inputElement = document.getElementById(inputId);
+        if (inputElement) {
+          inputElement.setAttribute("aria-invalid", "false");
+        }
+      };
+
+      // Real-time validation
+      form.name.addEventListener("blur", () => {
+        const result = validateName(form.name.value);
+        if (!result.valid) {
+          showError("errorName", result.message);
+        } else {
+          clearError("errorName");
+        }
+      });
+
+      form.name.addEventListener("input", () => {
+        if (form.name.value.trim().length > 0) {
+          const result = validateName(form.name.value);
+          if (result.valid) {
+            clearError("errorName");
+          }
+        }
+      });
+
+      form.email.addEventListener("blur", () => {
+        const result = validateEmail(form.email.value);
+        if (!result.valid) {
+          showError("errorEmail", result.message);
+        } else {
+          clearError("errorEmail");
+        }
+      });
+
+      form.email.addEventListener("input", () => {
+        if (form.email.value.trim().length > 0) {
+          const result = validateEmail(form.email.value);
+          if (result.valid) {
+            clearError("errorEmail");
+          }
+        }
+      });
+
+      // Add validation for radio buttons
+      const ratingInputs = document.querySelectorAll('input[name="rating"]');
+      ratingInputs.forEach((input) => {
+        input.addEventListener("change", () => {
+          const result = validateRating();
+          if (result.valid) {
+            clearError("errorRating");
+          }
+        });
+      });
+
+      // Add validation for service dropdown
+      form.serviceType.addEventListener("change", () => {
+        const result = validateService(form.serviceType.value);
+        if (!result.valid) {
+          showError("errorService", result.message);
+        } else {
+          clearError("errorService");
+        }
+      });
+
+      // Add validation for checkboxes
+      const likeCheckboxes = document.querySelectorAll('input[name="likes"]');
+      likeCheckboxes.forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+          const result = validateLikes();
+          if (result.valid) {
+            clearError("errorLikes");
+          }
+        });
+      });
+
+      // Form submission
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        // Validate all fields
+        const nameResult = validateName(form.name.value);
+        const emailResult = validateEmail(form.email.value);
+        const ratingResult = validateRating();
+        const serviceResult = validateService(form.serviceType.value);
+        const likesResult = validateLikes();
+
+        let valid = true;
+        let firstErrorField = null;
+
+        if (!nameResult.valid) {
+          showError("errorName", nameResult.message);
+          if (!firstErrorField) firstErrorField = form.name;
+          valid = false;
+        }
+
+        if (!emailResult.valid) {
+          showError("errorEmail", emailResult.message);
+          if (!firstErrorField) firstErrorField = form.email;
+          valid = false;
+        }
+
+        if (!ratingResult.valid) {
+          showError("errorRating", ratingResult.message);
+          if (!firstErrorField)
+            firstErrorField = document.getElementById("rate5");
+          valid = false;
+        }
+
+        if (!serviceResult.valid) {
+          showError("errorService", serviceResult.message);
+          if (!firstErrorField) firstErrorField = form.serviceType;
+          valid = false;
+        }
+
+        if (!likesResult.valid) {
+          showError("errorLikes", likesResult.message);
+          if (!firstErrorField)
+            firstErrorField = document.getElementById("quality");
+          valid = false;
+        }
+
+        if (valid) {
+          // Collect form data
+          const formData = {
+            name: form.name.value.trim(),
+            email: form.email.value.trim(),
+            rating: document.querySelector('input[name="rating"]:checked')
+              .value,
+            serviceType: form.serviceType.value,
+            likes: Array.from(
+              document.querySelectorAll('input[name="likes"]:checked')
+            ).map((cb) => cb.value),
+            comments: form.comments.value.trim(),
+          };
+
+          // Show success message
+          showToast("Thank you for your feedback! We appreciate your input.");
+
+          // Reset form
+          form.reset();
+
+          // Clear all error messages
+          [
+            "errorName",
+            "errorEmail",
+            "errorRating",
+            "errorService",
+            "errorLikes",
+          ].forEach(clearError);
+        } else {
+          // Focus on first error field
+          if (firstErrorField) {
+            firstErrorField.focus();
+          }
+        }
+      });
+
+      // Toast notification
+      function showToast(msg) {
+        const existingToast = document.querySelector(".toast");
+        if (existingToast) existingToast.remove();
+
+        const toast = document.createElement("div");
+        toast.className = "toast";
+        toast.setAttribute("role", "status");
+        toast.setAttribute("aria-live", "polite");
+        toast.textContent = msg;
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+          if (toast.parentNode) {
+            toast.parentNode.removeChild(toast);
+          }
+        }, 3500);
+      }
+    </script>
+  </body>
+</html>

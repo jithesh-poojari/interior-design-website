@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Contact DreamSpace Interiors for interior design consultations, quotes, and services in Mumbai. Reach us via phone, email, or message."
+    />
+    <title>DreamSpace Interiors | Contact Us</title>
+
+    <style>
+      :root {
+        --radius: 0.5rem;
+        --background: #f8f4ec;
+        --foreground: #2e2e2e;
+        --card: #ffffff;
+        --primary: #8b5e3c;
+        --primary-foreground: #fffaf2;
+        --secondary: #b98d68;
+        --accent: #e9d7b9;
+        --muted: #f0e5d8;
+        --muted-foreground: #5a4a3c;
+        --border: #d6c3aa;
+        --input: #fffaf2;
+        --error: #c41e3a;
+        --success: #4a7c59;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: var(--background);
+        color: var(--foreground);
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        line-height: 1.5;
+      }
+
+      .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: var(--primary);
+        color: var(--primary-foreground);
+        padding: 0.4rem 0.8rem;
+        z-index: 100;
+        text-decoration: none;
+        border-radius: var(--radius);
+      }
+
+      .skip-link:focus {
+        top: 0.5rem;
+        left: 0.5rem;
+      }
+
+      header {
+        background: var(--primary);
+        color: var(--primary-foreground);
+        padding: 0.7rem 1.2rem;
+        font-size: clamp(1rem, 3.5vw, 1.4rem);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .container {
+        width: min(95%, 600px);
+        margin: 1.5rem auto;
+        flex: 1;
+        padding: 0 1rem;
+      }
+
+      .hero {
+        text-align: left;
+        padding: clamp(1.2rem, 4vw, 2rem) 1.5rem;
+        border-radius: var(--radius);
+        background: linear-gradient(
+            rgba(139, 94, 60, 0.55),
+            rgba(139, 94, 60, 0.55)
+          ),
+          url("https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80")
+            center/cover no-repeat;
+        color: #fff;
+        animation: fadeIn 1.5s ease-in;
+        margin-bottom: 1.5rem;
+      }
+
+      .hero h1 {
+        font-size: clamp(1.4rem, 4vw, 1.8rem);
+        margin-bottom: 0.3rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+
+      .hero p {
+        font-size: clamp(0.9rem, 2vw, 1rem);
+      }
+
+      form {
+        background: var(--card);
+        color: var(--foreground);
+        padding: clamp(1.5rem, 3vw, 2rem);
+        border-radius: var(--radius);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        animation: slideUp 1s ease-in-out;
+        margin-bottom: 2rem;
+      }
+
+      .form-title {
+        font-size: 1.4rem;
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.2rem;
+      }
+
+      label,
+      .label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 0.3rem;
+        color: var(--foreground);
+        font-size: 0.9rem;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 0.6rem 0.8rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--input);
+        font-family: inherit;
+        font-size: 0.9rem;
+        transition: border-color 0.3s, box-shadow 0.3s;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: 2px solid var(--primary);
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(139, 94, 60, 0.25);
+      }
+
+      textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+
+      .radio-group {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 0.6rem;
+        margin-top: 0.4rem;
+      }
+
+      .radio-group input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+        clip: rect(0 0 0 0);
+        pointer-events: none;
+      }
+
+      .radio-group label {
+        background: var(--muted);
+        padding: 0.5rem 0.8rem;
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 500;
+        text-align: center;
+        border: 2px solid transparent;
+        font-size: 0.85rem;
+      }
+
+      .radio-group label:hover,
+      .radio-group input[type="radio"]:focus + label {
+        border-color: var(--primary);
+      }
+
+      .radio-group input[type="radio"]:checked + label {
+        background: var(--primary);
+        color: var(--primary-foreground);
+        border-color: var(--primary);
+      }
+
+      .btn {
+        background: var(--primary);
+        color: var(--primary-foreground);
+        border: none;
+        padding: 0.7rem 1.5rem;
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition: transform 0.3s, background 0.3s;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        font-size: 0.9rem;
+        min-width: 120px;
+      }
+
+      .btn:hover {
+        transform: scale(1.05);
+        background: var(--secondary);
+      }
+
+      .btn:focus {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+
+      .btn.secondary {
+        background: var(--accent);
+        color: var(--foreground);
+      }
+
+      .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        margin-top: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .error-msg {
+        color: var(--error);
+        font-size: 0.8rem;
+        margin-top: 0.2rem;
+        font-weight: 500;
+      }
+
+      .success-msg {
+        color: var(--success);
+        font-size: 0.8rem;
+        margin-top: 0.2rem;
+        font-weight: 500;
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 1.2rem;
+        right: 1.2rem;
+        background: var(--primary);
+        color: var(--primary-foreground);
+        padding: 0.8rem 1.2rem;
+        border-radius: var(--radius);
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+        animation: fadeInUp 0.5s ease, fadeOut 0.5s ease 3s;
+        z-index: 1000;
+        max-width: 90%;
+        font-size: 0.9rem;
+      }
+
+      .toast.success {
+        background: var(--success);
+      }
+
+      .helper-text {
+        font-size: 0.75rem;
+        color: var(--muted-foreground);
+        margin-top: 0.2rem;
+        font-style: italic;
+      }
+
+      footer {
+        text-align: center;
+        padding: 1rem 0.8rem;
+        background: var(--primary);
+        color: var(--primary-foreground);
+        letter-spacing: 0.3px;
+        margin-top: auto;
+        font-size: 0.9rem;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(15px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          transform: translateY(8px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeOut {
+        to {
+          opacity: 0;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          width: 95%;
+          padding: 0 0.5rem;
+        }
+
+        .radio-group {
+          grid-template-columns: 1fr;
+        }
+
+        .form-actions {
+          flex-direction: column;
+          justify-content: stretch;
+        }
+
+        .btn {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        header {
+          padding: 0.6rem 0.8rem;
+          font-size: 1rem;
+        }
+
+        .hero {
+          padding: 1rem 0.8rem;
+        }
+
+        form {
+          padding: 1.2rem;
+        }
+      }
+
+      @media (min-width: 1200px) {
+        .container {
+          max-width: 900px;
+        }
+      }
+
+      @media print {
+        header,
+        footer,
+        .btn,
+        .toast {
+          display: none !important;
+        }
+
+        body {
+          background: white;
+        }
+
+        form {
+          box-shadow: none;
+          border: 1px solid #ccc;
+        }
+      }
+
+      @media (prefers-contrast: more) {
+        :root {
+          --primary: #6b4226;
+          --border: #8b6f47;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <main id="main" class="container">
+      <section class="hero" aria-labelledby="hero-title">
+        <h1 id="hero-title">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path
+              d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.7 15.9 15.9 0 0 1 1.03 3.58 2 2 0 0 1-.45 1.59l-1.18 1.18a2 2 0 0 0-.15 2.71L12.8 20.1a1.9 1.9 0 0 0 2.7 0l1.18-1.18a2 2 0 0 1 1.59-.45 15.9 15.9 0 0 1 3.58 1.03A2 2 0 0 1 22 16.92z"
+            ></path>
+          </svg>
+          Contact Us
+        </h1>
+        <p>
+          Let's bring your dream space to life. Get in touch with our design
+          experts today!
+        </p>
+      </section>
+
+      <!-- Contact Form -->
+      <form id="contactForm" novalidate aria-labelledby="form-title">
+        <h2 id="form-title" class="form-title">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path
+              d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+            ></path>
+          </svg>
+          Send Us a Message
+        </h2>
+
+        <!-- Name Fields -->
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            placeholder="e.g. Riya"
+            required
+          />
+          <span
+            id="errorFirstName"
+            class="error-msg"
+            aria-live="assertive"
+          ></span>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            placeholder="e.g. Sharma"
+            required
+          />
+          <span
+            id="errorLastName"
+            class="error-msg"
+            aria-live="assertive"
+          ></span>
+        </div>
+
+        <!-- Email & Phone -->
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="e.g. riya@email.com"
+            required
+          />
+          <span id="errorEmail" class="error-msg" aria-live="assertive"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            maxlength="10"
+            pattern="^(\+91[\s\-]?)?[6-9]\d{9}$"
+            placeholder="e.g. +91 98765 43210 or 9876543210"
+            required
+          />
+          <div class="helper-text">Enter 10-digit Indian mobile number</div>
+          <span id="errorPhone" class="error-msg" aria-live="assertive"></span>
+        </div>
+
+        <!-- Subject -->
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <select id="subject" name="subject" required>
+            <option value="">Select a subject</option>
+            <option value="quote">Request a Quote</option>
+            <option value="service">Service Inquiry</option>
+            <option value="partnership">Business Partnership</option>
+            <option value="feedback">Feedback</option>
+            <option value="other">Other</option>
+          </select>
+          <span
+            id="errorSubject"
+            class="error-msg"
+            aria-live="assertive"
+          ></span>
+        </div>
+
+        <!-- Service Type -->
+        <div
+          class="form-group"
+          role="radiogroup"
+          aria-labelledby="serviceLabel"
+          aria-required="true"
+        >
+          <p class="label" id="serviceLabel">Service Type</p>
+          <div class="radio-group">
+            <input
+              type="radio"
+              id="residential"
+              name="serviceType"
+              value="residential"
+            />
+            <label for="residential">Residential</label>
+            <input
+              type="radio"
+              id="commercial"
+              name="serviceType"
+              value="commercial"
+            />
+            <label for="commercial">Commercial</label>
+            <input
+              type="radio"
+              id="renovation"
+              name="serviceType"
+              value="renovation"
+            />
+            <label for="renovation">Renovation</label>
+            <input
+              type="radio"
+              id="consultation"
+              name="serviceType"
+              value="consultation"
+            />
+            <label for="consultation">Consultation</label>
+          </div>
+          <span
+            id="errorService"
+            class="error-msg"
+            aria-live="assertive"
+          ></span>
+        </div>
+
+        <!-- Message -->
+        <div class="form-group">
+          <label for="message">Your Message</label>
+          <textarea
+            id="message"
+            name="message"
+            placeholder="Tell us about your project or inquiry..."
+            required
+          ></textarea>
+          <span
+            id="errorMessage"
+            class="error-msg"
+            aria-live="assertive"
+          ></span>
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+          <button type="reset" class="btn secondary">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M1 4v6h6"></path>
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+            </svg>
+            Clear Form
+          </button>
+          <button type="submit" class="btn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+            Send Message
+          </button>
+        </div>
+      </form>
+    </main>
+
+    <script>
+      // Validation helpers
+      const showError = (id, msg) => {
+        const el = document.getElementById(id);
+        el.textContent = msg;
+        el.setAttribute("role", "error");
+      };
+
+      const clearError = (id) => {
+        const el = document.getElementById(id);
+        el.textContent = "";
+        el.removeAttribute("role");
+      };
+
+      // Validation functions - Fixed to handle empty values
+      const validateName = (val) => {
+        const trimmed = val.trim();
+        if (trimmed.length === 0) return false;
+        if (trimmed.length < 2) return false;
+        return true;
+      };
+
+      const validateEmail = (val) => {
+        const trimmed = val.trim();
+        if (trimmed.length === 0) return false;
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed);
+      };
+
+      // Enhanced phone validation for Indian numbers - FIXED REGEX
+      const validatePhone = (val) => {
+        const trimmed = val.trim();
+        if (trimmed.length === 0) return false;
+
+        // Remove all spaces, dashes, parentheses
+        const cleaned = trimmed.replace(/[\s\-()]/g, "");
+
+        // Check for valid Indian mobile number formats:
+        // 1. 10 digits starting with 6, 7, 8, or 9
+        // 2. +91 followed by 10 digits starting with 6, 7, 8, or 9
+        // 3. 91 followed by 10 digits starting with 6, 7, 8, or 9
+        const pattern1 = /^[6-9]\d{9}$/; // 9876543210
+        const pattern2 = /^\+91[6-9]\d{9}$/; // +919876543210
+        const pattern3 = /^91[6-9]\d{9}$/; // 919876543210
+
+        return (
+          pattern1.test(cleaned) ||
+          pattern2.test(cleaned) ||
+          pattern3.test(cleaned)
+        );
+      };
+
+      const validateSubject = (val) => {
+        return val !== "" && val !== null && val !== undefined;
+      };
+
+      const validateMessage = (val) => {
+        const trimmed = val.trim();
+        if (trimmed.length === 0) return false;
+        if (trimmed.length < 10) return false;
+        return true;
+      };
+
+      const validateServiceType = () => {
+        return (
+          document.querySelector('input[name="serviceType"]:checked') !== null
+        );
+      };
+
+      // Real-time validation
+      ["firstName", "lastName"].forEach((field) => {
+        const input = document.getElementById(field);
+        input.addEventListener("blur", () => {
+          const value = input.value;
+          if (value.trim().length === 0) {
+            showError(
+              `error${field.charAt(0).toUpperCase() + field.slice(1)}`,
+              "This field is required"
+            );
+          } else if (!validateName(value)) {
+            showError(
+              `error${field.charAt(0).toUpperCase() + field.slice(1)}`,
+              "Must be at least 2 characters"
+            );
+          } else {
+            clearError(
+              `error${field.charAt(0).toUpperCase() + field.slice(1)}`
+            );
+          }
+        });
+      });
+
+      document.getElementById("email").addEventListener("blur", function () {
+        const val = this.value;
+        if (val.trim().length === 0) {
+          showError("errorEmail", "Email is required");
+        } else if (!validateEmail(val)) {
+          showError("errorEmail", "Enter a valid email address");
+        } else {
+          clearError("errorEmail");
+        }
+      });
+
+      // Enhanced phone validation - FIXED
+      document.getElementById("phone").addEventListener("input", function () {
+        // Allow only numbers, +, spaces, dashes, and parentheses
+        this.value = this.value.replace(/[^0-9+\s\-()]/g, "");
+      });
+
+      document.getElementById("phone").addEventListener("blur", function () {
+        const val = this.value.trim();
+
+        if (val.length === 0) {
+          showError("errorPhone", "Phone number is required");
+          return;
+        }
+
+        if (!validatePhone(val)) {
+          showError(
+            "errorPhone",
+            "Enter a valid Indian mobile number (10 digits starting with 6-9)"
+          );
+        } else {
+          clearError("errorPhone");
+        }
+      });
+
+      document
+        .getElementById("subject")
+        .addEventListener("change", function () {
+          if (!validateSubject(this.value)) {
+            showError("errorSubject", "Please select a subject");
+          } else {
+            clearError("errorSubject");
+          }
+        });
+
+      document.getElementById("message").addEventListener("blur", function () {
+        const val = this.value;
+        if (val.trim().length === 0) {
+          showError("errorMessage", "Message is required");
+        } else if (!validateMessage(val)) {
+          showError("errorMessage", "Message must be at least 10 characters");
+        } else {
+          clearError("errorMessage");
+        }
+      });
+
+      // Form submission - FIXED to validate empty forms
+      document
+        .getElementById("contactForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          let firstErrorField = null;
+          let isValid = true;
+
+          // Reset all errors
+          document
+            .querySelectorAll(".error-msg")
+            .forEach((el) => clearError(el.id));
+
+          // Validate First Name
+          const firstName = this.firstName.value.trim();
+          if (firstName.length === 0) {
+            showError("errorFirstName", "First name is required");
+            if (!firstErrorField) firstErrorField = this.firstName;
+            isValid = false;
+          } else if (!validateName(this.firstName.value)) {
+            showError(
+              "errorFirstName",
+              "First name must be at least 2 characters"
+            );
+            if (!firstErrorField) firstErrorField = this.firstName;
+            isValid = false;
+          }
+
+          // Validate Last Name
+          const lastName = this.lastName.value.trim();
+          if (lastName.length === 0) {
+            showError("errorLastName", "Last name is required");
+            if (!firstErrorField) firstErrorField = this.lastName;
+            isValid = false;
+          } else if (!validateName(this.lastName.value)) {
+            showError(
+              "errorLastName",
+              "Last name must be at least 2 characters"
+            );
+            if (!firstErrorField) firstErrorField = this.lastName;
+            isValid = false;
+          }
+
+          // Validate Email
+          const email = this.email.value.trim();
+          if (email.length === 0) {
+            showError("errorEmail", "Email is required");
+            if (!firstErrorField) firstErrorField = this.email;
+            isValid = false;
+          } else if (!validateEmail(this.email.value)) {
+            showError("errorEmail", "Enter a valid email address");
+            if (!firstErrorField) firstErrorField = this.email;
+            isValid = false;
+          }
+
+          // Validate Phone
+          const phone = this.phone.value.trim();
+          if (phone.length === 0) {
+            showError("errorPhone", "Phone number is required");
+            if (!firstErrorField) firstErrorField = this.phone;
+            isValid = false;
+          } else if (!validatePhone(this.phone.value)) {
+            showError(
+              "errorPhone",
+              "Enter a valid Indian mobile number (10 digits starting with 6-9)"
+            );
+            if (!firstErrorField) firstErrorField = this.phone;
+            isValid = false;
+          }
+
+          // Validate Subject
+          if (!validateSubject(this.subject.value)) {
+            showError("errorSubject", "Please select a subject");
+            if (!firstErrorField) firstErrorField = this.subject;
+            isValid = false;
+          }
+
+          // Validate Service Type
+          if (!validateServiceType()) {
+            showError("errorService", "Please select a service type");
+            if (!firstErrorField)
+              firstErrorField = document.getElementById("residential");
+            isValid = false;
+          }
+
+          // Validate Message
+          const message = this.message.value.trim();
+          if (message.length === 0) {
+            showError("errorMessage", "Message is required");
+            if (!firstErrorField) firstErrorField = this.message;
+            isValid = false;
+          } else if (!validateMessage(this.message.value)) {
+            showError("errorMessage", "Message must be at least 10 characters");
+            if (!firstErrorField) firstErrorField = this.message;
+            isValid = false;
+          }
+
+          if (isValid) {
+            // Normalize phone number before submission
+            const normalizedPhone = phone.replace(/[\s\-()]/g, "");
+            console.log("Form Data:", {
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              phone: normalizedPhone,
+              subject: this.subject.value,
+              serviceType: document.querySelector(
+                'input[name="serviceType"]:checked'
+              ).value,
+              message: message,
+            });
+
+            // Fixed string escaping issue
+            showToast(
+              "Thank you! We'll get back to you within 24 hours.",
+              "success"
+            );
+            this.reset();
+          } else if (firstErrorField) {
+            firstErrorField.focus();
+          }
+        });
+
+      // Reset handler
+      document.getElementById("contactForm").addEventListener("reset", () => {
+        document
+          .querySelectorAll(".error-msg")
+          .forEach((el) => clearError(el.id));
+      });
+
+      // Toast notification
+      function showToast(msg, type) {
+        const toast = document.createElement("div");
+        toast.className = type === "success" ? "toast success" : "toast";
+        toast.setAttribute("role", "status");
+        toast.setAttribute("aria-live", "polite");
+        toast.textContent = msg;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 4000);
+      }
+    </script>
+  </body>
+</html>
