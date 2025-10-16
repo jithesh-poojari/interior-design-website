@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Wishlist — DreamSpace</title>
+
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@500;700&display=swap"
+        rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        :root {
+            --cream: #f9f6f3;
+            --brown: #8b5e3b;
+            --dark-brown: #5c3d2e;
+            --light-cream: #fff7ef;
+            --border: #e8dcd2;
+            --text-muted: #7b5f48;
+            --radius: 1.2rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--cream);
+            color: var(--dark-brown);
+            padding: 60px 20px 40px;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--brown);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(139, 94, 59, 0.15);
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+            gap: 10px;
+        }
+
+        .controls select {
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            background: var(--light-cream);
+            transition: 0.3s;
+            color: var(--dark-brown);
+        }
+
+        .controls select:hover {
+            border-color: var(--brown);
+        }
+
+        .wishlist-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            max-width: 900px;
+        }
+
+        @media (max-width: 768px) {
+            .wishlist-container {
+                grid-template-columns: 1fr;
+            }
+
+            .controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        .wishlist-card {
+            background: var(--light-cream);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(139, 94, 59, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border);
+            width: 100%;
+            position: relative;
+        }
+
+        .wishlist-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(139, 94, 59, 0.25);
+        }
+
+        .card-header {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .wishlist-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .wishlist-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--brown);
+            color: var(--cream);
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+
+        .card-body h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-brown);
+        }
+
+        .card-body p.desc {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+
+        .card-body .price {
+            font-weight: 700;
+            color: var(--brown);
+            font-size: 1.1rem;
+            margin-top: 6px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-top: 1px solid var(--border);
+        }
+
+        .view-detail {
+            background: var(--brown);
+            color: var(--cream);
+            border: none;
+            border-radius: 50px;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .view-detail:hover {
+            background: var(--dark-brown);
+        }
+
+        .remove-btn {
+            background: var(--cream);
+            color: var(--brown);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .remove-btn:hover {
+            background: var(--border);
+        }
+
+        .empty-msg {
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 30px;
+        }
+
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background: var(--brown);
+            color: var(--cream);
+            text-align: center;
+            border-radius: var(--radius);
+            padding: 15px;
+            position: fixed;
+            z-index: 1100;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.95rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            visibility: visible;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--light-cream);
+            border-radius: var(--radius);
+            padding: 25px;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            animation: pop 0.3s ease;
+        }
+
+        @keyframes pop {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-content img {
+            width: 100%;
+            border-radius: var(--radius);
+            margin-bottom: 15px;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 18px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--brown);
+            transition: 0.2s;
+        }
+
+        .close:hover {
+            color: var(--dark-brown);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>💖 Your Wishlist</h1>
+        <p>Save the designs that inspire you. We’ll use your wishlist to bring your dream interiors to life.</p>
+    </header>
+
+
+    <div class="controls">
+        <select id="sortSelect">
+            <option value="default">Sort By: Default</option>
+            <option value="name-asc">Name: A → Z</option>
+            <option value="name-desc">Name: Z → A</option>
+            <option value="price-asc">Price: Low → High</option>
+            <option value="price-desc">Price: High → Low</option>
+        </select>
+
+        <select id="categorySelect">
+            <option value="all">All Categories</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Lighting">Lighting</option>
+            <option value="Decor">Decor</option>
+        </select>
+    </div>
+
+    <div class="wishlist-container" id="wishlistContainer"></div>
+    <p class="empty-msg" id="emptyMsg" style="display:none;">Your wishlist is empty — start adding favourites!</p>
+    <div class="toast" id="toast"></div>
+
+    <!-- Modal -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img id="modalImg" src="images/placeholder.png" alt="Preview image">
+            <h2 id="modalName">Item Name</h2>
+            <p id="modalDesc"></p>
+            <p class="price" id="modalPrice"></p>
+        </div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'wishlist';
+        const wishlistContainer = document.getElementById('wishlistContainer');
+        const emptyMsg = document.getElementById('emptyMsg');
+        const sortSelect = document.getElementById('sortSelect');
+        const categorySelect = document.getElementById('categorySelect');
+        const toast = document.getElementById('toast');
+        const detailModal = document.getElementById('detailModal');
+
+        let wishlist = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
+        function renderWishlist() {
+            const cat = categorySelect.value;
+            let filtered = wishlist.filter(item => cat === 'all' || item.category === cat);
+
+            const sort = sortSelect.value;
+            filtered.sort((a, b) => {
+                const getPrice = i => parseFloat(i.price.replace(/[^\d.]/g, ''));
+                if (sort === 'name-asc') return a.name.localeCompare(b.name);
+                if (sort === 'name-desc') return b.name.localeCompare(a.name);
+                if (sort === 'price-asc') return getPrice(a) - getPrice(b);
+                if (sort === 'price-desc') return getPrice(b) - getPrice(a);
+                return 0;
+            });
+
+            wishlistContainer.innerHTML = '';
+            if (filtered.length === 0) {
+                emptyMsg.style.display = 'block';
+            } else {
+                emptyMsg.style.display = 'none';
+                filtered.forEach((item, index) => {
+                    wishlistContainer.innerHTML += `
+          <div class="wishlist-card">
+            <div class="card-header">
+              <img src="${item.img || 'images/placeholder.png'}" alt="${item.name}">
+              <div class="card-badge">${item.category}</div>
+            </div>
+            <div class="card-body">
+              <h3>${item.name}</h3>
+              <p class="desc">${item.desc}</p>
+              <p class="price">${item.price}</p>
+            </div>
+            <div class="card-footer">
+              <button class="view-detail" onclick="viewDetail(${index})">View Detail</button>
+              <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+            </div>
+          </div>`;
+                });
+            }
+        }
+
+        function removeItem(index) {
+            const removed = wishlist.splice(index, 1);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(wishlist));
+            showToast(`${removed[0].name} removed.`);
+            renderWishlist();
+        }
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        function viewDetail(index) {
+            const item = wishlist[index];
+            document.getElementById('modalImg').src = item.img || 'images/placeholder.png';
+            document.getElementById('modalName').textContent = item.name;
+            document.getElementById('modalDesc').textContent = item.desc;
+            document.getElementById('modalPrice').textContent = item.price;
+            detailModal.style.display = 'flex';
+        }
+
+        document.querySelector('.close').onclick = () => detailModal.style.display = 'none';
+        window.onclick = e => { if (e.target === detailModal) detailModal.style.display = 'none'; };
+
+        sortSelect.onchange = renderWishlist;
+        categorySelect.onchange = renderWishlist;
+
+        renderWishlist();
+    </script>
+</body>
+
+</html>
