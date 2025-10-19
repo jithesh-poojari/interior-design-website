@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - DreamSpace</title>
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="stylesheet" href="css/auth.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body>
+    <div class="auth-page">
+      <div class="auth-container">
+        <div class="auth-card">
+          <div class="auth-header">
+            <h1>Welcome Back</h1>
+            <p>Sign in to your account to continue</p>
+          </div>
+
+          <form class="auth-form" id="loginForm">
+            <div class="form-field">
+              <label for="email">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="you@example.com"
+                required
+                autocomplete="email"
+              />
+              <span class="error-message" id="emailError"></span>
+            </div>
+
+            <div class="form-field">
+              <label for="password">Password</label>
+              <div class="input-wrapper">
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="••••••••"
+                  required
+                  autocomplete="current-password"
+                />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  id="togglePassword"
+                  aria-label="Toggle password visibility"
+                >
+                  <i data-lucide="eye" id="eyeIcon"></i>
+                  <i data-lucide="eye-off" id="eyeOffIcon" style="display: none"></i>
+                </button>
+              </div>
+              <span class="error-message" id="passwordError"></span>
+            </div>
+
+            <div class="form-options">
+              <div class="checkbox-wrapper">
+                <input type="checkbox" id="remember" name="remember" />
+                <label for="remember">Remember me</label>
+              </div>
+              <a href="#" class="forgot-link">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn-auth primary" id="loginBtn">
+              Sign In
+              <i data-lucide="log-in"></i>
+            </button>
+          </form>
+
+          <div class="auth-footer">
+            Don't have an account?
+            <a href="./sign-up.html">Sign up</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="./script.js"></script>
+    <script>
+      // Password toggle
+      const togglePassword = document.getElementById("togglePassword");
+      const passwordInput = document.getElementById("password");
+      const eyeIcon = document.getElementById("eyeIcon");
+      const eyeOffIcon = document.getElementById("eyeOffIcon");
+
+      togglePassword.addEventListener("click", () => {
+        const type = passwordInput.type === "password" ? "text" : "password";
+        passwordInput.type = type;
+        
+        if (type === "text") {
+          eyeIcon.style.display = "none";
+          eyeOffIcon.style.display = "block";
+        } else {
+          eyeIcon.style.display = "block";
+          eyeOffIcon.style.display = "none";
+        }
+        lucide.createIcons();
+      });
+
+      // Login form submission
+      document.getElementById("loginForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const remember = document.getElementById("remember").checked;
+
+        // Validate
+        if (!validateEmail(email)) {
+          showFieldError("email", "Please enter a valid email address");
+          return;
+        }
+
+        if (password.length < 6) {
+          showFieldError("password", "Password must be at least 6 characters");
+          return;
+        }
+
+        // Login
+        const result = await login(email, password, remember);
+        
+        if (result.success) {
+          showToast("Login successful! Redirecting...", "success");
+          setTimeout(() => {
+            window.location.href = "./index.html";
+          }, 1000);
+        } else {
+          showToast(result.message, "error");
+        }
+      });
+
+      // Field validation helpers
+      function showFieldError(fieldId, message) {
+        const input = document.getElementById(fieldId);
+        const error = document.getElementById(fieldId + "Error");
+        input.classList.add("error");
+        error.textContent = message;
+        error.classList.add("show");
+      }
+
+      function clearFieldError(fieldId) {
+        const input = document.getElementById(fieldId);
+        const error = document.getElementById(fieldId + "Error");
+        input.classList.remove("error");
+        error.classList.remove("show");
+      }
+
+      // Clear errors on input
+      document.querySelectorAll(".form-field input").forEach((input) => {
+        input.addEventListener("input", () => {
+          clearFieldError(input.id);
+        });
+      });
+
+      // Redirect if already logged in
+      if (isAuthenticated()) {
+        window.location.href = "./index.html";
+      }
+    </script>
+  </body>
+</html>

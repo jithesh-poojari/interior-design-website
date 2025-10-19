@@ -1,6 +1,267 @@
 // Initialize Lucide icons ONCE
 lucide.createIcons();
 
+// AUTHENTICATION
+
+// Storage keys
+const USERS_KEY = "dreamspace_users";
+const AUTH_KEY = "dreamspace_auth";
+const SESSION_KEY = "dreamspace_session";
+
+// Initialize users storage
+function initStorage() {
+  if (!localStorage.getItem(USERS_KEY)) {
+    localStorage.setItem(USERS_KEY, JSON.stringify([]));
+  }
+}
+
+initStorage();
+
+// Email validation
+function validateEmail(email) {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email);
+}
+
+// Hash password (simple - in production use bcrypt)
+function hashPassword(password) {
+  // Simple hash for demo - USE PROPER HASHING IN PRODUCTION
+  let hash = 0;
+  for (let i = 0; i < password.length; i++) {
+    const char = password.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash;
+  }
+  return hash.toString(36);
+}
+
+// Register new user
+async function register(name, email, password) {
+  const users = JSON.parse(localStorage.getItem(USERS_KEY));
+
+  // Check if user exists
+  if (users.find((u) => u.email === email)) {
+    return {
+      success: false,
+      message: "Email already registered",
+    };
+  }
+
+  // Create new user
+  const newUser = {
+    id: Date.now().toString(),
+    name: name,
+    email: email,
+    password: hashPassword(password),
+    createdAt: new Date().toISOString(),
+  };
+
+  users.push(newUser);
+  localStorage.setItem(USERS_KEY, JSON.stringify(users));
+
+  return {
+    success: true,
+    message: "Registration successful",
+  };
+}
+
+// Login user
+async function login(email, password, remember = false) {
+  const users = JSON.parse(localStorage.getItem(USERS_KEY));
+  const user = users.find(
+    (u) => u.email === email && u.password === hashPassword(password)
+  );
+
+  if (!user) {
+    return {
+      success: false,
+      message: "Invalid email or password",
+    };
+  }
+
+  // Create session
+  const session = {
+    userId: user.id,
+    email: user.email,
+    name: user.name,
+    loginTime: new Date().toISOString(),
+    remember: remember,
+  };
+
+  // Store session
+  if (remember) {
+    localStorage.setItem(AUTH_KEY, JSON.stringify(session));
+  } else {
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
+  }
+
+  return {
+    success: true,
+    message: "Login successful",
+    user: { id: user.id, name: user.name, email: user.email },
+  };
+}
+
+// Check if user is authenticated
+function isAuthenticated() {
+  const localAuth = localStorage.getItem(AUTH_KEY);
+  const sessionAuth = sessionStorage.getItem(SESSION_KEY);
+  return !!(localAuth || sessionAuth);
+}
+
+// Get current user
+function getCurrentUser() {
+  const localAuth = localStorage.getItem(AUTH_KEY);
+  const sessionAuth = sessionStorage.getItem(SESSION_KEY);
+  const authData = localAuth || sessionAuth;
+
+  if (authData) {
+    return JSON.parse(authData);
+  }
+  return null;
+}
+
+// Logout user
+function logout() {
+  localStorage.removeItem(AUTH_KEY);
+  sessionStorage.removeItem(SESSION_KEY);
+  window.location.href = "./login.html";
+}
+
+// Redirect after login
+function redirectAfterLogin() {
+  const redirect = sessionStorage.getItem("redirectAfterLogin");
+  sessionStorage.removeItem("redirectAfterLogin");
+  return redirect || "./index.html";
+}
+
+// Update navigation based on auth state
+function updateNavigation() {
+  const user = getCurrentUser();
+
+  // Get elements
+  const authSection = document.getElementById("authSection");
+  const userSection = document.getElementById("userSection");
+  const userWelcome = document.getElementById("userWelcome");
+  const userName = document.getElementById("userName");
+  const userNameMobile = document.getElementById("userNameMobile");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (user) {
+    // User is authenticated
+    // Hide auth buttons (login/signup)
+    if (authSection) authSection.style.display = "none";
+
+    // Show user section
+    if (userSection) userSection.style.display = "flex";
+    if (userWelcome) userWelcome.style.display = "flex";
+
+    // Set user name
+    if (userName) userName.textContent = user.name;
+    if (userNameMobile) userNameMobile.textContent = user.name;
+
+    // Add logout handler (only once)
+    if (logoutBtn && !logoutBtn.dataset.listenerAdded) {
+      logoutBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        // if (confirm("Are you sure you want to logout?")) {
+          logout();
+        // }
+      });
+      logoutBtn.dataset.listenerAdded = "true";
+      lucide.createIcons();
+    }
+  } else {
+    // User is NOT authenticated
+    // Show auth buttons (login/signup)
+    const currentPage = window.location.pathname;
+    const isAuthPage =
+      currentPage.includes("login") || currentPage.includes("signup");
+
+    if (!isAuthPage && authSection) {
+      authSection.style.display = "flex";
+    }
+
+    // Hide user section
+    if (userSection) userSection.style.display = "none";
+    if (userWelcome) userWelcome.style.display = "none";
+  }
+
+  // Re-initialize Lucide icons
+  lucide.createIcons();
+}
+
+// AUTHORIZATION
+const PUBLIC_PAGES = ["index.html", "login.html", "signup.html"];
+
+function isPublicPage() {
+  const currentPath = window.location.pathname;
+  const currentFile = currentPath.split("/").pop() || "index.html";
+  return PUBLIC_PAGES.includes(currentFile);
+}
+
+updateNavigation();
+
+// Prevent infinite redirect loop
+// let redirecting = false;
+
+// Auto-run on every page
+// document.addEventListener("DOMContentLoaded", () => {
+//   // Prevent running multiple times
+//   if (redirecting) return;
+
+//   const isAuth = isAuthenticated();
+//   const isPublic = isPublicPage();
+
+//   console.log("Page Check:", {
+//     currentPage: window.location.pathname,
+//     isAuthenticated: isAuth,
+//     isPublicPage: isPublic,
+//   });
+
+//   // Redirect logic with safety
+//   if (!isAuth && !isPublic) {
+//     // Not authenticated and trying to access protected page
+//     console.log("Redirecting to login...");
+//     redirecting = true;
+//     sessionStorage.setItem("redirectAfterLogin", window.location.pathname);
+//     setTimeout(() => {
+//       window.location.href = "./login.html";
+//     }, 100);
+//     return;
+//   }
+
+//   if (isAuth && isPublic) {
+//     // Authenticated and on login/signup page
+//     console.log("Already logged in, redirecting to home...");
+//     redirecting = true;
+//     const redirect = sessionStorage.getItem("redirectAfterLogin");
+//     sessionStorage.removeItem("redirectAfterLogin");
+//     setTimeout(() => {
+//       window.location.href = redirect || "./index.html";
+//     }, 100);
+//     return;
+//   }
+
+//   // Update navigation (only if not redirecting)
+//   if (!redirecting) {
+//     updateNavigation();
+//   }
+// });
+
+// Toast notification
+function showToast(message, type = "success") {
+  const toast = document.getElementById("toast");
+  if (!toast) return;
+
+  toast.textContent = message;
+  toast.className = `toast show ${type}`;
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3000);
+}
+
 // Mobile Menu Toggle
 const menuToggle = document.getElementById("menuToggle");
 const navLinks = document.getElementById("navLinks");
@@ -23,6 +284,7 @@ const themeToggle = document.getElementById("themeToggle");
 const html = document.documentElement;
 const moonIcon = document.getElementById("moonIcon");
 const sunIcon = document.getElementById("sunIcon");
+const themeText = document.getElementById("themeText");
 
 // Load saved theme immediately (before page renders)
 const savedTheme = localStorage.getItem("theme") || "light";
@@ -30,34 +292,63 @@ html.setAttribute("data-theme", savedTheme);
 
 // Set initial icon visibility
 if (savedTheme === "dark") {
-  moonIcon.classList.add("hidden");
-  sunIcon.classList.add("visible");
-} else {
-  moonIcon.classList.add("visible");
-  sunIcon.classList.add("hidden");
-}
-
-themeToggle.addEventListener("click", (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-
-  const currentTheme = html.getAttribute("data-theme");
-  const newTheme = currentTheme === "light" ? "dark" : "light";
-
-  // Update theme
-  html.setAttribute("data-theme", newTheme);
-  localStorage.setItem("theme", newTheme);
-
-  // Toggle icons
-  if (newTheme === "dark") {
+  if (moonIcon) {
     moonIcon.classList.remove("visible");
     moonIcon.classList.add("hidden");
+  }
+  if (sunIcon) {
     sunIcon.classList.remove("hidden");
     sunIcon.classList.add("visible");
-  } else {
-    sunIcon.classList.remove("visible");
-    sunIcon.classList.add("hidden");
+  }
+  if (themeText) themeText.textContent = "Light Mode";
+} else {
+  if (moonIcon) {
     moonIcon.classList.remove("hidden");
     moonIcon.classList.add("visible");
   }
-});
+  if (sunIcon) {
+    sunIcon.classList.remove("visible");
+    sunIcon.classList.add("hidden");
+  }
+  if (themeText) themeText.textContent = "Dark Mode";
+}
+
+if (themeToggle) {
+  themeToggle.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const currentTheme = html.getAttribute("data-theme");
+    const newTheme = currentTheme === "light" ? "dark" : "light";
+
+    // Update theme
+    html.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+
+    // Toggle icons
+    if (newTheme === "dark") {
+      moonIcon?.classList.remove("visible");
+      moonIcon?.classList.add("hidden");
+      sunIcon?.classList.remove("hidden");
+      sunIcon?.classList.add("visible");
+      if (themeText) themeText.textContent = "Light Mode";
+    } else {
+      sunIcon?.classList.remove("visible");
+      sunIcon?.classList.add("hidden");
+      moonIcon?.classList.remove("hidden");
+      moonIcon?.classList.add("visible");
+      if (themeText) themeText.textContent = "Dark Mode";
+    }
+  });
+}
+
+// Toast Notification Function
+function showToast(message, type = "success") {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.className = `toast show ${type}`;
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3000);
+}

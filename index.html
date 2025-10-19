@@ -573,6 +573,9 @@
       .contact-cta {
         text-align: center;
         margin-top: 2rem;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
       }
 
       /* Responsive */
@@ -616,6 +619,10 @@
         .contact-grid {
           grid-template-columns: 1fr;
         }
+
+        .contact-cta {
+          flex-direction: column;
+      }
 
         .footer-grid {
           grid-template-columns: 1fr;
@@ -668,24 +675,55 @@
         </button>
 
         <ul class="nav-links" id="navLinks">
+          <!-- User Welcome (Mobile Only - Shows at top when authenticated) -->
+          <li class="user-welcome" id="userWelcome">
+            <div class="user-welcome-content">
+              <span class="welcome-text">Welcome,</span>
+              <span class="user-name-display" id="userNameMobile"></span>
+            </div>
+          </li>
+
+          <!-- Navigation Links -->
           <li><a href="./index.html">Home</a></li>
-          <li><a href="#about">About</a></li>
+          <li><a href="./booking.html">Consultation</a></li>
           <li><a href="./projects.html">Projects</a></li>
+          <li><a href="./products.html">Products</a></li>
           <li><a href="./services.html">Services</a></li>
-          <li><a href="#contact">Contact</a></li>
+
+          <!-- Theme Toggle -->
           <li>
             <button
               class="theme-toggle"
               id="themeToggle"
               aria-label="Toggle theme"
             >
-              <span class="theme-icon moon-icon" id="moonIcon">
-                <i data-lucide="moon"></i>
-              </span>
-              <span class="theme-icon sun-icon" id="sunIcon">
-                <i data-lucide="sun"></i>
-              </span>
+              <i
+                data-lucide="moon"
+                class="theme-icon moon-icon"
+                id="moonIcon"
+              ></i>
+              <i data-lucide="sun" class="theme-icon sun-icon" id="sunIcon"></i>
               <span class="theme-text" id="themeText">Dark Mode</span>
+            </button>
+          </li>
+
+          <!-- Auth Section - Login/Signup (Hidden when authenticated) -->
+          <li class="auth-section" id="authSection" style="display: none">
+            <a href="./login.html" class="btn btn-outline auth-btn">
+              <i data-lucide="log-in"></i>
+              Login
+            </a>
+            <a href="./sign-up.html" class="btn btn-primary auth-btn">
+              <i data-lucide="user-plus"></i>
+              Sign Up
+            </a>
+          </li>
+
+          <!-- User Section - Name & Logout (Hidden when not authenticated) -->
+          <li class="user-section" id="userSection" style="display: none">
+            <button class="btn btn-primary" id="logoutBtn">
+              <i data-lucide="log-out"></i>
+              Logout
             </button>
           </li>
         </ul>
@@ -695,17 +733,18 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
       <div class="hero-content">
-        <h1>Transform Your Space Into Something Extraordinary</h1>
+        <h1>Designing Warm & Cozy Spaces That Feel Like Home</h1>
         <p>
-          Award-winning interior design studio creating timeless, elegant spaces
-          that reflect your unique style and personality
+          At DreamSpace, we craft intimate interiors for modern families and
+          couples — blending comfort, style, and personality to make every
+          corner truly yours.
         </p>
         <div class="btn-group">
           <a href="#contact" class="btn btn-primary">
-            Get Started
+            Start Your Dream Space
             <i data-lucide="arrow-right" class="lucide"></i>
           </a>
-          <a href="./projects.html" class="btn btn-outline"> View Projects </a>
+          <a href="./projects.html" class="btn btn-outline"> View Our Work </a>
         </div>
       </div>
     </section>
@@ -715,48 +754,27 @@
       <div class="container">
         <div class="section-header">
           <h2>About Us</h2>
-          <p>Crafting beautiful interiors since 2010</p>
+          <p>Designing warm, cozy spaces for modern families and couples</p>
         </div>
+
         <div class="about-grid">
           <div class="about-image">
             <img
               src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800"
-              alt="About Us"
+              alt="DreamSpace Interior Design"
             />
           </div>
+
           <div class="about-text">
-            <h3>Creating Spaces That Tell Your Story</h3>
+            <h3>Turning Houses Into Dream Homes</h3>
             <p>
-              At DreamSpace, we believe that great design goes beyond
-              aesthetics. It's about creating environments that enhance your
-              daily life, reflect your personality, and stand the test of time.
-            </p>
-            <p>
-              Our team of experienced designers works closely with each client
-              to understand their vision, lifestyle, and needs. We blend
-              creativity with functionality to deliver spaces that are not only
-              beautiful but also practical and comfortable.
-            </p>
-            <p>
-              From concept to completion, we handle every detail with precision
-              and care, ensuring a seamless design experience that exceeds your
-              expectations.
+              At DreamSpace, we bring warmth and personality into every corner.
+              Our focus is on creating interiors that feel inviting, functional,
+              and uniquely yours. Whether it’s a compact apartment or a cozy
+              family home, our designs blend comfort with timeless elegance.
             </p>
 
-            <div class="stats-grid">
-              <div class="stat-item">
-                <h4>500+</h4>
-                <p>Projects Completed</p>
-              </div>
-              <div class="stat-item">
-                <h4>15+</h4>
-                <p>Awards Won</p>
-              </div>
-              <div class="stat-item">
-                <h4>100%</h4>
-                <p>Client Satisfaction</p>
-              </div>
-            </div>
+            <a href="./about.html" class="btn btn-outline">Learn More</a>
           </div>
         </div>
       </div>
@@ -767,33 +785,36 @@
       <div class="container">
         <div class="section-header">
           <h2>Featured Projects</h2>
-          <p>Explore our latest interior design masterpieces</p>
+          <p>Discover our cozy, timeless interiors crafted for modern living</p>
         </div>
+
         <div class="projects-grid">
           <div class="project-card">
             <div class="project-image">
               <img
                 src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800"
-                alt="Modern Living Room"
+                alt="Cozy Living Room"
               />
             </div>
             <div class="project-content">
-              <h3>Modern Minimalist Living</h3>
-              <p class="project-meta">Contemporary • Residential</p>
+              <h3>Cozy Modern Living Room</h3>
+              <p class="project-meta">Warm • Family Home</p>
             </div>
           </div>
+
           <div class="project-card">
             <div class="project-image">
               <img
                 src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800"
-                alt="Luxury Bedroom"
+                alt="Serene Bedroom"
               />
             </div>
             <div class="project-content">
-              <h3>Luxury Master Suite</h3>
-              <p class="project-meta">Classic • Residential</p>
+              <h3>Serene Couple’s Retreat</h3>
+              <p class="project-meta">Minimal • Bedroom Design</p>
             </div>
           </div>
+
           <div class="project-card">
             <div class="project-image">
               <img
@@ -802,22 +823,24 @@
               />
             </div>
             <div class="project-content">
-              <h3>Gourmet Kitchen</h3>
-              <p class="project-meta">Modern • Residential</p>
+              <h3>Heart of the Home Kitchen</h3>
+              <p class="project-meta">Functional • Family Kitchen</p>
             </div>
           </div>
+
           <div class="project-card">
             <div class="project-image">
               <img
                 src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800"
-                alt="Office Space"
+                alt="Workspace Design"
               />
             </div>
             <div class="project-content">
-              <h3>Executive Office</h3>
-              <p class="project-meta">Contemporary • Commercial</p>
+              <h3>Calm & Focused Workspace</h3>
+              <p class="project-meta">Contemporary • Home Office</p>
             </div>
           </div>
+
           <div class="project-card">
             <div class="project-image">
               <img
@@ -826,10 +849,11 @@
               />
             </div>
             <div class="project-content">
-              <h3>Elegant Dining Space</h3>
-              <p class="project-meta">Traditional • Residential</p>
+              <h3>Family Dining Haven</h3>
+              <p class="project-meta">Classic • Dining Space</p>
             </div>
           </div>
+
           <div class="project-card">
             <div class="project-image">
               <img
@@ -838,8 +862,8 @@
               />
             </div>
             <div class="project-content">
-              <h3>Spa-Like Bathroom</h3>
-              <p class="project-meta">Modern • Residential</p>
+              <h3>Relaxing Spa-Inspired Bath</h3>
+              <p class="project-meta">Modern • Bathroom Design</p>
             </div>
           </div>
         </div>
@@ -847,59 +871,63 @@
     </section>
 
     <!-- Before & After -->
-    <section class="before-after">
+    <section class="before-after" id="before-after">
       <div class="container">
         <div class="section-header">
           <h2>Before & After Transformations</h2>
-          <p>See the incredible transformations we've created</p>
+          <p>See how we turn everyday spaces into warm, welcoming homes</p>
         </div>
+
         <div class="ba-grid">
           <div class="ba-card">
             <div class="ba-images">
               <div class="ba-image-wrapper">
                 <span class="ba-label">Before</span>
                 <img
-                  src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800"
-                  alt="Before"
+                  src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800"
+                  alt="Before Living Room"
                 />
               </div>
               <div class="ba-image-wrapper">
                 <span class="ba-label">After</span>
                 <img
-                  src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800"
-                  alt="After"
+                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800"
+                  alt="After Living Room"
                 />
               </div>
             </div>
             <div class="ba-content">
-              <h3>Downtown Loft Renovation</h3>
+              <h3>Living Room Makeover</h3>
               <p>
-                Complete transformation of a dated space into a modern,
-                light-filled sanctuary.
+                We refreshed a dull, cluttered space into a bright and cozy
+                family living area — warm tones, soft lighting, and personal
+                touches.
               </p>
             </div>
           </div>
+
           <div class="ba-card">
             <div class="ba-images">
               <div class="ba-image-wrapper">
                 <span class="ba-label">Before</span>
                 <img
-                  src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800"
-                  alt="Before"
+                  src="https://images.unsplash.com/photo-1520880867055-1e30d1cb001c?w=800"
+                  alt="Before Kitchen"
                 />
               </div>
               <div class="ba-image-wrapper">
                 <span class="ba-label">After</span>
                 <img
-                  src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800"
-                  alt="After"
+                  src="https://images.unsplash.com/photo-1601049676869-702ea24cfd38?w=800"
+                  alt="After Kitchen"
                 />
               </div>
             </div>
             <div class="ba-content">
-              <h3>Kitchen Remodel</h3>
+              <h3>Family Kitchen Refresh</h3>
               <p>
-                From cramped and outdated to an open, functional chef's dream.
+                Transformed a small, outdated kitchen into an open and inviting
+                cooking space — designed for togetherness and daily comfort.
               </p>
             </div>
           </div>
@@ -952,8 +980,9 @@
       <div class="container">
         <div class="section-header">
           <h2>What Our Clients Say</h2>
-          <p>Don't just take our word for it</p>
+          <p>Real stories from families who trusted DreamSpace</p>
         </div>
+
         <div class="testimonials-grid">
           <div class="testimonial-card">
             <div class="stars">
@@ -964,22 +993,23 @@
               <i data-lucide="star" fill="#fbbf24"></i>
             </div>
             <p class="testimonial-text">
-              "DreamSpace transformed our house into a home. Their attention to
-              detail and creative vision exceeded all our expectations. We
-              couldn't be happier!"
+              "DreamSpace turned our new apartment in Manipal into a warm, cozy
+              home. Every corner reflects our lifestyle perfectly. The team was
+              friendly and understood exactly what we wanted."
             </p>
             <div class="testimonial-author">
               <img
-                src="https://i.pravatar.cc/150?img=1"
-                alt="Sarah Johnson"
+                src="https://i.pravatar.cc/150?img=47"
+                alt="Ananya Rao"
                 class="author-image"
               />
               <div class="author-info">
-                <h4>Sarah Johnson</h4>
-                <p>Homeowner, Brooklyn</p>
+                <h4>Ananya Rao</h4>
+                <p>Homeowner, Manipal</p>
               </div>
             </div>
           </div>
+
           <div class="testimonial-card">
             <div class="stars">
               <i data-lucide="star" fill="#fbbf24"></i>
@@ -989,22 +1019,23 @@
               <i data-lucide="star" fill="#fbbf24"></i>
             </div>
             <p class="testimonial-text">
-              "Professional, creative, and a pleasure to work with. They
-              understood our style perfectly and delivered a stunning office
-              space that our team loves."
+              "Our café in Udupi got a complete makeover thanks to DreamSpace.
+              The rustic and modern blend attracts more customers now. Their
+              design sense is simply brilliant!"
             </p>
             <div class="testimonial-author">
               <img
-                src="https://i.pravatar.cc/150?img=12"
-                alt="Michael Chen"
+                src="https://i.pravatar.cc/150?img=35"
+                alt="Rahul Shetty"
                 class="author-image"
               />
               <div class="author-info">
-                <h4>Michael Chen</h4>
-                <p>CEO, Tech Startup</p>
+                <h4>Rahul Shetty</h4>
+                <p>Café Owner, Udupi</p>
               </div>
             </div>
           </div>
+
           <div class="testimonial-card">
             <div class="stars">
               <i data-lucide="star" fill="#fbbf24"></i>
@@ -1014,19 +1045,19 @@
               <i data-lucide="star" fill="#fbbf24"></i>
             </div>
             <p class="testimonial-text">
-              "From start to finish, the experience was flawless. They handled
-              everything and kept us informed every step of the way. Highly
-              recommend!"
+              "We wanted a compact, minimal design for our 2BHK in Karkala. The
+              DreamSpace team made it look spacious and calming with their color
+              palette and layout ideas. Highly satisfied!"
             </p>
             <div class="testimonial-author">
               <img
-                src="https://i.pravatar.cc/150?img=5"
-                alt="Emily Rodriguez"
+                src="https://i.pravatar.cc/150?img=15"
+                alt="Divya & Arjun"
                 class="author-image"
               />
               <div class="author-info">
-                <h4>Emily Rodriguez</h4>
-                <p>Homeowner, Manhattan</p>
+                <h4>Divya & Arjun</h4>
+                <p>Couple, Karkala</p>
               </div>
             </div>
           </div>
@@ -1039,8 +1070,9 @@
       <div class="container">
         <div class="section-header">
           <h2>Frequently Asked Questions</h2>
-          <p>Everything you need to know about working with us</p>
+          <p>Here’s everything you might want to know before getting started</p>
         </div>
+
         <div class="faq-container">
           <div class="faq-item">
             <div class="faq-question">
@@ -1049,40 +1081,29 @@
             </div>
             <div class="faq-answer">
               <p>
-                Project timelines vary depending on scope and complexity. A
-                single room redesign typically takes 4-6 weeks, while full home
-                renovations can take 3-6 months. We'll provide a detailed
-                timeline during our initial consultation.
+                It depends on the size and scope of your space. A single room
+                setup or makeover usually takes around 4–6 weeks, while complete
+                home interiors may take 2–4 months. We’ll share a clear timeline
+                after our first site visit.
               </p>
             </div>
           </div>
+
           <div class="faq-item">
             <div class="faq-question">
-              <span>What is your design fee structure?</span>
+              <span>What kind of projects do you take up?</span>
               <i data-lucide="chevron-down"></i>
             </div>
             <div class="faq-answer">
               <p>
-                We offer flexible pricing options including hourly rates, flat
-                fees, and percentage-based fees. Our initial consultation is
-                complimentary, and we'll provide a detailed proposal based on
-                your specific project needs.
+                We design cozy homes, apartments, and small commercial spaces
+                such as cafés or offices. Most of our projects are for nuclear
+                families or couples who want a warm, modern living space that
+                feels personal.
               </p>
             </div>
           </div>
-          <div class="faq-item">
-            <div class="faq-question">
-              <span>Do you work with existing furniture?</span>
-              <i data-lucide="chevron-down"></i>
-            </div>
-            <div class="faq-answer">
-              <p>
-                Absolutely! We're happy to incorporate your existing pieces into
-                the new design. We'll assess what works with the new aesthetic
-                and suggest updates or additions as needed.
-              </p>
-            </div>
-          </div>
+
           <div class="faq-item">
             <div class="faq-question">
               <span>Can you work within my budget?</span>
@@ -1090,23 +1111,37 @@
             </div>
             <div class="faq-answer">
               <p>
-                Yes! We work with various budgets and will always be transparent
-                about costs. We'll help you prioritize and make smart decisions
-                to get the most impact from your investment.
+                Absolutely! We understand that every family has different needs
+                and priorities. We’ll plan materials, furnishings, and finishes
+                according to your budget while maintaining quality and style.
               </p>
             </div>
           </div>
+
           <div class="faq-item">
             <div class="faq-question">
-              <span>Do you handle all aspects of the renovation?</span>
+              <span>Do you work with local suppliers and contractors?</span>
               <i data-lucide="chevron-down"></i>
             </div>
             <div class="faq-answer">
               <p>
-                We offer full-service project management, coordinating with
-                contractors, ordering materials, and overseeing installation.
-                You'll have a single point of contact throughout the entire
-                process.
+                Yes, we collaborate with trusted local vendors and craftsmen in
+                Manipal–Udupi to ensure smooth execution and timely delivery.
+                This also helps us keep costs fair and support local businesses.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <span>Can I include my existing furniture or décor?</span>
+              <i data-lucide="chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>
+                Definitely! If you already have furniture or décor that holds
+                sentimental value, we’ll happily integrate it into the new
+                design. It’s about creating a home that feels truly yours.
               </p>
             </div>
           </div>
@@ -1118,8 +1153,11 @@
     <section class="contact" id="contact">
       <div class="container">
         <div class="section-header">
-          <h2>Ready to Transform Your Space?</h2>
-          <p>Let's start creating your dream interior today</p>
+          <h2>Let's Design Your Dream Space</h2>
+          <p>
+            We’re just a call or visit away — reach out and let’s begin your
+            transformation
+          </p>
         </div>
         <div class="contact-grid">
           <div class="contact-item">
@@ -1152,6 +1190,7 @@
           <a href="./booking.html" class="btn btn-primary"
             >Schedule a Consultation</a
           >
+          <a href="./contact.html" class="btn btn-outline">Send Us a Message</a>
         </div>
       </div>
     </section>
@@ -1182,11 +1221,12 @@
         <div class="footer-section">
           <h3>Quick Links</h3>
           <ul>
-            <li><a href="./about.html">About Us</a></li>
+            <li><a href="./booking.html">Schedule Consultation</a></li>
             <li><a href="./projects.html">Projects</a></li>
-            <li><a href="./booking.html">Book Consultation</a></li>
-            <li><a href="./feedback.html">Feedback</a></li>
+            <li><a href="./products.html">Products</a></li>
+            <li><a href="./about.html">About Us</a></li>
             <li><a href="./contact.html">Contact Us</a></li>
+            <li><a href="./feedback.html">Share Feedback</a></li>
           </ul>
         </div>
         <div class="footer-section">
@@ -1256,17 +1296,6 @@
           }
         });
       });
-
-      // Toast Notification Function
-      function showToast(message, type = "success") {
-        const toast = document.getElementById("toast");
-        toast.textContent = message;
-        toast.className = `toast show ${type}`;
-
-        setTimeout(() => {
-          toast.classList.remove("show");
-        }, 3000);
-      }
 
       // Newsletter form
       document

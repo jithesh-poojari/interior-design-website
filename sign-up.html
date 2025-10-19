@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up - DreamSpace</title>
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="stylesheet" href="css/auth.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body>
+    <div class="auth-page">
+      <div class="auth-container">
+        <div class="auth-card">
+          <div class="auth-header">
+            <h1>Create Account</h1>
+            <p>Join DreamSpace to get started</p>
+          </div>
+
+          <form class="auth-form" id="signupForm">
+            <div class="form-field">
+              <label for="name">Full Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="John Doe"
+                required
+                autocomplete="name"
+              />
+              <span class="error-message" id="nameError"></span>
+            </div>
+
+            <div class="form-field">
+              <label for="email">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="you@example.com"
+                required
+                autocomplete="email"
+              />
+              <span class="error-message" id="emailError"></span>
+            </div>
+
+            <div class="form-field">
+              <label for="password">Password</label>
+              <div class="input-wrapper">
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="••••••••"
+                  required
+                  autocomplete="new-password"
+                />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  id="togglePassword"
+                  aria-label="Toggle password visibility"
+                >
+                  <i data-lucide="eye" id="eyeIcon"></i>
+                  <i data-lucide="eye-off" id="eyeOffIcon" style="display: none"></i>
+                </button>
+              </div>
+              <span class="error-message" id="passwordError"></span>
+              <div style="margin-top: 0.5rem">
+                <div id="passwordStrength" style="font-size: 0.8125rem; color: hsl(var(--muted-foreground))">
+                  Password strength: <span id="strengthText">Weak</span>
+                </div>
+                <div style="height: 4px; background: hsl(var(--muted)); border-radius: 2px; margin-top: 0.25rem; overflow: hidden">
+                  <div id="strengthBar" style="height: 100%; width: 0%; background: hsl(0 84% 60%); transition: all 0.3s ease"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="confirmPassword">Confirm Password</label>
+              <div class="input-wrapper">
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="••••••••"
+                  required
+                  autocomplete="new-password"
+                />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  id="toggleConfirmPassword"
+                  aria-label="Toggle password visibility"
+                >
+                  <i data-lucide="eye" id="eyeIcon2"></i>
+                  <i data-lucide="eye-off" id="eyeOffIcon2" style="display: none"></i>
+                </button>
+              </div>
+              <span class="error-message" id="confirmPasswordError"></span>
+            </div>
+
+            <div class="checkbox-wrapper">
+              <input type="checkbox" id="terms" name="terms" required />
+              <label for="terms" style="font-size: 0.875rem">
+                I agree to the <a href="#" class="forgot-link">Terms of Service</a> and
+                <a href="#" class="forgot-link">Privacy Policy</a>
+              </label>
+            </div>
+
+            <button type="submit" class="btn-auth primary" id="signupBtn">
+              Create Account
+              <i data-lucide="user-plus"></i>
+            </button>
+          </form>
+
+          <div class="auth-footer">
+            Already have an account?
+            <a href="./login.html">Sign in</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="./script.js"></script>
+    <script>
+      // Password toggle for both fields
+      const togglePassword = document.getElementById("togglePassword");
+      const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
+      const passwordInput = document.getElementById("password");
+      const confirmPasswordInput = document.getElementById("confirmPassword");
+
+      togglePassword.addEventListener("click", () => {
+        togglePasswordVisibility(passwordInput, "eyeIcon", "eyeOffIcon");
+      });
+
+      toggleConfirmPassword.addEventListener("click", () => {
+        togglePasswordVisibility(confirmPasswordInput, "eyeIcon2", "eyeOffIcon2");
+      });
+
+      function togglePasswordVisibility(input, eyeId, eyeOffId) {
+        const type = input.type === "password" ? "text" : "password";
+        input.type = type;
+        
+        const eyeIcon = document.getElementById(eyeId);
+        const eyeOffIcon = document.getElementById(eyeOffId);
+        
+        if (type === "text") {
+          eyeIcon.style.display = "none";
+          eyeOffIcon.style.display = "block";
+        } else {
+          eyeIcon.style.display = "block";
+          eyeOffIcon.style.display = "none";
+        }
+        lucide.createIcons();
+      }
+
+      // Password strength indicator
+      passwordInput.addEventListener("input", () => {
+        const strength = checkPasswordStrength(passwordInput.value);
+        updatePasswordStrength(strength);
+      });
+
+      function checkPasswordStrength(password) {
+        let strength = 0;
+        if (password.length >= 8) strength++;
+        if (password.length >= 12) strength++;
+        if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+        if (/\d/.test(password)) strength++;
+        if (/[^a-zA-Z\d]/.test(password)) strength++;
+        return strength;
+      }
+
+      function updatePasswordStrength(strength) {
+        const strengthBar = document.getElementById("strengthBar");
+        const strengthText = document.getElementById("strengthText");
+        
+        const levels = [
+          { text: "Very Weak", width: "20%", color: "hsl(0 84% 60%)" },
+          { text: "Weak", width: "40%", color: "hsl(25 95% 53%)" },
+          { text: "Fair", width: "60%", color: "hsl(45 93% 47%)" },
+          { text: "Good", width: "80%", color: "hsl(142 76% 36%)" },
+          { text: "Strong", width: "100%", color: "hsl(142 76% 36%)" }
+        ];
+        
+        const level = levels[strength] || levels[0];
+        strengthBar.style.width = level.width;
+        strengthBar.style.background = level.color;
+        strengthText.textContent = level.text;
+        strengthText.style.color = level.color;
+      }
+
+      // Signup form submission
+      document.getElementById("signupForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+        const terms = document.getElementById("terms").checked;
+
+        // Validate
+        let hasError = false;
+
+        if (name.length < 2) {
+          showFieldError("name", "Name must be at least 2 characters");
+          hasError = true;
+        }
+
+        if (!validateEmail(email)) {
+          showFieldError("email", "Please enter a valid email address");
+          hasError = true;
+        }
+
+        if (password.length < 8) {
+          showFieldError("password", "Password must be at least 8 characters");
+          hasError = true;
+        }
+
+        if (password !== confirmPassword) {
+          showFieldError("confirmPassword", "Passwords do not match");
+          hasError = true;
+        }
+
+        if (!terms) {
+          showToast("Please accept the terms and conditions", "error");
+          hasError = true;
+        }
+
+        if (hasError) return;
+
+        // Register
+        const result = await register(name, email, password);
+        
+        if (result.success) {
+          showToast("Account created successfully! Redirecting...", "success");
+          setTimeout(() => {
+            window.location.href = "./login.html";
+          }, 1500);
+        } else {
+          showToast(result.message, "error");
+        }
+      });
+
+      // Field validation helpers
+      function showFieldError(fieldId, message) {
+        const input = document.getElementById(fieldId);
+        const error = document.getElementById(fieldId + "Error");
+        input.classList.add("error");
+        error.textContent = message;
+        error.classList.add("show");
+      }
+
+      function clearFieldError(fieldId) {
+        const input = document.getElementById(fieldId);
+        const error = document.getElementById(fieldId + "Error");
+        input.classList.remove("error");
+        error.classList.remove("show");
+      }
+
+      // Clear errors on input
+      document.querySelectorAll(".form-field input").forEach((input) => {
+        input.addEventListener("input", () => {
+          clearFieldError(input.id);
+        });
+      });
+
+      // Redirect if already logged in
+      if (isAuthenticated()) {
+        window.location.href = "./index.html";
+      }
+    </script>
+  </body>
+</html>
