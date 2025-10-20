@@ -1,438 +1,839 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>DreamSpace | Book Consultation</title>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Consultation - DreamSpace</title>
+    <link rel="stylesheet" href="css/globals.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="./script.js"></script>
     <style>
-        :root {
-            --radius: 0.7rem;
-            --background: #f8f4ec;
-            --foreground: #3a2e2a;
-            --card: #ffffff;
-            --primary: #8b5e3c;
-            --primary-foreground: #fffaf2;
-            --secondary: #c6a27e;
-            --accent: #e9d7b9;
-            --muted: #f0e5d8;
-            --muted-foreground: #5a4a3c;
-            --border: #d6c3aa;
-            --input: #fffaf2;
+      /* Booking Page Specific Styles */
+      .booking-container {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 6rem 1.5rem 4rem;
+      }
+
+      .booking-hero {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .booking-hero h1 {
+        font-size: clamp(2rem, 4vw, 2.5rem);
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        color: hsl(var(--foreground));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+      }
+
+      .booking-hero p {
+        color: hsl(var(--muted-foreground));
+        font-size: 1.0625rem;
+      }
+
+      .booking-form {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: calc(var(--radius) * 2);
+        padding: 2.5rem;
+        box-shadow: 0 10px 40px hsla(var(--foreground), 0.08);
+      }
+
+      /* Fieldset Styles */
+      .form-fieldset {
+        border: 1px solid hsl(var(--border));
+        border-radius: calc(var(--radius) * 1.5);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(
+          to bottom,
+          hsl(var(--background)),
+          hsl(var(--background) / 0.5)
+        );
+      }
+
+      .fieldset-legend {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+        font-weight: 700;
+        color: hsl(var(--primary));
+        padding: 0 0.75rem;
+      }
+
+      .fieldset-legend i {
+        width: 20px;
+        height: 20px;
+      }
+
+      .form-fieldset .form-group:last-of-type {
+        margin-bottom: 0;
+      }
+
+      .radio-group-label {
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .radio-group-label:first-of-type {
+        margin-top: 0;
+      }
+      .form-group {
+        margin-bottom: 1rem;
+      }
+
+      .form-group label,
+      .radio-group-label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: hsl(var(--foreground));
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid hsl(var(--border));
+        border-radius: var(--radius);
+        background: hsl(var(--background));
+        color: hsl(var(--foreground));
+        font-size: 0.9375rem;
+        transition: all 0.2s ease;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: hsl(var(--ring));
+        box-shadow: 0 0 0 3px hsl(var(--ring) / 0.1);
+      }
+
+      .form-group input::placeholder {
+        color: hsl(var(--muted-foreground));
+      }
+
+      /* Radio Button Groups as Buttons */
+      .radio-buttons {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .radio-button {
+        position: relative;
+      }
+
+      .radio-button input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .radio-button label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        border: 1px solid hsl(var(--border));
+        border-radius: var(--radius);
+        background: hsl(var(--background));
+        color: hsl(var(--muted-foreground));
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-align: center;
+      }
+
+      .radio-button input[type="radio"]:checked + label {
+        background: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+        border-color: hsl(var(--primary));
+      }
+
+      .radio-button label:hover {
+        background: hsl(var(--muted));
+        border-color: hsl(var(--primary) / 0.5);
+      }
+
+      .radio-button input[type="radio"]:checked + label:hover {
+        background: hsl(var(--primary) / 0.9);
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 50px;
+      }
+
+      .error-message {
+        color: hsl(0 84% 60%);
+        font-size: 0.8125rem;
+        margin-top: 0.375rem;
+        display: none;
+      }
+
+      .error-message.show {
+        display: block;
+      }
+
+      .form-group input.error,
+      .form-group select.error {
+        border-color: hsl(0 84% 60%);
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        justify-content: flex-end;
+      }
+
+      .btn-reset {
+        background: hsl(var(--muted));
+        color: hsl(var(--foreground));
+        border: 1px solid hsl(var(--border));
+      }
+
+      .btn-reset:hover {
+        background: hsl(var(--muted) / 0.7);
+      }
+
+      .btn-submit {
+        background: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+      }
+
+      .btn-submit:hover {
+        background: hsl(var(--primary) / 0.9);
+      }
+
+      .auto-fill-badge {
+        display: none;
+        margin-left: 0.5rem;
+        font-size: 0.75rem;
+        color: hsl(var(--primary));
+        font-weight: 600;
+      }
+
+      /* Responsive */
+      @media (max-width: 640px) {
+        .booking-container{
+          padding: 6rem 1rem 2rem;
+        }
+        .booking-form {
+          padding: 1rem;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .radio-buttons {
+          grid-template-columns: 1fr;
         }
 
-        body {
-            font-family: "Poppins", sans-serif;
-            background: var(--background);
-            color: var(--foreground);
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 700px;
-            margin: 2rem auto 5rem auto;
-        }
-
-        .site-header {
-            background: var(--primary);
-            color: var(--primary-foreground);
-            padding: 1.2rem 0;
-            text-align: center;
-            font-size: 1.8rem;
-            font-weight: 600;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.6rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .hero {
-            text-align: center;
-            padding: 2.5rem 1rem;
-            border-radius: var(--radius);
-            background: linear-gradient(rgba(139, 94, 60, 0.55), rgba(139, 94, 60, 0.55)),
-                url('interior-bg.jpg') center/cover no-repeat;
-            color: #fff;
-            margin-top: 1.5rem;
-            animation: fadeIn 1.5s ease-in;
-        }
-
-        .hero h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .hero p {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        .form {
-            background: var(--card);
-            color: var(--foreground);
-            padding: 2rem;
-            margin-top: 2rem;
-            border-radius: var(--radius);
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
-            animation: slideUp 1s ease-in-out;
-        }
-
-        .form label {
-            display: block;
-            font-weight: 500;
-            margin-top: 1rem;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        input[type="date"],
-        input[type="time"],
-        select {
-            width: 100%;
-            margin-top: 0.4rem;
-            padding: 0.7rem 0.8rem;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            background: var(--input);
-            transition: 0.3s;
-        }
-
-        input:focus,
-        select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(139, 94, 60, 0.25);
-        }
-
-        .fieldset {
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1rem;
-            margin-top: 1.5rem;
-            background: #fdfaf5;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .fieldset legend {
-            font-weight: 600;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .fieldset label {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 500;
-            cursor: pointer;
-        }
-
-        input[type="radio"] {
-            width: 18px;
-            height: 18px;
-            accent-color: var(--primary);
-            cursor: pointer;
-        }
-
-        .btn {
-            background: var(--primary);
-            color: var(--primary-foreground);
-            border: none;
-            padding: 0.8rem 1.6rem;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: 0.3s;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            justify-content: center;
-        }
-
-        .btn:hover {
-            transform: scale(1.05);
-            background: var(--secondary);
-        }
-
-        .btn.secondary {
-            background: var(--accent);
-            color: var(--foreground);
+        textarea {
+          min-height: 100px;
         }
 
         .form-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
-            margin-top: 1.5rem;
+          flex-direction: column-reverse;
         }
 
-        .error-msg {
-            color: red;
-            font-size: 0.85rem;
-            margin-top: 0.2rem;
+        .form-actions button {
+          text-align: center;
+          display: flex;
+          justify-content: center;
         }
-
-        .toast-unique {
-            position: fixed;
-            bottom: 1.5rem;
-            right: 1.5rem;
-            background: var(--primary);
-            color: var(--primary-foreground);
-            padding: 1rem 1.5rem;
-            border-radius: var(--radius);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-            animation: fadeInUp 0.5s ease, fadeOut 0.5s ease 3s;
-            z-index: 1000;
-        }
-
-        .site-footer {
-            text-align: center;
-            padding: 1.5rem 0;
-            background: var(--primary);
-            color: var(--primary-foreground);
-            margin-top: auto;
-            letter-spacing: 0.5px;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                transform: translateY(10px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeOut {
-            to {
-                opacity: 0;
-            }
-        }
-
-        /* small inline SVG icons */
-        .icon {
-            width: 20px;
-            height: 20px;
-            vertical-align: middle;
-        }
+      }
     </style>
-</head>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <header class="top-header">
+      <nav class="nav-container">
+        <a class="logo" href="./index.html">DreamSpace</a>
 
-<body>
-    <header class="site-header">
-        <!-- Home Icon -->
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round">
-            <path d="M3 9L12 2l9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-        </svg>
-        DreamSpace
+        <!-- Menu Toggle with Lucide Icons -->
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+          <i data-lucide="menu" class="menu-icon"></i>
+          <i data-lucide="x" class="close-icon"></i>
+        </button>
+
+        <ul class="nav-links" id="navLinks">
+          <!-- User Welcome (Mobile Only - Shows at top when authenticated) -->
+          <li class="user-welcome" id="userWelcome">
+            <div class="user-welcome-content">
+              <span class="welcome-text">Welcome,</span>
+              <span class="user-name-display" id="userNameMobile"></span>
+            </div>
+          </li>
+
+          <!-- Navigation Links -->
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./booking.html">Consultation</a></li>
+          <li><a href="./projects.html">Projects</a></li>
+          <li><a href="./products.html">Products</a></li>
+          <li><a href="./services.html">Services</a></li>
+
+          <!-- Theme Toggle -->
+          <li>
+            <button
+              class="theme-toggle"
+              id="themeToggle"
+              aria-label="Toggle theme"
+            >
+              <i
+                data-lucide="moon"
+                class="theme-icon moon-icon"
+                id="moonIcon"
+              ></i>
+              <i data-lucide="sun" class="theme-icon sun-icon" id="sunIcon"></i>
+              <span class="theme-text" id="themeText">Dark Mode</span>
+            </button>
+          </li>
+
+          <!-- Auth Section - Login/Signup (Hidden when authenticated) -->
+          <li class="auth-section" id="authSection" style="display: none">
+            <a href="./login.html" class="btn btn-outline auth-btn">
+              <i data-lucide="log-in"></i>
+              Login
+            </a>
+            <a href="./sign-up.html" class="btn btn-primary auth-btn">
+              <i data-lucide="user-plus"></i>
+              Sign Up
+            </a>
+          </li>
+
+          <!-- User Section - Name & Logout (Hidden when not authenticated) -->
+          <li class="user-section" id="userSection" style="display: none">
+            <button class="btn btn-primary" id="logoutBtn">
+              <i data-lucide="log-out"></i>
+              Logout
+            </button>
+          </li>
+        </ul>
+      </nav>
     </header>
 
-    <main class="container booking-page">
-        <section class="hero small">
-            <h1>
-                <!-- Calendar Icon -->
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                </svg>
-                Book a Consultation
-            </h1>
-            <p>Schedule your design session — let’s shape your dream space together.</p>
-        </section>
+    <!-- Main Content -->
+    <main class="booking-container">
+      <div class="booking-hero">
+        <h1>Book a Consultation</h1>
+        <p>
+          Schedule your design session — let's shape your dream space together.
+        </p>
+      </div>
 
-        <form id="bookingForm" class="form" novalidate>
-            <label>Full Name
-                <input id="name" name="name" type="text" placeholder="e.g. Riya Sharma" required>
-                <span class="error-msg" id="errorName"></span>
-            </label>
-            <label>Email
-                <input id="email" name="email" type="email" placeholder="e.g. riya@email.com" required>
-                <span class="error-msg" id="errorEmail"></span>
-            </label>
-            <label>Phone
-                <input id="phone" name="phone" type="tel" placeholder="10-digit number" required>
-                <span class="error-msg" id="errorPhone"></span>
-            </label>
-            <label>Preferred Date
-                <input id="date" name="date" type="date" required>
-                <span class="error-msg" id="errorDate"></span>
-            </label>
-            <label>Preferred Time
-                <input id="time" name="time" type="time" required>
-                <span class="error-msg" id="errorTime"></span>
-            </label>
+      <form class="booking-form" id="bookingForm" novalidate>
+        <!-- Personal Information Fieldset -->
+        <fieldset class="form-fieldset">
+          <legend class="fieldset-legend">
+            <i data-lucide="user"></i>
+            Personal Information
+          </legend>
 
-            <fieldset class="fieldset">
-                <legend>
-                    <!-- Palette Icon -->
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <path
-                            d="M19.4 15A1.65 1.65 0 0 1 18 17h-1a3 3 0 0 0-3 3v1a1.65 1.65 0 0 1-2.6 1.4A9.98 9.98 0 1 1 19.4 15z">
-                        </path>
-                    </svg>
-                    Type of Design
-                </legend>
-                <label><input type="radio" name="designType" value="Home"> Home</label>
-                <label><input type="radio" name="designType" value="Office"> Office</label>
-                <label><input type="radio" name="designType" value="Renovation"> Renovation</label>
-                <span class="error-msg" id="errorDesign"></span>
-            </fieldset>
-
-            <fieldset class="fieldset">
-                <legend>
-                    <!-- Package Icon -->
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path
-                            d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.73z">
-                        </path>
-                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                    </svg>
-                    Additional Services
-                </legend>
-                <label><input type="radio" name="req" value="3D"> 3D Design</label>
-                <label><input type="radio" name="req" value="Furniture"> Custom Furniture</label>
-                <label><input type="radio" name="req" value="Lighting"> Lighting</label>
-                <span class="error-msg" id="errorReq"></span>
-            </fieldset>
-
-            <label>Budget (₹)
-                <select id="budget" name="budget" required>
-                    <option value="">Select your budget range</option>
-                    <option value="50000-100000">₹50,000 - ₹1,00,000</option>
-                    <option value="100000-200000">₹1,00,000 - ₹2,00,000</option>
-                    <option value="200000-300000">₹2,00,000 - ₹3,00,000</option>
-                    <option value="300000+">Above ₹3,00,000</option>
-                </select>
-                <span class="error-msg" id="errorBudget"></span>
+          <div class="form-group">
+            <label for="name">
+              Full Name
+              <span id="autoFilledBadge" class="auto-fill-badge">
+                ✓ Auto-filled
+              </span>
             </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Enter your full name"
+              required
+            />
+            <span class="error-message" id="errorName"></span>
+          </div>
 
-            <div class="form-actions">
-                <button type="reset" class="btn secondary">
-                    <!-- Refresh Icon -->
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="23 4 23 10 17 10"></polyline>
-                        <polyline points="1 20 1 14 7 14"></polyline>
-                        <path d="M3.51 9a9 9 0 0 1 14.13-3.36L23 10"></path>
-                        <path d="M20.49 15a9 9 0 0 1-14.13 3.36L1 14"></path>
-                    </svg>
-                    Reset
-                </button>
-                <button class="btn" type="submit">
-                    <!-- Send Icon -->
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="22" y1="2" x2="11" y2="13"></line>
-                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                    </svg>
-                    Submit
-                </button>
+          <div class="form-group">
+            <label for="email">
+              Email Address
+              <span id="autoFilledEmailBadge" class="auto-fill-badge">
+                ✓ Auto-filled
+              </span>
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="your.email@example.com"
+              required
+            />
+            <span class="error-message" id="errorEmail"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="10-digit mobile number"
+              pattern="[0-9]{10}"
+              maxlength="10"
+              required
+            />
+            <span class="error-message" id="errorPhone"></span>
+          </div>
+        </fieldset>
+
+        <!-- Appointment Details Fieldset -->
+        <fieldset class="form-fieldset">
+          <legend class="fieldset-legend">
+            <i data-lucide="calendar"></i>
+            Appointment Details
+          </legend>
+
+          <div class="form-group">
+            <label for="date">Preferred Date</label>
+            <input type="date" id="date" name="date" required />
+            <span class="error-message" id="errorDate"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="time">Preferred Time</label>
+            <input type="time" id="time" name="time" required />
+            <span class="error-message" id="errorTime"></span>
+          </div>
+        </fieldset>
+
+        <!-- Project Details Fieldset -->
+        <fieldset class="form-fieldset">
+          <legend class="fieldset-legend">
+            <i data-lucide="briefcase"></i>
+            Project Details
+          </legend>
+
+          <div class="radio-group-label">
+            Project Type 
+          </div>
+          <div class="radio-buttons">
+            <div class="radio-button">
+              <input
+                type="radio"
+                id="designHome"
+                name="designType"
+                value="Home"
+                required
+              />
+              <label for="designHome">
+                <i data-lucide="home"></i>
+                Home
+              </label>
             </div>
-        </form>
+            <div class="radio-button">
+              <input
+                type="radio"
+                id="designOffice"
+                name="designType"
+                value="Office"
+                required
+              />
+              <label for="designOffice">
+                <i data-lucide="briefcase"></i>
+                Office
+              </label>
+            </div>
+            <div class="radio-button">
+              <input
+                type="radio"
+                id="designRenovation"
+                name="designType"
+                value="Renovation"
+                required
+              />
+              <label for="designRenovation">
+                <i data-lucide="hammer"></i>
+                Renovation
+              </label>
+            </div>
+          </div>
+          <span class="error-message" id="errorDesign"></span>
+
+          <div class="radio-group-label">
+            Add-on Services 
+          </div>
+          <div class="radio-buttons">
+            <div class="radio-button">
+              <input
+                type="radio"
+                id="addonColor"
+                name="addon"
+                value="Color Consultation"
+                required
+              />
+              <label for="addonColor">
+                <i data-lucide="palette"></i>
+                Color Consultation
+              </label>
+            </div>
+            <div class="radio-button">
+              <input
+                type="radio"
+                id="addonLayout"
+                name="addon"
+                value="Layout Planning"
+                required
+              />
+              <label for="addonLayout">
+                <i data-lucide="layout"></i>
+                Layout Planning
+              </label>
+            </div>
+          </div>
+          <span class="error-message" id="errorService"></span>
+        </fieldset>
+
+        <!-- Additional Information Fieldset -->
+        <fieldset class="form-fieldset">
+          <legend class="fieldset-legend">
+            <i data-lucide="info"></i>
+            Additional Information
+          </legend>
+
+          <div class="form-group">
+            <label for="budget">
+              Budget Range (₹) 
+            </label>
+            <select id="budget" name="budget" required>
+              <option value="">Select your budget range</option>
+              <option value="50000-100000">₹50,000 - ₹1,00,000</option>
+              <option value="100000-200000">₹1,00,000 - ₹2,00,000</option>
+              <option value="200000-300000">₹2,00,000 - ₹3,00,000</option>
+              <option value="300000+">Above ₹3,00,000</option>
+            </select>
+            <span class="error-message" id="errorBudget"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Project Description (Optional)</label>
+            <textarea
+              id="description"
+              name="description"
+              placeholder="Tell us about your space, goals, or style preferences"
+              rows="4"
+            ></textarea>
+          </div>
+        </fieldset>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button type="reset" class="btn btn-reset">
+            <i data-lucide="refresh-cw"></i>
+            Reset
+          </button>
+          <button type="submit" class="btn btn-submit">
+            <i data-lucide="send"></i>
+            Submit Booking
+          </button>
+        </div>
+      </form>
     </main>
 
-    <footer class="site-footer">
-        <p>© 2025 DreamSpace Interiors — Designed with Love 🤎</p>
+    <!-- Footer -->
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h3>DreamSpace</h3>
+          <p>
+            Creating exceptional interiors that inspire and delight since 2010.
+          </p>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook">
+              <i data-lucide="facebook"></i>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <i data-lucide="instagram"></i>
+            </a>
+            <a href="#" aria-label="Twitter">
+              <i data-lucide="twitter"></i>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <i data-lucide="linkedin"></i>
+            </a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="./booking.html">Schedule Consultation</a></li>
+            <li><a href="./projects.html">Projects</a></li>
+            <li><a href="./products.html">Products</a></li>
+            <li><a href="./about.html">About Us</a></li>
+            <li><a href="./contact.html">Contact Us</a></li>
+            <li><a href="./feedback.html">Share Feedback</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Services</h3>
+          <ul>
+            <li><a href="#">Residential Design</a></li>
+            <li><a href="#">Commercial Design</a></li>
+            <li><a href="#">Space Planning</a></li>
+            <li><a href="#">Renovation</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Newsletter</h3>
+          <p>Subscribe for design tips and inspiration</p>
+          <form class="newsletter-form">
+            <div class="form-group">
+              <input
+                type="email"
+                class="form-input"
+                placeholder="Enter your email"
+                required
+              />
+              <button type="submit" class="btn btn-primary">Subscribe</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 DreamSpace Interior Design. All rights reserved.</p>
+      </div>
     </footer>
 
+    <div id="toast" class="toast"></div>
+
     <script>
-        function validateForm() {
-            let valid = true;
-            const name = document.getElementById('name');
-            const email = document.getElementById('email');
-            const phone = document.getElementById('phone');
-            const date = document.getElementById('date');
-            const time = document.getElementById('time');
-            const design = document.querySelector('input[name="designType"]:checked');
-            const req = document.querySelector('input[name="req"]:checked');
-            const budget = document.getElementById('budget');
+      // Auto-fill user data if authenticated
+      document.addEventListener("DOMContentLoaded", () => {
+        const currentUser = getCurrentUser();
 
-            document.querySelectorAll('.error-msg').forEach(e => e.textContent = '');
+        if (currentUser) {
+          // User is authenticated - pre-fill and disable fields
+          const nameField = document.getElementById("name");
+          const emailField = document.getElementById("email");
 
-            if (!name.value.trim()) { document.getElementById('errorName').textContent = "Name is required"; valid = false; }
-            if (!email.value.trim() || !email.value.includes('@')) { document.getElementById('errorEmail').textContent = "Valid email required"; valid = false; }
+          // Pre-fill email (preferred)
+          if (currentUser.email) {
+            emailField.value = currentUser.email;
+            emailField.disabled = true;
+            emailField.style.backgroundColor = "hsl(var(--muted))";
+            emailField.style.cursor = "not-allowed";
+            document.getElementById("autoFilledEmailBadge").style.display =
+              "inline";
+          }
 
-            const phoneValue = phone.value.replace(/\D/g, '');
-            if (!phoneValue || phoneValue.length !== 10) { document.getElementById('errorPhone').textContent = "Enter 10-digit phone number"; valid = false; }
+          // Pre-fill name if available
+          if (currentUser.name) {
+            nameField.value = currentUser.name;
+            nameField.disabled = true;
+            nameField.style.backgroundColor = "hsl(var(--muted))";
+            nameField.style.cursor = "not-allowed";
+            document.getElementById("autoFilledBadge").style.display = "inline";
+          }
 
-            if (!date.value) { document.getElementById('errorDate').textContent = "Select a date"; valid = false; }
-            if (!time.value) { document.getElementById('errorTime').textContent = "Select a time"; valid = false; }
-            if (!design) { document.getElementById('errorDesign').textContent = "Choose design type"; valid = false; }
-            if (!req) { document.getElementById('errorReq').textContent = "Choose additional service"; valid = false; }
-            if (!budget.value) { document.getElementById('errorBudget').textContent = "Select budget"; valid = false; }
+          console.log("Form auto-filled for:", currentUser.name);
+        }
+      });
 
-            return valid;
+      // Form validation
+      function validateForm() {
+        let isValid = true;
+
+        // Clear all errors
+        document
+          .querySelectorAll(".error-message")
+          .forEach((el) => el.classList.remove("show"));
+        document
+          .querySelectorAll(".error")
+          .forEach((el) => el.classList.remove("error"));
+
+        // Phone validation
+        const phone = document.getElementById("phone");
+        const phoneRegex = /^[0-9]{10}$/;
+        if (!phone.value.trim()) {
+          showError("phone", "Please enter your phone number");
+          isValid = false;
+        } else if (!phoneRegex.test(phone.value.replace(/\D/g, ""))) {
+          showError("phone", "Please enter a valid 10-digit phone number");
+          isValid = false;
         }
 
-        function showUniqueToast(message) {
-            const toast = document.createElement('div');
-            toast.className = 'toast-unique';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            setTimeout(() => { toast.remove(); }, 3500);
+        // Date validation
+        const date = document.getElementById("date");
+        const selectedDate = new Date(date.value);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        if (!date.value) {
+          showError("date", "Please select a date");
+          isValid = false;
+        } else if (selectedDate < today) {
+          showError("date", "Please select a future date");
+          isValid = false;
         }
 
-        document.getElementById('bookingForm').addEventListener('submit', e => {
-            e.preventDefault();
-            if (validateForm()) {
-                const userName = document.getElementById('name').value.trim();
-                showUniqueToast(`Hi ${userName}! Your booking request is submitted 🎉`);
-                document.getElementById('bookingForm').reset();
+        // Time validation
+        const time = document.getElementById("time");
+        if (!time.value) {
+          showError("time", "Please select a time");
+          isValid = false;
+        }
+
+        // Design type validation
+        const designType = document.querySelector(
+          'input[name="designType"]:checked'
+        );
+        if (!designType) {
+          showError("Design", "Please select a project type");
+          isValid = false;
+        }
+
+        // Addon validation (NOW REQUIRED)
+        const addon = document.querySelector('input[name="addon"]:checked');
+        if (!addon) {
+          showError("Service", "Please select an add-on service");
+          isValid = false;
+        }
+
+        // Budget validation
+        const budget = document.getElementById("budget");
+        if (!budget.value) {
+          showError("budget", "Please select your budget range");
+          isValid = false;
+        }
+
+        return isValid;
+      }
+
+      function showError(fieldId, message) {
+        const field = document.getElementById(fieldId);
+        const errorEl = document.getElementById("error" + capitalize(fieldId));
+
+        if (field && !field.disabled) field.classList.add("error");
+        if (errorEl) {
+          errorEl.textContent = message;
+          errorEl.classList.add("show");
+        }
+      }
+
+      function capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+      }
+
+      // Phone number formatting (only numbers)
+      document.getElementById("phone").addEventListener("input", function (e) {
+        this.value = this.value.replace(/\D/g, "").slice(0, 10);
+      });
+
+      // Set min date to today
+      const dateInput = document.getElementById("date");
+      const today = new Date().toISOString().split("T")[0];
+      dateInput.setAttribute("min", today);
+
+      // Form submission
+      document.getElementById("bookingForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        if (validateForm()) {
+          const userName = document.getElementById("name").value.trim();
+          const userEmail = document.getElementById("email").value.trim();
+          const userDate = new Date(
+            document.getElementById("date").value
+          ).toLocaleDateString("en-IN");
+          const userTime = document.getElementById("time").value;
+          const designType = document.querySelector(
+            'input[name="designType"]:checked'
+          ).value;
+          const addon = document.querySelector(
+            'input[name="addon"]:checked'
+          ).value;
+          const budget = document.getElementById("budget").value;
+          const description = document
+            .getElementById("description")
+            .value.trim();
+
+          // Prepare booking data
+          const bookingData = {
+            name: userName,
+            email: userEmail,
+            phone: document.getElementById("phone").value,
+            date: document.getElementById("date").value,
+            time: userTime,
+            designType: designType,
+            addon: addon,
+            budget: budget,
+            description: description,
+            bookedAt: new Date().toISOString(),
+            userId: getCurrentUser()?.userId || null,
+          };
+
+          // Store booking (you can save to localStorage or send to backend)
+          const bookings = JSON.parse(
+            localStorage.getItem("dreamspace_bookings") || "[]"
+          );
+          bookings.push(bookingData);
+          localStorage.setItem("dreamspace_bookings", JSON.stringify(bookings));
+
+          console.log("Booking submitted:", bookingData);
+
+          showToast(
+            `Hi ${userName}! Your consultation is booked for ${userDate} at ${userTime}. We'll contact you soon! 🎉`,
+            "success"
+          );
+
+          // Reset form after short delay
+          setTimeout(() => {
+            document.getElementById("bookingForm").reset();
+
+            // Re-apply auto-fill after reset
+            const currentUser = getCurrentUser();
+            if (currentUser) {
+              if (currentUser.email) {
+                document.getElementById("email").value = currentUser.email;
+                document.getElementById("email").disabled = true;
+              }
+              if (currentUser.name) {
+                document.getElementById("name").value = currentUser.name;
+                document.getElementById("name").disabled = true;
+              }
             }
+          }, 2000);
+        }
+      });
+
+      // Reset button
+      document
+        .querySelector('button[type="reset"]')
+        .addEventListener("click", () => {
+          document
+            .querySelectorAll(".error-message")
+            .forEach((el) => el.classList.remove("show"));
+          document
+            .querySelectorAll(".error")
+            .forEach((el) => el.classList.remove("error"));
+
+          // Re-apply auto-fill after reset
+          setTimeout(() => {
+            const currentUser = getCurrentUser();
+            if (currentUser) {
+              if (currentUser.email) {
+                document.getElementById("email").value = currentUser.email;
+                document.getElementById("email").disabled = true;
+              }
+              if (currentUser.name) {
+                document.getElementById("name").value = currentUser.name;
+                document.getElementById("name").disabled = true;
+              }
+            }
+          }, 100);
         });
     </script>
-</body>
-
+  </body>
 </html>

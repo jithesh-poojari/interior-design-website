@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign Up - DreamSpace</title>
-    <link rel="stylesheet" href="globals.css" />
-    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/globals.css" />
+    <link rel="stylesheet" href="css/auth.css" />
     <script src="https://unpkg.com/lucide@latest"></script>
   </head>
   <body>
@@ -62,16 +62,42 @@
                   aria-label="Toggle password visibility"
                 >
                   <i data-lucide="eye" id="eyeIcon"></i>
-                  <i data-lucide="eye-off" id="eyeOffIcon" style="display: none"></i>
+                  <i
+                    data-lucide="eye-off"
+                    id="eyeOffIcon"
+                    style="display: none"
+                  ></i>
                 </button>
               </div>
               <span class="error-message" id="passwordError"></span>
               <div style="margin-top: 0.5rem">
-                <div id="passwordStrength" style="font-size: 0.8125rem; color: hsl(var(--muted-foreground))">
+                <div
+                  id="passwordStrength"
+                  style="
+                    font-size: 0.8125rem;
+                    color: hsl(var(--muted-foreground));
+                  "
+                >
                   Password strength: <span id="strengthText">Weak</span>
                 </div>
-                <div style="height: 4px; background: hsl(var(--muted)); border-radius: 2px; margin-top: 0.25rem; overflow: hidden">
-                  <div id="strengthBar" style="height: 100%; width: 0%; background: hsl(0 84% 60%); transition: all 0.3s ease"></div>
+                <div
+                  style="
+                    height: 4px;
+                    background: hsl(var(--muted));
+                    border-radius: 2px;
+                    margin-top: 0.25rem;
+                    overflow: hidden;
+                  "
+                >
+                  <div
+                    id="strengthBar"
+                    style="
+                      height: 100%;
+                      width: 0%;
+                      background: hsl(0 84% 60%);
+                      transition: all 0.3s ease;
+                    "
+                  ></div>
                 </div>
               </div>
             </div>
@@ -94,7 +120,11 @@
                   aria-label="Toggle password visibility"
                 >
                   <i data-lucide="eye" id="eyeIcon2"></i>
-                  <i data-lucide="eye-off" id="eyeOffIcon2" style="display: none"></i>
+                  <i
+                    data-lucide="eye-off"
+                    id="eyeOffIcon2"
+                    style="display: none"
+                  ></i>
                 </button>
               </div>
               <span class="error-message" id="confirmPasswordError"></span>
@@ -103,7 +133,8 @@
             <div class="checkbox-wrapper">
               <input type="checkbox" id="terms" name="terms" required />
               <label for="terms" style="font-size: 0.875rem">
-                I agree to the <a href="#" class="forgot-link">Terms of Service</a> and
+                I agree to the
+                <a href="#" class="forgot-link">Terms of Service</a> and
                 <a href="#" class="forgot-link">Privacy Policy</a>
               </label>
             </div>
@@ -128,7 +159,9 @@
     <script>
       // Password toggle for both fields
       const togglePassword = document.getElementById("togglePassword");
-      const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
+      const toggleConfirmPassword = document.getElementById(
+        "toggleConfirmPassword"
+      );
       const passwordInput = document.getElementById("password");
       const confirmPasswordInput = document.getElementById("confirmPassword");
 
@@ -137,16 +170,20 @@
       });
 
       toggleConfirmPassword.addEventListener("click", () => {
-        togglePasswordVisibility(confirmPasswordInput, "eyeIcon2", "eyeOffIcon2");
+        togglePasswordVisibility(
+          confirmPasswordInput,
+          "eyeIcon2",
+          "eyeOffIcon2"
+        );
       });
 
       function togglePasswordVisibility(input, eyeId, eyeOffId) {
         const type = input.type === "password" ? "text" : "password";
         input.type = type;
-        
+
         const eyeIcon = document.getElementById(eyeId);
         const eyeOffIcon = document.getElementById(eyeOffId);
-        
+
         if (type === "text") {
           eyeIcon.style.display = "none";
           eyeOffIcon.style.display = "block";
@@ -176,15 +213,15 @@
       function updatePasswordStrength(strength) {
         const strengthBar = document.getElementById("strengthBar");
         const strengthText = document.getElementById("strengthText");
-        
+
         const levels = [
           { text: "Very Weak", width: "20%", color: "hsl(0 84% 60%)" },
           { text: "Weak", width: "40%", color: "hsl(25 95% 53%)" },
           { text: "Fair", width: "60%", color: "hsl(45 93% 47%)" },
           { text: "Good", width: "80%", color: "hsl(142 76% 36%)" },
-          { text: "Strong", width: "100%", color: "hsl(142 76% 36%)" }
+          { text: "Strong", width: "100%", color: "hsl(142 76% 36%)" },
         ];
-        
+
         const level = levels[strength] || levels[0];
         strengthBar.style.width = level.width;
         strengthBar.style.background = level.color;
@@ -193,57 +230,66 @@
       }
 
       // Signup form submission
-      document.getElementById("signupForm").addEventListener("submit", async (e) => {
-        e.preventDefault();
-        
-        const name = document.getElementById("name").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
-        const confirmPassword = document.getElementById("confirmPassword").value;
-        const terms = document.getElementById("terms").checked;
+      document
+        .getElementById("signupForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
 
-        // Validate
-        let hasError = false;
+          const name = document.getElementById("name").value.trim();
+          const email = document.getElementById("email").value.trim();
+          const password = document.getElementById("password").value;
+          const confirmPassword =
+            document.getElementById("confirmPassword").value;
+          const terms = document.getElementById("terms").checked;
 
-        if (name.length < 2) {
-          showFieldError("name", "Name must be at least 2 characters");
-          hasError = true;
-        }
+          // Validate
+          let hasError = false;
 
-        if (!validateEmail(email)) {
-          showFieldError("email", "Please enter a valid email address");
-          hasError = true;
-        }
+          if (name.length < 2) {
+            showFieldError("name", "Name must be at least 2 characters");
+            hasError = true;
+          }
 
-        if (password.length < 8) {
-          showFieldError("password", "Password must be at least 8 characters");
-          hasError = true;
-        }
+          if (!validateEmail(email)) {
+            showFieldError("email", "Please enter a valid email address");
+            hasError = true;
+          }
 
-        if (password !== confirmPassword) {
-          showFieldError("confirmPassword", "Passwords do not match");
-          hasError = true;
-        }
+          if (password.length < 8) {
+            showFieldError(
+              "password",
+              "Password must be at least 8 characters"
+            );
+            hasError = true;
+          }
 
-        if (!terms) {
-          showToast("Please accept the terms and conditions", "error");
-          hasError = true;
-        }
+          if (password !== confirmPassword) {
+            showFieldError("confirmPassword", "Passwords do not match");
+            hasError = true;
+          }
 
-        if (hasError) return;
+          if (!terms) {
+            showToast("Please accept the terms and conditions", "error");
+            hasError = true;
+          }
 
-        // Register
-        const result = await register(name, email, password);
-        
-        if (result.success) {
-          showToast("Account created successfully! Redirecting...", "success");
-          setTimeout(() => {
-            window.location.href = "./login.html";
-          }, 1500);
-        } else {
-          showToast(result.message, "error");
-        }
-      });
+          if (hasError) return;
+
+          // Register
+          const result = await register(name, email, password);
+
+          if (result.success) {
+            showToast(
+              "Account created successfully! Redirecting...",
+              "success"
+            );
+            setTimeout(() => {
+              window.location.href = "./login.html";
+            }, 1500);
+          } else {
+            showToast(result.message, "error");
+          }
+        });
 
       // Field validation helpers
       function showFieldError(fieldId, message) {

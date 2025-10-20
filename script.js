@@ -1,5 +1,5 @@
 // Initialize Lucide icons ONCE
-lucide.createIcons();
+// lucide.createIcons();
 
 // AUTHENTICATION
 

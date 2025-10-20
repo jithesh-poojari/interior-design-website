@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - DreamSpace</title>
-    <link rel="stylesheet" href="globals.css" />
-    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/globals.css" />
+    <link rel="stylesheet" href="css/auth.css" />
     <script src="https://unpkg.com/lucide@latest"></script>
   </head>
   <body>
@@ -49,7 +49,11 @@
                   aria-label="Toggle password visibility"
                 >
                   <i data-lucide="eye" id="eyeIcon"></i>
-                  <i data-lucide="eye-off" id="eyeOffIcon" style="display: none"></i>
+                  <i
+                    data-lucide="eye-off"
+                    id="eyeOffIcon"
+                    style="display: none"
+                  ></i>
                 </button>
               </div>
               <span class="error-message" id="passwordError"></span>
@@ -90,7 +94,7 @@
       togglePassword.addEventListener("click", () => {
         const type = passwordInput.type === "password" ? "text" : "password";
         passwordInput.type = type;
-        
+
         if (type === "text") {
           eyeIcon.style.display = "none";
           eyeOffIcon.style.display = "block";
@@ -102,36 +106,41 @@
       });
 
       // Login form submission
-      document.getElementById("loginForm").addEventListener("submit", async (e) => {
-        e.preventDefault();
-        
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
-        const remember = document.getElementById("remember").checked;
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
 
-        // Validate
-        if (!validateEmail(email)) {
-          showFieldError("email", "Please enter a valid email address");
-          return;
-        }
+          const email = document.getElementById("email").value.trim();
+          const password = document.getElementById("password").value;
+          const remember = document.getElementById("remember").checked;
 
-        if (password.length < 6) {
-          showFieldError("password", "Password must be at least 6 characters");
-          return;
-        }
+          // Validate
+          if (!validateEmail(email)) {
+            showFieldError("email", "Please enter a valid email address");
+            return;
+          }
 
-        // Login
-        const result = await login(email, password, remember);
-        
-        if (result.success) {
-          showToast("Login successful! Redirecting...", "success");
-          setTimeout(() => {
-            window.location.href = "./index.html";
-          }, 1000);
-        } else {
-          showToast(result.message, "error");
-        }
-      });
+          if (password.length < 6) {
+            showFieldError(
+              "password",
+              "Password must be at least 6 characters"
+            );
+            return;
+          }
+
+          // Login
+          const result = await login(email, password, remember);
+
+          if (result.success) {
+            showToast("Login successful! Redirecting...", "success");
+            setTimeout(() => {
+              window.location.href = "./index.html";
+            }, 1000);
+          } else {
+            showToast(result.message, "error");
+          }
+        });
 
       // Field validation helpers
       function showFieldError(fieldId, message) {
