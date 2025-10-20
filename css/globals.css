@@ -473,7 +473,7 @@ footer {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  background: hsl(var(--background));
+  background: hsl(var(--card));
   border: 1px solid hsl(var(--border));
   border-radius: var(--radius);
   padding: 1rem 1.5rem;
@@ -493,22 +493,26 @@ footer {
 
 .toast.success {
   border-left: 3px solid hsl(var(--primary));
-  background: hsl(var(--primary) / 0.05);
+  background: hsl(var(--secondary));
+  color: hsl(var(--foreground));
 }
 
 .toast.error {
   border-left: 3px solid hsl(0 84% 60%);
-  background: hsl(0 84% 60% / 0.05);
+  background: hsl(var(--muted));
+  color: hsl(var(--foreground));
 }
 
 .toast.warning {
-  border-left: 3px solid hsl(var(--accent));
-  background: hsl(var(--accent) / 0.1);
+  border-left: 3px solid hsl(var(--primary));
+  background: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
 }
 
 .toast.info {
-  border-left: 3px solid hsl(var(--muted-foreground));
-  background: hsl(var(--muted) / 0.5);
+  border-left: 3px solid hsl(var(--primary));
+  background: hsl(var(--muted));
+  color: hsl(var(--foreground));
 }
 
 /* Toast icon */
@@ -518,7 +522,6 @@ footer {
   width: 18px;
   height: 18px;
   margin-right: 0.75rem;
-  vertical-align: middle;
 }
 
 .toast.success::before {
@@ -537,12 +540,13 @@ footer {
 
 .toast.warning::before {
   content: "⚠";
+  color: hsl(var(--primary));
   font-size: 1rem;
 }
 
 .toast.info::before {
   content: "ℹ";
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--primary));
   font-size: 1rem;
 }
 

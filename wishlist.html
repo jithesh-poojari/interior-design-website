@@ -3,351 +3,566 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your Wishlist — DreamSpace</title>
-
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@500;700&display=swap"
-      rel="stylesheet"
-    />
-
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-
+    <title>Your Wishlist - DreamSpace</title>
+    <link rel="stylesheet" href="css/globals.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="./script.js"></script>
     <style>
-      :root {
-        --cream: #f9f6f3;
-        --brown: #8b5e3b;
-        --dark-brown: #5c3d2e;
-        --light-cream: #fff7ef;
-        --border: #e8dcd2;
-        --text-muted: #7b5f48;
-        --radius: 1.2rem;
+      /* Wishlist Page Specific Styles */
+      .wishlist-container {
+        margin: 0 auto;
+        padding: 6rem 1.5rem 4rem;
       }
 
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: "Poppins", sans-serif;
-      }
-
-      body {
-        background: var(--cream);
-        color: var(--dark-brown);
-        padding: 60px 20px 40px;
-        min-height: 100vh;
-      }
-
-      header {
+      .wishlist-hero {
         text-align: center;
-        margin-bottom: 35px;
+        margin-bottom: 3rem;
       }
 
-      header h1 {
-        font-family: "Playfair Display", serif;
-        font-size: 3rem;
-        color: var(--brown);
-        margin-bottom: 10px;
-        text-shadow: 2px 2px 4px rgba(139, 94, 59, 0.15);
+      .wishlist-hero h1 {
+        font-size: clamp(2rem, 4vw, 2.5rem);
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        color: hsl(var(--foreground));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
       }
 
-      header p {
-        color: var(--text-muted);
-        font-size: 1rem;
+      .wishlist-hero p {
+        color: hsl(var(--muted-foreground));
+        font-size: 1.0625rem;
         max-width: 700px;
         margin: 0 auto;
       }
 
-      .controls {
+      /* Controls */
+      .wishlist-controls {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2.5rem;
         flex-wrap: wrap;
-        margin-bottom: 25px;
-        gap: 10px;
+        justify-content: space-between;
       }
 
-      .controls select {
-        border: 1px solid var(--border);
-        border-radius: 30px;
-        padding: 8px 15px;
-        font-size: 0.9rem;
+      .controls-group {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .control-select {
+        padding: 0.75rem 1rem;
+        border: 1px solid hsl(var(--border));
+        border-radius: var(--radius);
+        background: hsl(var(--background));
+        color: hsl(var(--foreground));
+        font-size: 0.9375rem;
+        min-width: 200px;
         cursor: pointer;
-        background: var(--light-cream);
-        transition: 0.3s;
-        color: var(--dark-brown);
+        transition: all 0.2s ease;
       }
 
-      .controls select:hover {
-        border-color: var(--brown);
+      .control-select:focus {
+        outline: none;
+        border-color: hsl(var(--ring));
+        box-shadow: 0 0 0 3px hsl(var(--ring) / 0.1);
       }
 
-      .wishlist-container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
-        justify-content: center;
+      .back-link {
+        display: flex;
         align-items: center;
-        margin: 0 auto;
-        max-width: 900px;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background: hsl(var(--muted));
+        color: hsl(var(--foreground));
+        border-radius: var(--radius);
+        text-decoration: none;
+        font-weight: 500;
+        border: 1px solid hsl(var(--border));
+        transition: all 0.2s ease;
       }
 
-      @media (max-width: 768px) {
-        .wishlist-container {
-          grid-template-columns: 1fr;
-        }
+      .back-link:hover {
+        background: hsl(var(--muted) / 0.7);
+      }
 
-        .controls {
-          flex-direction: column;
-          gap: 10px;
-        }
+      /* Wishlist Grid */
+      .wishlist-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
       }
 
       .wishlist-card {
-        background: var(--light-cream);
-        border-radius: var(--radius);
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: calc(var(--radius) * 1.5);
         overflow: hidden;
-        box-shadow: 0 8px 16px rgba(139, 94, 59, 0.15);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border: 1px solid var(--border);
-        width: 100%;
-        position: relative;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
       }
 
       .wishlist-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(139, 94, 59, 0.25);
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px hsla(var(--foreground), 0.1);
+        border-color: hsl(var(--primary));
       }
 
-      .card-header {
+      .wishlist-image-wrapper {
         position: relative;
-        height: 180px;
-        overflow: hidden;
+        width: 100%;
+        height: 240px;
       }
 
-      .wishlist-card img {
+      .wishlist-image {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.4s ease;
+        background: hsl(var(--muted));
       }
 
-      .wishlist-card:hover img {
-        transform: scale(1.05);
-      }
-
-      .card-badge {
+      .wishlist-category {
         position: absolute;
-        top: 10px;
-        right: 10px;
-        background: var(--brown);
-        color: var(--cream);
-        padding: 4px 10px;
-        border-radius: 50px;
+        top: 1rem;
+        right: 1rem;
+        padding: 0.25rem 0.75rem;
+        background: hsl(var(--card) / 0.95);
+        color: hsl(var(--primary));
+        border-radius: calc(var(--radius) * 0.75);
         font-size: 0.75rem;
         font-weight: 600;
+        text-transform: uppercase;
+        backdrop-filter: blur(4px);
       }
 
-      .card-body {
-        padding: 15px;
-      }
-
-      .card-body h3 {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: var(--dark-brown);
-      }
-
-      .card-body p.desc {
-        color: var(--text-muted);
-        font-size: 0.85rem;
-        margin-top: 4px;
-      }
-
-      .card-body .price {
-        font-weight: 700;
-        color: var(--brown);
-        font-size: 1.1rem;
-        margin-top: 6px;
-      }
-
-      .card-footer {
+      .wishlist-content {
+        padding: 1.5rem;
+        flex: 1;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 12px 15px;
-        border-top: 1px solid var(--border);
+        flex-direction: column;
       }
 
-      .view-detail {
-        background: var(--brown);
-        color: var(--cream);
-        border: none;
-        border-radius: 50px;
-        padding: 8px 14px;
-        font-size: 0.85rem;
+      .wishlist-name {
+        font-size: 1.25rem;
         font-weight: 600;
-        cursor: pointer;
-        transition: 0.3s;
+        margin-bottom: 0.5rem;
+        color: hsl(var(--card-foreground));
       }
 
-      .view-detail:hover {
-        background: var(--dark-brown);
+      .wishlist-desc {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.875rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+        flex: 1;
       }
 
-      .remove-btn {
-        background: var(--cream);
-        color: var(--brown);
-        border: 1px solid var(--border);
-        border-radius: 50px;
-        padding: 8px 14px;
-        font-size: 0.85rem;
-        cursor: pointer;
-        transition: 0.3s;
+      .wishlist-price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: hsl(var(--primary));
+        margin-bottom: 1rem;
       }
 
-      .remove-btn:hover {
-        background: var(--border);
+      .wishlist-actions {
+        display: flex;
+        gap: 0.75rem;
       }
 
-      .empty-msg {
+      .btn-view-detail,
+      .btn-remove {
+        flex: 1;
+        justify-content: center;
+      }
+
+      .btn-view-detail {
+        background: hsl(var(--muted));
+        color: hsl(var(--foreground));
+        border: 1px solid hsl(var(--border));
+      }
+
+      .btn-view-detail:hover {
+        background: hsl(var(--muted) / 0.7);
+      }
+
+      .btn-remove {
+        background: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+        border: 1px solid hsl(var(--border));
+      }
+
+      .btn-remove:hover {
+        background: hsl(0 84% 60%);
+        color: white;
+      }
+
+      /* Empty State */
+      .empty-state {
         text-align: center;
-        color: var(--text-muted);
-        margin-top: 30px;
+        padding: 4rem 2rem;
       }
 
-      .toast {
-        visibility: hidden;
-        min-width: 250px;
-        background: var(--brown);
-        color: var(--cream);
-        text-align: center;
-        border-radius: var(--radius);
-        padding: 15px;
-        position: fixed;
-        z-index: 1100;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 0.95rem;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        transition: all 0.3s ease;
+      .empty-state i {
+        width: 80px;
+        height: 80px;
+        color: hsl(var(--muted-foreground));
+        margin-bottom: 1.5rem;
       }
 
-      .toast.show {
-        visibility: visible;
+      .empty-state h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        color: hsl(var(--foreground));
       }
 
+      .empty-state p {
+        color: hsl(var(--muted-foreground));
+        margin-bottom: 2rem;
+      }
+
+      /* Modal */
       .modal {
         display: none;
         position: fixed;
-        z-index: 2000;
+        z-index: 1000;
         left: 0;
         top: 0;
         width: 100%;
         height: 100%;
         background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
         justify-content: center;
         align-items: center;
+        padding: 1rem;
       }
 
       .modal-content {
-        background: var(--light-cream);
-        border-radius: var(--radius);
-        padding: 25px;
-        max-width: 400px;
-        text-align: center;
-        position: relative;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        animation: pop 0.3s ease;
-      }
-
-      @keyframes pop {
-        from {
-          transform: scale(0.8);
-          opacity: 0;
-        }
-
-        to {
-          transform: scale(1);
-          opacity: 1;
-        }
-      }
-
-      .modal-content img {
+        background: hsl(var(--card));
+        border-radius: calc(var(--radius) * 2);
+        padding: 2rem;
+        max-width: 600px;
         width: 100%;
-        border-radius: var(--radius);
-        margin-bottom: 15px;
+        position: relative;
+        box-shadow: 0 20px 60px hsla(var(--foreground), 0.3);
+        animation: modalSlideIn 0.3s ease;
       }
 
-      .close {
+      @keyframes modalSlideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .modal-close {
         position: absolute;
-        top: 10px;
-        right: 18px;
-        font-size: 24px;
+        top: 1rem;
+        right: 1rem;
+        background: hsl(var(--muted));
+        border: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
         cursor: pointer;
-        color: var(--brown);
-        transition: 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
       }
 
-      .close:hover {
-        color: var(--dark-brown);
+      .modal-close:hover {
+        background: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+      }
+
+      .modal-image {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: var(--radius);
+        margin-bottom: 1.5rem;
+      }
+
+      .modal-category {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        background: hsl(var(--primary) / 0.15);
+        color: hsl(var(--primary));
+        border-radius: calc(var(--radius) * 0.75);
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+
+      .modal-name {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: hsl(var(--foreground));
+      }
+
+      .modal-desc {
+        color: hsl(var(--muted-foreground));
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      }
+
+      .modal-price {
+        font-size: 2rem;
+        font-weight: 700;
+        color: hsl(var(--primary));
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .wishlist-controls {
+          flex-direction: column;
+        }
+
+        .controls-group {
+          flex-direction: column;
+          width: 100%;
+        }
+
+        .control-select,
+        .back-link {
+          width: 100%;
+        }
+
+        .wishlist-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .wishlist-actions {
+          flex-direction: column;
+        }
+
+        .modal-content {
+          padding: 1.5rem;
+        }
       }
     </style>
   </head>
-
   <body>
-    <header>
-      <h1>💖 Your Wishlist</h1>
-      <p>
-        Save the designs that inspire you. We’ll use your wishlist to bring your
-        dream interiors to life.
-      </p>
+    <!-- Navigation -->
+    <header class="top-header">
+      <nav class="nav-container">
+        <a class="logo" href="./index.html">DreamSpace</a>
+
+        <!-- Menu Toggle with Lucide Icons -->
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+          <i data-lucide="menu" class="menu-icon"></i>
+          <i data-lucide="x" class="close-icon"></i>
+        </button>
+
+        <ul class="nav-links" id="navLinks">
+          <!-- User Welcome (Mobile Only - Shows at top when authenticated) -->
+          <li class="user-welcome" id="userWelcome">
+            <div class="user-welcome-content">
+              <span class="welcome-text">Welcome,</span>
+              <span class="user-name-display" id="userNameMobile"></span>
+            </div>
+          </li>
+
+          <!-- Navigation Links -->
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./booking.html">Consultation</a></li>
+          <li><a href="./projects.html">Projects</a></li>
+          <li><a href="./products.html">Products</a></li>
+          <li><a href="./services.html">Services</a></li>
+
+          <!-- Theme Toggle -->
+          <li>
+            <button
+              class="theme-toggle"
+              id="themeToggle"
+              aria-label="Toggle theme"
+            >
+              <i
+                data-lucide="moon"
+                class="theme-icon moon-icon"
+                id="moonIcon"
+              ></i>
+              <i data-lucide="sun" class="theme-icon sun-icon" id="sunIcon"></i>
+              <span class="theme-text" id="themeText">Dark Mode</span>
+            </button>
+          </li>
+
+          <!-- Auth Section - Login/Signup (Hidden when authenticated) -->
+          <li class="auth-section" id="authSection" style="display: none">
+            <a href="./login.html" class="btn btn-outline auth-btn">
+              <i data-lucide="log-in"></i>
+              Login
+            </a>
+            <a href="./sign-up.html" class="btn btn-primary auth-btn">
+              <i data-lucide="user-plus"></i>
+              Sign Up
+            </a>
+          </li>
+
+          <!-- User Section - Name & Logout (Hidden when not authenticated) -->
+          <li class="user-section" id="userSection" style="display: none">
+            <button class="btn btn-primary" id="logoutBtn">
+              <i data-lucide="log-out"></i>
+              Logout
+            </button>
+          </li>
+        </ul>
+      </nav>
     </header>
 
-    <div class="controls">
-      <select id="sortSelect">
-        <option value="default">Sort By: Default</option>
-        <option value="name-asc">Name: A → Z</option>
-        <option value="name-desc">Name: Z → A</option>
-        <option value="price-asc">Price: Low → High</option>
-        <option value="price-desc">Price: High → Low</option>
-      </select>
+    <!-- Main Content -->
+    <main class="wishlist-container">
+      <div class="wishlist-hero">
+        <h1>Your Wishlist</h1>
+        <p>
+          Save the designs that inspire you. We'll use your wishlist to bring
+          your dream interiors to life.
+        </p>
+      </div>
 
-      <select id="categorySelect">
-        <option value="all">All Categories</option>
-        <option value="Furniture">Furniture</option>
-        <option value="Lighting">Lighting</option>
-        <option value="Decor">Decor</option>
-      </select>
-    </div>
+      <!-- Controls -->
+      <div class="wishlist-controls">
+        <div class="controls-group">
+          <select id="sortSelect" class="control-select">
+            <option value="default">Sort By: Default</option>
+            <option value="name-asc">Name: A → Z</option>
+            <option value="name-desc">Name: Z → A</option>
+            <option value="price-asc">Price: Low → High</option>
+            <option value="price-desc">Price: High → Low</option>
+          </select>
 
-    <div class="wishlist-container" id="wishlistContainer"></div>
-    <p class="empty-msg" id="emptyMsg" style="display: none">
-      Your wishlist is empty — start adding favourites!
-    </p>
-    <div class="toast" id="toast"></div>
+          <select id="categorySelect" class="control-select">
+            <option value="all">All Categories</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Lighting">Lighting</option>
+            <option value="Decor">Decor</option>
+          </select>
+        </div>
 
-    <!-- Modal -->
+        <a href="./products.html" class="back-link">
+          <i data-lucide="arrow-left"></i>
+          Back to Products
+        </a>
+      </div>
+
+      <!-- Wishlist Grid -->
+      <div class="wishlist-grid" id="wishlistContainer"></div>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="emptyState" style="display: none">
+        <i data-lucide="heart-off"></i>
+        <h3>Your Wishlist is Empty</h3>
+        <p>Start adding your favorite products to see them here</p>
+        <a href="./products.html" class="btn btn-primary">
+          <i data-lucide="shopping-bag"></i>
+          Browse Products
+        </a>
+      </div>
+    </main>
+
+    <!-- Detail Modal -->
     <div id="detailModal" class="modal">
       <div class="modal-content">
-        <span class="close">&times;</span>
-        <img id="modalImg" src="images/placeholder.png" alt="Preview image" />
-        <h2 id="modalName">Item Name</h2>
-        <p id="modalDesc"></p>
-        <p class="price" id="modalPrice"></p>
+        <button class="modal-close">
+          <i data-lucide="x"></i>
+        </button>
+        <img
+          id="modalImg"
+          src="images/placeholder.png"
+          alt="Preview"
+          class="modal-image"
+        />
+        <span class="modal-category" id="modalCategory">Category</span>
+        <h2 class="modal-name" id="modalName">Item Name</h2>
+        <p class="modal-desc" id="modalDesc"></p>
+        <p class="modal-price" id="modalPrice"></p>
       </div>
     </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h3>DreamSpace</h3>
+          <p>
+            Creating exceptional interiors that inspire and delight since 2010.
+          </p>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook">
+              <i data-lucide="facebook"></i>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <i data-lucide="instagram"></i>
+            </a>
+            <a href="#" aria-label="Twitter">
+              <i data-lucide="twitter"></i>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <i data-lucide="linkedin"></i>
+            </a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="./booking.html">Schedule Consultation</a></li>
+            <li><a href="./projects.html">Projects</a></li>
+            <li><a href="./products.html">Products</a></li>
+            <li><a href="./wishlist.html">Products Wishlist</a></li>
+            <li><a href="./about.html">About Us</a></li>
+            <li><a href="./contact.html">Contact Us</a></li>
+            <li><a href="./feedback.html">Share Feedback</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Services</h3>
+          <ul>
+            <li><a href="#">Residential Design</a></li>
+            <li><a href="#">Commercial Design</a></li>
+            <li><a href="#">Space Planning</a></li>
+            <li><a href="#">Renovation</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Newsletter</h3>
+          <p>Subscribe for design tips and inspiration</p>
+          <form class="newsletter-form">
+            <div class="form-group">
+              <input
+                type="email"
+                class="form-input"
+                placeholder="Enter your email"
+                required
+              />
+              <button type="submit" class="btn btn-primary">Subscribe</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 DreamSpace Interior Design. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <div id="toast" class="toast"></div>
 
     <script>
       const STORAGE_KEY = "wishlist";
       const wishlistContainer = document.getElementById("wishlistContainer");
-      const emptyMsg = document.getElementById("emptyMsg");
+      const emptyState = document.getElementById("emptyState");
       const sortSelect = document.getElementById("sortSelect");
       const categorySelect = document.getElementById("categorySelect");
-      const toast = document.getElementById("toast");
       const detailModal = document.getElementById("detailModal");
 
       let wishlist = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
@@ -370,43 +585,61 @@
 
         wishlistContainer.innerHTML = "";
         if (filtered.length === 0) {
-          emptyMsg.style.display = "block";
+          emptyState.style.display = "block";
+          wishlistContainer.style.display = "none";
         } else {
-          emptyMsg.style.display = "none";
+          emptyState.style.display = "none";
+          wishlistContainer.style.display = "grid";
           filtered.forEach((item, index) => {
             wishlistContainer.innerHTML += `
-          <div class="wishlist-card">
-            <div class="card-header">
-              <img src="${item.img || "images/placeholder.png"}" alt="${
+              <div class="wishlist-card">
+                <div class="wishlist-image-wrapper">
+                  <img src="${item.img || "images/placeholder.png"}" alt="${
               item.name
-            }">
-              <div class="card-badge">${item.category}</div>
-            </div>
-            <div class="card-body">
-              <h3>${item.name}</h3>
-              <p class="desc">${item.desc}</p>
-              <p class="price">${item.price}</p>
-            </div>
-            <div class="card-footer">
-              <button class="view-detail" onclick="viewDetail(${index})">View Detail</button>
-              <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
-            </div>
-          </div>`;
+            }" class="wishlist-image" />
+                  <span class="wishlist-category">${item.category}</span>
+                </div>
+                <div class="wishlist-content">
+                  <h3 class="wishlist-name">${item.name}</h3>
+                  <p class="wishlist-desc">${item.desc}</p>
+                  <p class="wishlist-price">${item.price}</p>
+                  <div class="wishlist-actions">
+                    <button class="btn btn-view-detail view-detail" data-index="${index}">
+                      <i data-lucide="eye"></i>
+                      View Detail
+                    </button>
+                    <button class="btn btn-remove remove-btn" data-index="${index}">
+                      <i data-lucide="trash-2"></i>
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              </div>
+            `;
+          });
+
+          // Re-initialize Lucide icons
+          lucide.createIcons();
+
+          // Add event listeners
+          document.querySelectorAll(".view-detail").forEach((btn) => {
+            btn.addEventListener("click", () => viewDetail(btn.dataset.index));
+          });
+
+          document.querySelectorAll(".remove-btn").forEach((btn) => {
+            btn.addEventListener("click", () => removeItem(btn.dataset.index));
           });
         }
+
+        // Re-initialize Lucide icons for empty state
+        lucide.createIcons();
       }
 
       function removeItem(index) {
         const removed = wishlist.splice(index, 1);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(wishlist));
-        showToast(`${removed[0].name} removed.`);
+        showToast(`${removed[0].name} removed from wishlist`, "success");
         renderWishlist();
-      }
-
-      function showToast(message) {
-        toast.textContent = message;
-        toast.classList.add("show");
-        setTimeout(() => toast.classList.remove("show"), 2500);
       }
 
       function viewDetail(index) {
@@ -416,11 +649,15 @@
         document.getElementById("modalName").textContent = item.name;
         document.getElementById("modalDesc").textContent = item.desc;
         document.getElementById("modalPrice").textContent = item.price;
+        document.getElementById("modalCategory").textContent = item.category;
         detailModal.style.display = "flex";
+        lucide.createIcons();
       }
 
-      document.querySelector(".close").onclick = () =>
-        (detailModal.style.display = "none");
+      document.querySelector(".modal-close").onclick = () => {
+        detailModal.style.display = "none";
+      };
+
       window.onclick = (e) => {
         if (e.target === detailModal) detailModal.style.display = "none";
       };

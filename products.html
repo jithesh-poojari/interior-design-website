@@ -3,200 +3,241 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Elegant Interiors</title>
-
+    <title>Products - DreamSpace</title>
+    <link rel="stylesheet" href="css/globals.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="./script.js"></script>
     <style>
-      :root {
-        --radius: 0.65rem;
-        --background: #f9f6f3;
-        --foreground: #3b2a1a;
-        --card: #fff7f0;
-        --card-foreground: #3b2a1a;
-        --primary: #8b5e3b;
-        --primary-foreground: #fff7f0;
-        --secondary: #a27650;
-        --secondary-foreground: #fff7f0;
-        --muted: #d6c3af;
-        --muted-foreground: #3b2a1a;
-        --border: #c8b49a;
-        --input: #fff7f0;
-        --shadow: rgba(0, 0, 0, 0.1);
+      /* Products Page Specific Styles */
+      .products-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 6rem 1.5rem 4rem;
       }
 
-      body {
-        font-family: "Segoe UI", sans-serif;
-        background: var(--background);
-        color: var(--foreground);
-        margin: 0;
-        padding: 0;
-        scroll-behavior: smooth;
+      .products-hero {
+        text-align: center;
+        margin-bottom: 3rem;
       }
 
-      .navbar {
-        background: var(--primary);
-        color: var(--primary-foreground);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 40px;
-        box-shadow: 0 4px 10px var(--shadow);
-      }
-
-      .navbar h2 {
-        margin: 0;
-        font-size: 1.4rem;
-      }
-
-      .navbar .right {
+      .products-hero h1 {
+        font-size: clamp(2rem, 4vw, 2.5rem);
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        color: hsl(var(--foreground));
         display: flex;
         align-items: center;
-        gap: 20px;
+        justify-content: center;
+        gap: 0.75rem;
       }
 
-      .navbar .right span {
-        margin-left: 15px;
-        font-weight: bold;
+      .products-hero p {
+        color: hsl(var(--muted-foreground));
+        font-size: 1.0625rem;
+        max-width: 800px;
+        margin: 0 auto;
       }
 
-      .navbar .right #wishlist-link {
-        background: var(--card);
-        color: var(--foreground);
-        border: none;
-        padding: 6px 12px;
-        border-radius: var(--radius);
-        cursor: pointer;
-        font-weight: bold;
-        text-decoration: none;
-      }
-
-      .navbar .right #wishlist-link:hover {
-        background: var(--secondary);
-        color: var(--secondary-foreground);
-      }
-
-      .title {
-        margin: 30px 40px 10px;
-        font-size: 1.8rem;
-        color: var(--foreground);
-      }
-
-      .subtitle {
-        margin: 0 40px;
-        color: var(--muted);
-        font-size: 1rem;
-      }
-
-      .top-controls {
-        margin: 30px 40px;
+      /* Filters & Search */
+      .products-controls {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2.5rem;
         flex-wrap: wrap;
-        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
       }
 
-      .top-controls select,
-      .top-controls input {
-        padding: 10px;
+      .filters-group {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .filter-select {
+        padding: 0.75rem 1rem;
+        border: 1px solid hsl(var(--border));
         border-radius: var(--radius);
-        border: 1px solid var(--border);
-        font-size: 1rem;
-        width: 250px;
-        background: var(--input);
-        color: var(--foreground);
+        background: hsl(var(--background));
+        color: hsl(var(--foreground));
+        font-size: 0.9375rem;
+        min-width: 180px;
+        cursor: pointer;
+        transition: all 0.2s ease;
       }
 
-      /* Product grid */
+      .filter-select:focus {
+        outline: none;
+        border-color: hsl(var(--ring));
+        box-shadow: 0 0 0 3px hsl(var(--ring) / 0.1);
+      }
+
+      .search-wrapper {
+        position: relative;
+        flex: 1;
+        max-width: 400px;
+      }
+
+      .search-wrapper .search-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: hsl(var(--muted-foreground));
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 0.75rem 1rem 0.75rem 3rem;
+        border: 1px solid hsl(var(--border));
+        border-radius: var(--radius);
+        background: hsl(var(--background));
+        color: hsl(var(--foreground));
+        font-size: 0.9375rem;
+        transition: all 0.2s ease;
+      }
+
+      .search-input:focus {
+        outline: none;
+        border-color: hsl(var(--ring));
+        box-shadow: 0 0 0 3px hsl(var(--ring) / 0.1);
+      }
+
+      .wishlist-link {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+        border-radius: var(--radius);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+
+      .wishlist-link:hover {
+        background: hsl(var(--primary) / 0.9);
+      }
+
+      .wishlist-badge {
+        background: hsl(var(--background));
+        color: hsl(var(--primary));
+        padding: 0.125rem 0.5rem;
+        border-radius: 12px;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+        margin-left: auto;
+      }
+
+      /* Product Grid */
       .product-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 30px;
-        margin: 40px;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
       }
 
-      .card {
-        background: var(--card);
-        color: var(--card-foreground);
-        border-radius: var(--radius);
-        box-shadow: 0 4px 10px var(--shadow);
-        transition: 0.3s;
+      .product-card {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: calc(var(--radius) * 1.5);
+        overflow: hidden;
+        transition: all 0.3s ease;
         display: flex;
         flex-direction: column;
-        overflow: hidden;
       }
 
-      .card:hover {
-        transform: translateY(-5px);
+      .product-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px hsla(var(--foreground), 0.1);
+        border-color: hsl(var(--primary));
       }
 
-      .card img {
+      .product-image {
         width: 100%;
-        height: 220px;
+        height: 240px;
         object-fit: cover;
-        background: var(--card);
+        background: hsl(var(--muted));
       }
 
-      .card-content {
-        padding: 20px;
-        flex-grow: 1;
-      }
-
-      .card-content h4 {
-        margin: 0 0 10px;
-        color: var(--foreground);
-      }
-
-      .card-content p.price {
-        color: var(--primary);
-        font-weight: bold;
-        font-size: 1.1rem;
-        margin: 0 0 10px;
-      }
-
-      .card-content p.desc {
-        font-size: 0.9rem;
-        color: var(--muted);
-        margin-bottom: 20px;
-      }
-
-      .buttons {
+      .product-content {
+        padding: 1.5rem;
+        flex: 1;
         display: flex;
-        justify-content: space-between;
-        padding: 10px 20px 20px;
+        flex-direction: column;
       }
 
-      .buttons button {
-        background: var(--primary);
-        color: var(--primary-foreground);
-        border: none;
-        padding: 8px 16px;
-        border-radius: var(--radius);
-        cursor: pointer;
-        transition: 0.3s;
+      .product-category {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        background: hsl(var(--primary) / 0.15);
+        color: hsl(var(--primary));
+        border-radius: calc(var(--radius) * 0.75);
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.75rem;
+        width: fit-content;
       }
 
-      .buttons button:hover {
-        background: var(--secondary);
-        color: var(--secondary-foreground);
+      .product-name {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: hsl(var(--card-foreground));
       }
 
-      /* Footer */
-      .footer {
-        background: var(--primary);
-        color: var(--primary-foreground);
-        text-align: center;
-        padding: 20px;
-        font-size: 0.95rem;
-        margin-top: 40px;
-        position: relative;
+      .product-desc {
+        color: hsl(var(--muted-foreground));
+        font-size: 0.875rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+        flex: 1;
       }
 
-      .footer span {
-        color: var(--secondary);
-        font-weight: bold;
+      .product-price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: hsl(var(--primary));
+        margin-bottom: 1rem;
       }
 
-      /* Quick View Modal */
+      .product-actions {
+        display: flex;
+        gap: 0.75rem;
+      }
+
+      .btn-quick-view,
+      .btn-wishlist {
+        justify-content: center;
+        flex: 1;
+      }
+
+      .btn-quick-view {
+        background: hsl(var(--muted));
+        color: hsl(var(--foreground));
+        border: 1px solid hsl(var(--border));
+      }
+
+      .btn-quick-view:hover {
+        background: hsl(var(--muted) / 0.7);
+      }
+
+      .btn-wishlist {
+        background: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+      }
+
+      .btn-wishlist:hover {
+        background: hsl(var(--primary) / 0.9);
+      }
+
+      /* Modal */
       .modal {
         display: none;
         position: fixed;
@@ -205,171 +246,320 @@
         top: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
         justify-content: center;
         align-items: center;
+        padding: 1rem;
       }
 
       .modal-content {
-        background: var(--card);
-        border-radius: var(--radius);
-        padding: 20px;
-        max-width: 500px;
-        width: 90%;
+        background: hsl(var(--card));
+        border-radius: calc(var(--radius) * 2);
+        padding: 2rem;
+        max-width: 600px;
+        width: 100%;
         position: relative;
-        color: var(--card-foreground);
+        box-shadow: 0 20px 60px hsla(var(--foreground), 0.3);
+        animation: modalSlideIn 0.3s ease;
       }
 
-      .modal-content img {
+      @keyframes modalSlideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: hsl(var(--muted));
+        border: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      .modal-close:hover {
+        background: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+      }
+
+      .modal-image {
         width: 100%;
-        height: 250px;
+        height: 300px;
         object-fit: cover;
         border-radius: var(--radius);
+        margin-bottom: 1.5rem;
       }
 
-      .close-modal {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        font-size: 1.2rem;
-        cursor: pointer;
-        background: none;
-        border: none;
-        color: var(--primary);
-        font-weight: bold;
+      .modal-category {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        background: hsl(var(--primary) / 0.15);
+        color: hsl(var(--primary));
+        border-radius: calc(var(--radius) * 0.75);
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
       }
 
-      /* Toast */
-      .toast {
-        visibility: hidden;
-        min-width: 250px;
-        background-color: var(--primary);
-        color: var(--primary-foreground);
-        text-align: center;
-        border-radius: var(--radius);
-        padding: 16px;
-        position: fixed;
-        z-index: 2000;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 1rem;
+      .modal-name {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: hsl(var(--foreground));
       }
 
-      .toast.show {
-        visibility: visible;
-        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      .modal-desc {
+        color: hsl(var(--muted-foreground));
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
       }
 
-      @keyframes fadein {
-        from {
-          bottom: 0;
-          opacity: 0;
+      .modal-price {
+        font-size: 2rem;
+        font-weight: 700;
+        color: hsl(var(--primary));
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .products-controls {
+          flex-direction: column;
+          align-items: stretch;
         }
 
-        to {
-          bottom: 30px;
-          opacity: 1;
-        }
-      }
-
-      @keyframes fadeout {
-        from {
-          bottom: 30px;
-          opacity: 1;
+        .filters-group {
+          flex-direction: column;
         }
 
-        to {
-          bottom: 0;
-          opacity: 0;
+        .filter-select,
+        .search-wrapper {
+          width: 100%;
+          max-width: none;
         }
-      }
 
-      /* Back to Top */
-      .back-top {
-        position: fixed;
-        bottom: 60px;
-        right: 30px;
-        background: var(--primary);
-        color: var(--primary-foreground);
-        border: none;
-        padding: 10px 15px;
-        border-radius: var(--radius);
-        cursor: pointer;
-        display: none;
-        z-index: 100;
-      }
+        .product-grid {
+          grid-template-columns: 1fr;
+        }
 
-      .back-top:hover {
-        background: var(--secondary);
-        color: var(--secondary-foreground);
-      }
+        .product-actions {
+          flex-direction: column;
+        }
 
-      /* Clock */
-      .clock {
-        font-weight: bold;
-        font-size: 1rem;
+        .modal-content {
+          padding: 1.5rem;
+        }
       }
     </style>
   </head>
-
   <body>
-    <!-- Navbar -->
-    <nav class="navbar">
-      <h2>🏠 DreamSpace</h2>
-      <div class="right">
-        <span class="clock" id="clock">00:00:00</span>
-        <a href="wishlist.html" id="wishlist-link"
-          >Wishlist (<span id="wishlist-count">0</span>)</a
-        >
+    <!-- Navigation -->
+    <header class="top-header">
+      <nav class="nav-container">
+        <a class="logo" href="./index.html">DreamSpace</a>
+
+        <!-- Menu Toggle with Lucide Icons -->
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+          <i data-lucide="menu" class="menu-icon"></i>
+          <i data-lucide="x" class="close-icon"></i>
+        </button>
+
+        <ul class="nav-links" id="navLinks">
+          <!-- User Welcome (Mobile Only - Shows at top when authenticated) -->
+          <li class="user-welcome" id="userWelcome">
+            <div class="user-welcome-content">
+              <span class="welcome-text">Welcome,</span>
+              <span class="user-name-display" id="userNameMobile"></span>
+            </div>
+          </li>
+
+          <!-- Navigation Links -->
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./booking.html">Consultation</a></li>
+          <li><a href="./projects.html">Projects</a></li>
+          <li><a href="./products.html">Products</a></li>
+          <li><a href="./services.html">Services</a></li>
+
+          <!-- Theme Toggle -->
+          <li>
+            <button
+              class="theme-toggle"
+              id="themeToggle"
+              aria-label="Toggle theme"
+            >
+              <i
+                data-lucide="moon"
+                class="theme-icon moon-icon"
+                id="moonIcon"
+              ></i>
+              <i data-lucide="sun" class="theme-icon sun-icon" id="sunIcon"></i>
+              <span class="theme-text" id="themeText">Dark Mode</span>
+            </button>
+          </li>
+
+          <!-- Auth Section - Login/Signup (Hidden when authenticated) -->
+          <li class="auth-section" id="authSection" style="display: none">
+            <a href="./login.html" class="btn btn-outline auth-btn">
+              <i data-lucide="log-in"></i>
+              Login
+            </a>
+            <a href="./sign-up.html" class="btn btn-primary auth-btn">
+              <i data-lucide="user-plus"></i>
+              Sign Up
+            </a>
+          </li>
+
+          <!-- User Section - Name & Logout (Hidden when not authenticated) -->
+          <li class="user-section" id="userSection" style="display: none">
+            <button class="btn btn-primary" id="logoutBtn">
+              <i data-lucide="log-out"></i>
+              Logout
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <!-- Main Content -->
+    <main class="products-container">
+      <div class="products-hero">
+        <h1>Our Product Collection</h1>
+        <p>
+          A curated showcase of timeless furniture, lighting, and décor —
+          exclusively crafted for elegant living.
+        </p>
       </div>
-    </nav>
 
-    <h3 class="title">Explore Our Signature Interior Collection</h3>
-    <p class="subtitle">
-      A curated showcase of timeless furniture, lighting, and décor —
-      exclusively crafted for elegant brown & cream living.
-    </p>
+      <!-- Controls -->
+      <div class="products-controls">
+        <div class="filters-group">
+          <select id="categoryFilter" class="filter-select">
+            <option value="All">All Categories</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Lighting">Lighting</option>
+            <option value="Decor">Decor</option>
+          </select>
 
-    <!-- Controls -->
-    <div class="top-controls">
-      <select id="categoryFilter">
-        <option value="All">All Categories</option>
-        <option value="Furniture">Furniture</option>
-        <option value="Lighting">Lighting</option>
-        <option value="Decor">Decor</option>
-      </select>
-      <input
-        type="text"
-        id="searchInput"
-        placeholder="Search your dream interior..."
-      />
-    </div>
+          <div class="search-wrapper">
+            <i data-lucide="search" class="search-icon"></i>
+            <input
+              type="text"
+              id="searchInput"
+              class="search-input"
+              placeholder="Search products..."
+            />
+          </div>
+        </div>
 
-    <!-- Product Grid -->
-    <div class="product-grid" id="products"></div>
+        <a href="./wishlist.html" class="wishlist-link">
+          <i data-lucide="heart"></i>
+          Wishlist
+          <span class="wishlist-badge" id="wishlist-count">0</span>
+        </a>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="product-grid" id="products"></div>
+    </main>
 
     <!-- Quick View Modal -->
     <div class="modal" id="modal">
       <div class="modal-content">
-        <button class="close-modal" id="closeModal">&times;</button>
-        <img id="modalImg" src="./images/placeholder.png" alt="Product Preview" />
-        <h4 id="modalName">Product Name</h4>
-        <p id="modalDesc"></p>
-        <p id="modalPrice"></p>
+        <button class="modal-close" id="closeModal">
+          <i data-lucide="x"></i>
+        </button>
+        <img
+          id="modalImg"
+          src="./images/placeholder.svg"
+          alt="Product Preview"
+          class="modal-image"
+        />
+        <span class="modal-category" id="modalCategory">Category</span>
+        <h2 class="modal-name" id="modalName">Product Name</h2>
+        <p class="modal-desc" id="modalDesc"></p>
+        <p class="modal-price" id="modalPrice"></p>
       </div>
     </div>
 
-    <!-- Toast -->
-    <div class="toast" id="toast">Added to Wishlist 💖</div>
-
-    <!-- Back to Top -->
-    <button class="back-top" id="backTop">↑ Top</button>
-
     <!-- Footer -->
-    <footer class="footer">
-      © 2025 <span>Elegant Interiors</span> — Designed by our Team
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h3>DreamSpace</h3>
+          <p>
+            Creating exceptional interiors that inspire and delight since 2010.
+          </p>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook">
+              <i data-lucide="facebook"></i>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <i data-lucide="instagram"></i>
+            </a>
+            <a href="#" aria-label="Twitter">
+              <i data-lucide="twitter"></i>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <i data-lucide="linkedin"></i>
+            </a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="./booking.html">Schedule Consultation</a></li>
+            <li><a href="./projects.html">Projects</a></li>
+            <li><a href="./products.html">Products</a></li>
+            <li><a href="./wishlist.html">Products Wishlist</a></li>
+            <li><a href="./about.html">About Us</a></li>
+            <li><a href="./contact.html">Contact Us</a></li>
+            <li><a href="./feedback.html">Share Feedback</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Services</h3>
+          <ul>
+            <li><a href="#">Residential Design</a></li>
+            <li><a href="#">Commercial Design</a></li>
+            <li><a href="#">Space Planning</a></li>
+            <li><a href="#">Renovation</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Newsletter</h3>
+          <p>Subscribe for design tips and inspiration</p>
+          <form class="newsletter-form">
+            <div class="form-group">
+              <input
+                type="email"
+                class="form-input"
+                placeholder="Enter your email"
+                required
+              />
+              <button type="submit" class="btn btn-primary">Subscribe</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 DreamSpace Interior Design. All rights reserved.</p>
+      </div>
     </footer>
+
+    <div id="toast" class="toast"></div>
 
     <script>
       const products = [
@@ -377,85 +567,85 @@
           name: "Modern Sofa Set",
           category: "Furniture",
           price: "₹35,000",
-          desc: "Handpicked — premium finish; blends with brown & cream interiors.",
-          img: "./images/pic1.png",
+          desc: "Handpicked premium finish sofa that blends perfectly with brown & cream interiors.",
+          img: "./images/modern-sofa-set.png",
         },
         {
           name: "Teak Dining Table",
           category: "Furniture",
           price: "₹45,000",
-          desc: "6-seater teak table with high gloss finish.",
-          img: "./images/picc2.png",
+          desc: "6-seater teak table with high gloss finish and elegant design.",
+          img: "./images/teak-dining-table.png",
         },
         {
           name: "Wall Art Decor",
           category: "Decor",
           price: "₹5,000",
-          desc: "Abstract canvas art with subtle earthy tones.",
-          img: "./images/pic3.png",
+          desc: "Abstract canvas art with subtle earthy tones for modern homes.",
+          img: "./images/wall-art-decor.png",
         },
         {
           name: "Pendant Lights",
           category: "Lighting",
           price: "₹8,000",
-          desc: "Pendant lights adding cozy golden hue.",
-          img: "./images/pic4.png",
+          desc: "Beautiful pendant lights adding cozy golden ambiance.",
+          img: "./images/pendant-lights.png",
         },
         {
           name: "Classic Armchair",
           category: "Furniture",
           price: "₹22,000",
-          desc: "Velvet texture with carved wooden legs.",
-          img: "./images/pic5.png",
+          desc: "Velvet texture armchair with carved wooden legs.",
+          img: "./images/classic-armchair.png",
         },
         {
           name: "Floor Rug",
           category: "Decor",
           price: "₹7,000",
           desc: "Soft woven rug in neutral cream shades.",
-          img: "./images/pic6.png",
+          img: "./images/floor-rug.png",
         },
         {
           name: "Wooden Bookshelf",
           category: "Furniture",
           price: "₹18,000",
           desc: "Tall organizer with smooth teak finish.",
-          img: "./images/pic7.png",
+          img: "./images/wooden-bookshelf.png",
         },
         {
           name: "Decor Vase Set",
           category: "Decor",
           price: "₹3,500",
           desc: "Handcrafted vases for elegant table setup.",
-          img: "./images/pic8.png",
+          img: "./images/decor-vase-set.png",
         },
         {
           name: "King Size Bed",
           category: "Furniture",
           price: "₹55,000",
           desc: "Solid wood frame with modern comfort design.",
-          img: "./images/pic9.png",
+          img: "./images/king-size-bed.png",
         },
         {
           name: "Curtain Set",
           category: "Decor",
           price: "₹4,200",
           desc: "Brown and beige shades with soft texture.",
-          img: "./images/pic10.png",
+          img: "./images/curtain-set.png",
         },
         {
           name: "Wall Mirror",
           category: "Decor",
           price: "₹6,000",
           desc: "Rounded mirror with bronze border frame.",
-          img: "./images/pic11.png",
+          img: "./images/wall-mirror.png",
         },
         {
           name: "Indoor Plant Pot",
           category: "Decor",
           price: "₹2,500",
           desc: "Ceramic pot ideal for indoor décor corners.",
-          img: "./images/pic12.png",
+          img: "./images/indoor-plant-pot.png",
         },
       ];
 
@@ -466,59 +656,66 @@
       const modalName = document.getElementById("modalName");
       const modalDesc = document.getElementById("modalDesc");
       const modalPrice = document.getElementById("modalPrice");
+      const modalCategory = document.getElementById("modalCategory");
       const closeModal = document.getElementById("closeModal");
-      const toast = document.getElementById("toast");
       const backTop = document.getElementById("backTop");
       const categoryFilter = document.getElementById("categoryFilter");
       const searchInput = document.getElementById("searchInput");
 
-      let wishlistCount = 0;
-
+      // Load wishlist count
       function loadWishlistCount() {
         const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-        wishlistCount = wishlist.length;
-        wishlistCountEl.textContent = wishlistCount;
+        wishlistCountEl.textContent = wishlist.length;
       }
 
       loadWishlistCount();
 
+      // Add to wishlist
       function addToWishlist(product) {
         let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
         if (!wishlist.some((p) => p.name === product.name)) {
           wishlist.push(product);
           localStorage.setItem("wishlist", JSON.stringify(wishlist));
-          wishlistCount++;
-          wishlistCountEl.textContent = wishlistCount;
-          toast.textContent = "Added to Wishlist 💖";
+          wishlistCountEl.textContent = wishlist.length;
+          showToast(`${product.name} added to wishlist! 💖`, "success");
         } else {
-          toast.textContent = "Already in Wishlist!";
+          showToast("Already in wishlist!", "info");
         }
-
-        toast.classList.add("show");
-        setTimeout(() => toast.classList.remove("show"), 2500);
       }
 
+      // Render products
       function renderProducts(filteredProducts) {
         productGrid.innerHTML = filteredProducts
           .map(
             (p, i) => `
-        <div class="card">
-          <img src="${p.img}" alt="${p.name}">
-          <div class="card-content">
-            <h4>${p.name}</h4>
-            <p class="price">${p.price}</p>
-            <p class="desc">${p.desc}</p>
+          <div class="product-card">
+            <img src="${p.img}" alt="${p.name}" class="product-image" />
+            <div class="product-content">
+              <span class="product-category">${p.category}</span>
+              <h3 class="product-name">${p.name}</h3>
+              <p class="product-desc">${p.desc}</p>
+              <p class="product-price">${p.price}</p>
+              <div class="product-actions">
+                <button class="btn btn-quick-view quick-view" data-index="${i}">
+                  <i data-lucide="eye"></i>
+                  Quick View
+                </button>
+                <button class="btn btn-wishlist wishlist-btn" data-index="${i}">
+                  <i data-lucide="heart"></i>
+                  Wishlist
+                </button>
+              </div>
+            </div>
           </div>
-          <div class="buttons">
-            <button class="quick-view" data-index="${i}">Quick View</button>
-            <button class="wishlist-btn" data-index="${i}">♡ Add to Wishlist</button>
-          </div>
-        </div>
-      `
+        `
           )
           .join("");
 
+        // Re-initialize Lucide icons
+        lucide.createIcons();
+
+        // Add event listeners
         document.querySelectorAll(".quick-view").forEach((btn) => {
           btn.addEventListener("click", () => {
             const p = filteredProducts[btn.dataset.index];
@@ -526,6 +723,7 @@
             modalName.textContent = p.name;
             modalDesc.textContent = p.desc;
             modalPrice.textContent = p.price;
+            modalCategory.textContent = p.category;
             modal.style.display = "flex";
           });
         });
@@ -540,6 +738,7 @@
 
       renderProducts(products);
 
+      // Close modal
       closeModal.addEventListener(
         "click",
         () => (modal.style.display = "none")
@@ -548,6 +747,7 @@
         if (e.target === modal) modal.style.display = "none";
       });
 
+      // Filter products
       function filterProducts() {
         const category = categoryFilter.value;
         const search = searchInput.value.toLowerCase();
@@ -562,23 +762,6 @@
 
       categoryFilter.addEventListener("change", filterProducts);
       searchInput.addEventListener("input", filterProducts);
-
-      function updateClock() {
-        const now = new Date();
-        const h = String(now.getHours()).padStart(2, "0");
-        const m = String(now.getMinutes()).padStart(2, "0");
-        const s = String(now.getSeconds()).padStart(2, "0");
-        document.getElementById("clock").textContent = `${h}:${m}:${s}`;
-      }
-      setInterval(updateClock, 1000);
-      updateClock();
-
-      window.addEventListener("scroll", () => {
-        backTop.style.display = window.scrollY > 300 ? "block" : "none";
-      });
-      backTop.addEventListener("click", () =>
-        window.scrollTo({ top: 0, behavior: "smooth" })
-      );
     </script>
   </body>
 </html>
