@@ -5,906 +5,845 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Contact DreamSpace Interiors for interior design consultations, quotes, and services in Mumbai. Reach us via phone, email, or message."
+      content="Contact DreamSpace Interiors for interior design consultations, quotes, and services."
     />
-    <title>DreamSpace Interiors | Contact Us</title>
-
+    <title>Contact Us - DreamSpace</title>
+    <link rel="stylesheet" href="css/globals.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="./script.js"></script>
     <style>
-      :root {
-        --radius: 0.5rem;
-        --background: #f8f4ec;
-        --foreground: #2e2e2e;
-        --card: #ffffff;
-        --primary: #8b5e3c;
-        --primary-foreground: #fffaf2;
-        --secondary: #b98d68;
-        --accent: #e9d7b9;
-        --muted: #f0e5d8;
-        --muted-foreground: #5a4a3c;
-        --border: #d6c3aa;
-        --input: #fffaf2;
-        --error: #c41e3a;
-        --success: #4a7c59;
+      /* Contact Page Specific Styles */
+      .contact-page-container {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 6rem 1.5rem 4rem;
       }
 
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+      .contact-page-hero {
+        text-align: center;
+        margin-bottom: 3rem;
       }
 
-      body {
-        font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
-        background: var(--background);
-        color: var(--foreground);
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        line-height: 1.5;
-      }
-
-      .skip-link {
-        position: absolute;
-        top: -40px;
-        left: 0;
-        background: var(--primary);
-        color: var(--primary-foreground);
-        padding: 0.4rem 0.8rem;
-        z-index: 100;
-        text-decoration: none;
-        border-radius: var(--radius);
-      }
-
-      .skip-link:focus {
-        top: 0.5rem;
-        left: 0.5rem;
-      }
-
-      header {
-        background: var(--primary);
-        color: var(--primary-foreground);
-        padding: 0.7rem 1.2rem;
-        font-size: clamp(1rem, 3.5vw, 1.4rem);
-        font-weight: 600;
+      .contact-page-hero h1 {
+        font-size: clamp(2rem, 4vw, 2.5rem);
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        color: hsl(var(--foreground));
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        justify-content: center;
+        gap: 0.75rem;
       }
 
-      .container {
-        width: min(95%, 600px);
-        margin: 1.5rem auto;
-        flex: 1;
-        padding: 0 1rem;
+      .contact-page-hero p {
+        color: hsl(var(--muted-foreground));
+        font-size: 1.0625rem;
       }
 
-      .hero {
-        text-align: left;
-        padding: clamp(1.2rem, 4vw, 2rem) 1.5rem;
-        border-radius: var(--radius);
-        background: linear-gradient(
-            rgba(139, 94, 60, 0.55),
-            rgba(139, 94, 60, 0.55)
-          ),
-          url("https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80")
-            center/cover no-repeat;
-        color: #fff;
-        animation: fadeIn 1.5s ease-in;
+      .contact-page-form {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: calc(var(--radius) * 2);
+        padding: 2.5rem;
+        box-shadow: 0 10px 40px hsla(var(--foreground), 0.08);
+      }
+
+      .contact-form-group {
         margin-bottom: 1.5rem;
       }
 
-      .hero h1 {
-        font-size: clamp(1.4rem, 4vw, 1.8rem);
-        margin-bottom: 0.3rem;
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
-      }
-
-      .hero p {
-        font-size: clamp(0.9rem, 2vw, 1rem);
-      }
-
-      form {
-        background: var(--card);
-        color: var(--foreground);
-        padding: clamp(1.5rem, 3vw, 2rem);
-        border-radius: var(--radius);
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-        animation: slideUp 1s ease-in-out;
-        margin-bottom: 2rem;
-      }
-
-      .form-title {
-        font-size: 1.4rem;
-        color: var(--primary);
-        margin-bottom: 1.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
-      }
-
-      .form-group {
-        margin-bottom: 1.2rem;
-      }
-
-      label,
-      .label {
+      .contact-form-group label {
         display: block;
-        font-weight: 500;
-        margin-bottom: 0.3rem;
-        color: var(--foreground);
-        font-size: 0.9rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: hsl(var(--foreground));
+        margin-bottom: 0.5rem;
       }
 
-      input[type="text"],
-      input[type="email"],
-      input[type="tel"],
-      select,
-      textarea {
+      .contact-form-group input,
+      .contact-form-group select,
+      .contact-form-group textarea {
         width: 100%;
-        padding: 0.6rem 0.8rem;
-        border: 1px solid var(--border);
+        padding: 0.75rem 1rem;
+        border: 1px solid hsl(var(--border));
         border-radius: var(--radius);
-        background: var(--input);
-        font-family: inherit;
-        font-size: 0.9rem;
-        transition: border-color 0.3s, box-shadow 0.3s;
+        background: hsl(var(--background));
+        color: hsl(var(--foreground));
+        font-size: 0.9375rem;
+        transition: all 0.2s ease;
       }
 
-      input:focus,
-      select:focus,
-      textarea:focus {
-        outline: 2px solid var(--primary);
-        border-color: var(--primary);
-        box-shadow: 0 0 0 2px rgba(139, 94, 60, 0.25);
+      .contact-form-group input:focus,
+      .contact-form-group select:focus,
+      .contact-form-group textarea:focus {
+        outline: none;
+        border-color: hsl(var(--ring));
+        box-shadow: 0 0 0 3px hsl(var(--ring) / 0.1);
       }
 
-      textarea {
-        min-height: 100px;
+      .contact-form-group textarea {
+        min-height: 120px;
         resize: vertical;
       }
 
-      .radio-group {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: 0.6rem;
-        margin-top: 0.4rem;
+      .contact-form-group input.contact-error,
+      .contact-form-group select.contact-error,
+      .contact-form-group textarea.contact-error {
+        border-color: hsl(0 84% 60%);
       }
 
-      .radio-group input[type="radio"] {
+      .contact-helper-text {
+        font-size: 0.8125rem;
+        color: hsl(var(--muted-foreground));
+        margin-top: 0.375rem;
+      }
+
+      .contact-error-msg {
+        color: hsl(0 84% 60%);
+        font-size: 0.8125rem;
+        display: none;
+      }
+
+      .contact-error-msg.show {
+        display: block;
+      }
+
+      /* Service Type Radio Buttons */
+      .contact-service-group-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: hsl(var(--foreground));
+        margin-bottom: 0.75rem;
+      }
+
+      .contact-radio-buttons {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 0.75rem;
+      }
+
+      .contact-radio-button {
+        position: relative;
+      }
+
+      .contact-radio-button input[type="radio"] {
         position: absolute;
         opacity: 0;
-        clip: rect(0 0 0 0);
-        pointer-events: none;
+        width: 0;
+        height: 0;
       }
 
-      .radio-group label {
-        background: var(--muted);
-        padding: 0.5rem 0.8rem;
-        border-radius: var(--radius);
-        cursor: pointer;
-        transition: all 0.3s;
-        font-weight: 500;
-        text-align: center;
-        border: 2px solid transparent;
-        font-size: 0.85rem;
-      }
-
-      .radio-group label:hover,
-      .radio-group input[type="radio"]:focus + label {
-        border-color: var(--primary);
-      }
-
-      .radio-group input[type="radio"]:checked + label {
-        background: var(--primary);
-        color: var(--primary-foreground);
-        border-color: var(--primary);
-      }
-
-      .btn {
-        background: var(--primary);
-        color: var(--primary-foreground);
-        border: none;
-        padding: 0.7rem 1.5rem;
-        border-radius: var(--radius);
-        cursor: pointer;
-        transition: transform 0.3s, background 0.3s;
-        font-weight: 600;
-        display: inline-flex;
+      .contact-radio-button label {
+        display: flex;
         align-items: center;
         justify-content: center;
-        gap: 0.4rem;
-        font-size: 0.9rem;
-        min-width: 120px;
-      }
-
-      .btn:hover {
-        transform: scale(1.05);
-        background: var(--secondary);
-      }
-
-      .btn:focus {
-        outline: 2px solid var(--primary);
-        outline-offset: 2px;
-      }
-
-      .btn.secondary {
-        background: var(--accent);
-        color: var(--foreground);
-      }
-
-      .form-actions {
-        display: flex;
-        justify-content: flex-end;
-        gap: 1rem;
-        margin-top: 1.5rem;
-        flex-wrap: wrap;
-      }
-
-      .error-msg {
-        color: var(--error);
-        font-size: 0.8rem;
-        margin-top: 0.2rem;
-        font-weight: 500;
-      }
-
-      .success-msg {
-        color: var(--success);
-        font-size: 0.8rem;
-        margin-top: 0.2rem;
-        font-weight: 500;
-      }
-
-      .toast {
-        position: fixed;
-        bottom: 1.2rem;
-        right: 1.2rem;
-        background: var(--primary);
-        color: var(--primary-foreground);
-        padding: 0.8rem 1.2rem;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        border: 1px solid hsl(var(--border));
         border-radius: var(--radius);
-        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-        animation: fadeInUp 0.5s ease, fadeOut 0.5s ease 3s;
-        z-index: 1000;
-        max-width: 90%;
-        font-size: 0.9rem;
-      }
-
-      .toast.success {
-        background: var(--success);
-      }
-
-      .helper-text {
-        font-size: 0.75rem;
-        color: var(--muted-foreground);
-        margin-top: 0.2rem;
-        font-style: italic;
-      }
-
-      footer {
+        background: hsl(var(--background));
+        color: hsl(var(--muted-foreground));
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 0.875rem;
+        font-weight: 500;
         text-align: center;
-        padding: 1rem 0.8rem;
-        background: var(--primary);
-        color: var(--primary-foreground);
-        letter-spacing: 0.3px;
-        margin-top: auto;
-        font-size: 0.9rem;
       }
 
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
+      .contact-radio-button input[type="radio"]:checked + label {
+        background: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+        border-color: hsl(var(--primary));
       }
 
-      @keyframes slideUp {
-        from {
-          transform: translateY(15px);
-          opacity: 0;
-        }
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
+      .contact-radio-button label:hover {
+        background: hsl(var(--muted));
+        border-color: hsl(var(--primary) / 0.5);
       }
 
-      @keyframes fadeInUp {
-        from {
-          transform: translateY(8px);
-          opacity: 0;
-        }
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
+      .contact-radio-button input[type="radio"]:checked + label:hover {
+        background: hsl(var(--primary) / 0.9);
       }
 
-      @keyframes fadeOut {
-        to {
-          opacity: 0;
-        }
+      /* Form Actions */
+      .contact-form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        justify-content: flex-end;
       }
 
-      @media (max-width: 768px) {
-        .container {
-          width: 95%;
-          padding: 0 0.5rem;
+      .contact-btn-reset {
+        background: hsl(var(--muted));
+        color: hsl(var(--foreground));
+        border: 1px solid hsl(var(--border));
+      }
+
+      .contact-btn-reset:hover {
+        background: hsl(var(--muted) / 0.7);
+      }
+
+      .contact-btn-submit {
+        background: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+      }
+
+      .contact-btn-submit:hover {
+        background: hsl(var(--primary) / 0.9);
+      }
+
+      /* Fieldset */
+      .contact-fieldset {
+        border: 1px solid hsl(var(--border));
+        border-radius: calc(var(--radius) * 1.5);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(
+          to bottom,
+          hsl(var(--background)),
+          hsl(var(--background) / 0.5)
+        );
+      }
+
+      .contact-fieldset .contact-form-group:last-of-type {
+        margin-bottom: 0;
+      }
+
+      .contact-fieldset-legend {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+        font-weight: 700;
+        color: hsl(var(--primary));
+        padding: 0 0.75rem;
+      }
+
+      .auto-fill-badge {
+        display: none;
+        margin-left: 0.5rem;
+        font-size: 0.75rem;
+        color: hsl(var(--primary));
+        font-weight: 600;
+      }
+
+      /* Responsive */
+      @media (max-width: 640px) {
+        .contact-page-form {
+          padding: 1.5rem;
         }
 
-        .radio-group {
+        .contact-radio-buttons {
           grid-template-columns: 1fr;
         }
 
-        .form-actions {
-          flex-direction: column;
-          justify-content: stretch;
+        .contact-form-actions {
+          flex-direction: column-reverse;
         }
 
-        .btn {
+        .contact-form-actions button {
           width: 100%;
-        }
-      }
-
-      @media (max-width: 480px) {
-        header {
-          padding: 0.6rem 0.8rem;
-          font-size: 1rem;
-        }
-
-        .hero {
-          padding: 1rem 0.8rem;
-        }
-
-        form {
-          padding: 1.2rem;
-        }
-      }
-
-      @media (min-width: 1200px) {
-        .container {
-          max-width: 900px;
-        }
-      }
-
-      @media print {
-        header,
-        footer,
-        .btn,
-        .toast {
-          display: none !important;
-        }
-
-        body {
-          background: white;
-        }
-
-        form {
-          box-shadow: none;
-          border: 1px solid #ccc;
-        }
-      }
-
-      @media (prefers-contrast: more) {
-        :root {
-          --primary: #6b4226;
-          --border: #8b6f47;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        *,
-        *::before,
-        *::after {
-          animation-duration: 0.01ms !important;
-          transition-duration: 0.01ms !important;
         }
       }
     </style>
   </head>
 
   <body>
-    <main id="main" class="container">
-      <section class="hero" aria-labelledby="hero-title">
-        <h1 id="hero-title">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <path
-              d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.7 15.9 15.9 0 0 1 1.03 3.58 2 2 0 0 1-.45 1.59l-1.18 1.18a2 2 0 0 0-.15 2.71L12.8 20.1a1.9 1.9 0 0 0 2.7 0l1.18-1.18a2 2 0 0 1 1.59-.45 15.9 15.9 0 0 1 3.58 1.03A2 2 0 0 1 22 16.92z"
-            ></path>
-          </svg>
-          Contact Us
-        </h1>
+    <header class="top-header">
+      <nav class="nav-container">
+        <a class="logo" href="./index.html">DreamSpace</a>
+
+        <!-- Menu Toggle with Lucide Icons -->
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+          <i data-lucide="menu" class="menu-icon"></i>
+          <i data-lucide="x" class="close-icon"></i>
+        </button>
+
+        <ul class="nav-links" id="navLinks">
+          <!-- User Welcome (Mobile Only - Shows at top when authenticated) -->
+          <li class="user-welcome" id="userWelcome">
+            <div class="user-welcome-content">
+              <span class="welcome-text">Welcome,</span>
+              <span class="user-name-display" id="userNameMobile"></span>
+            </div>
+          </li>
+
+          <!-- Navigation Links -->
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./booking.html">Consultation</a></li>
+          <li><a href="./projects.html">Projects</a></li>
+          <li><a href="./products.html">Products</a></li>
+          <li><a href="./services.html">Services</a></li>
+
+          <!-- Theme Toggle -->
+          <li>
+            <button
+              class="theme-toggle"
+              id="themeToggle"
+              aria-label="Toggle theme"
+            >
+              <i
+                data-lucide="moon"
+                class="theme-icon moon-icon"
+                id="moonIcon"
+              ></i>
+              <i data-lucide="sun" class="theme-icon sun-icon" id="sunIcon"></i>
+              <span class="theme-text" id="themeText">Dark Mode</span>
+            </button>
+          </li>
+
+          <!-- Auth Section - Login/Signup (Hidden when authenticated) -->
+          <li class="auth-section" id="authSection" style="display: none">
+            <a href="./login.html" class="btn btn-outline auth-btn">
+              <i data-lucide="log-in"></i>
+              Login
+            </a>
+            <a href="./sign-up.html" class="btn btn-primary auth-btn">
+              <i data-lucide="user-plus"></i>
+              Sign Up
+            </a>
+          </li>
+
+          <!-- User Section - Name & Logout (Hidden when not authenticated) -->
+          <li class="user-section" id="userSection" style="display: none">
+            <button class="btn btn-primary" id="logoutBtn">
+              <i data-lucide="log-out"></i>
+              Logout
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="contact-page-container">
+      <div class="contact-page-hero">
+        <h1>Contact Us</h1>
         <p>
           Let's bring your dream space to life. Get in touch with our design
           experts today!
         </p>
-      </section>
+      </div>
 
-      <!-- Contact Form -->
-      <form id="contactForm" novalidate aria-labelledby="form-title">
-        <h2 id="form-title" class="form-title">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <path
-              d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
-            ></path>
-          </svg>
-          Send Us a Message
-        </h2>
+      <form class="contact-page-form" id="contactForm" novalidate>
+        <!-- Personal Information -->
+        <fieldset class="contact-fieldset">
+          <legend class="contact-fieldset-legend">
+            <i data-lucide="user"></i>
+            Personal Information
+          </legend>
 
-        <!-- Name Fields -->
-        <div class="form-group">
-          <label for="firstName">First Name</label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            placeholder="e.g. Riya"
-            required
-          />
-          <span
-            id="errorFirstName"
-            class="error-msg"
-            aria-live="assertive"
-          ></span>
-        </div>
-
-        <div class="form-group">
-          <label for="lastName">Last Name</label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            placeholder="e.g. Sharma"
-            required
-          />
-          <span
-            id="errorLastName"
-            class="error-msg"
-            aria-live="assertive"
-          ></span>
-        </div>
-
-        <!-- Email & Phone -->
-        <div class="form-group">
-          <label for="email">Email Address</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="e.g. riya@email.com"
-            required
-          />
-          <span id="errorEmail" class="error-msg" aria-live="assertive"></span>
-        </div>
-
-        <div class="form-group">
-          <label for="phone">Phone Number</label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            maxlength="10"
-            pattern="^(\+91[\s\-]?)?[6-9]\d{9}$"
-            placeholder="e.g. +91 98765 43210 or 9876543210"
-            required
-          />
-          <div class="helper-text">Enter 10-digit Indian mobile number</div>
-          <span id="errorPhone" class="error-msg" aria-live="assertive"></span>
-        </div>
-
-        <!-- Subject -->
-        <div class="form-group">
-          <label for="subject">Subject</label>
-          <select id="subject" name="subject" required>
-            <option value="">Select a subject</option>
-            <option value="quote">Request a Quote</option>
-            <option value="service">Service Inquiry</option>
-            <option value="partnership">Business Partnership</option>
-            <option value="feedback">Feedback</option>
-            <option value="other">Other</option>
-          </select>
-          <span
-            id="errorSubject"
-            class="error-msg"
-            aria-live="assertive"
-          ></span>
-        </div>
-
-        <!-- Service Type -->
-        <div
-          class="form-group"
-          role="radiogroup"
-          aria-labelledby="serviceLabel"
-          aria-required="true"
-        >
-          <p class="label" id="serviceLabel">Service Type</p>
-          <div class="radio-group">
+          <div class="contact-form-group">
+            <label for="name">
+              Name
+              <span id="autoFilledNameBadge" class="auto-fill-badge">
+                ✓ Auto-filled
+              </span>
+            </label>
             <input
-              type="radio"
-              id="residential"
-              name="serviceType"
-              value="residential"
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Enter your name"
+              required
             />
-            <label for="residential">Residential</label>
-            <input
-              type="radio"
-              id="commercial"
-              name="serviceType"
-              value="commercial"
-            />
-            <label for="commercial">Commercial</label>
-            <input
-              type="radio"
-              id="renovation"
-              name="serviceType"
-              value="renovation"
-            />
-            <label for="renovation">Renovation</label>
-            <input
-              type="radio"
-              id="consultation"
-              name="serviceType"
-              value="consultation"
-            />
-            <label for="consultation">Consultation</label>
+            <span class="contact-error-msg" id="errorName"></span>
           </div>
-          <span
-            id="errorService"
-            class="error-msg"
-            aria-live="assertive"
-          ></span>
-        </div>
 
-        <!-- Message -->
-        <div class="form-group">
-          <label for="message">Your Message</label>
-          <textarea
-            id="message"
-            name="message"
-            placeholder="Tell us about your project or inquiry..."
-            required
-          ></textarea>
-          <span
-            id="errorMessage"
-            class="error-msg"
-            aria-live="assertive"
-          ></span>
-        </div>
+          <div class="contact-form-group">
+            <label for="email">
+              Email
+              <span id="autoFilledEmailBadge" class="auto-fill-badge">
+                ✓ Auto-filled
+              </span>
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="name@example.com"
+              required
+            />
+            <span class="contact-error-msg" id="errorEmail"></span>
+          </div>
+
+          <div class="contact-form-group">
+            <label for="phone">Phone Number</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              maxlength="10"
+              placeholder="10-digit mobile number"
+              required
+            />
+            <div class="contact-helper-text">
+              Enter 10-digit Indian mobile number
+            </div>
+            <span class="contact-error-msg" id="errorPhone"></span>
+          </div>
+        </fieldset>
+
+        <!-- Inquiry Details -->
+        <fieldset class="contact-fieldset">
+          <legend class="contact-fieldset-legend">
+            <i data-lucide="message-square"></i>
+            Inquiry Details
+          </legend>
+
+          <div class="contact-form-group">
+            <label for="subject">Subject</label>
+            <select id="subject" name="subject" required>
+              <option value="">Select a subject</option>
+              <option value="quote">Request a Quote</option>
+              <option value="service">Service Inquiry</option>
+              <option value="partnership">Business Partnership</option>
+              <option value="feedback">Feedback</option>
+              <option value="other">Other</option>
+            </select>
+            <span class="contact-error-msg" id="errorSubject"></span>
+          </div>
+
+          <div class="contact-form-group">
+            <div class="contact-service-group-label">Service Type</div>
+            <div class="contact-radio-buttons">
+              <div class="contact-radio-button">
+                <input
+                  type="radio"
+                  id="residential"
+                  name="serviceType"
+                  value="residential"
+                />
+                <label for="residential">
+                  <i data-lucide="home"></i>
+                  Residential
+                </label>
+              </div>
+              <div class="contact-radio-button">
+                <input
+                  type="radio"
+                  id="commercial"
+                  name="serviceType"
+                  value="commercial"
+                />
+                <label for="commercial">
+                  <i data-lucide="building"></i>
+                  Commercial
+                </label>
+              </div>
+              <div class="contact-radio-button">
+                <input
+                  type="radio"
+                  id="renovation"
+                  name="serviceType"
+                  value="renovation"
+                />
+                <label for="renovation">
+                  <i data-lucide="hammer"></i>
+                  Renovation
+                </label>
+              </div>
+              <div class="contact-radio-button">
+                <input
+                  type="radio"
+                  id="consultation"
+                  name="serviceType"
+                  value="consultation"
+                />
+                <label for="consultation">
+                  <i data-lucide="calendar"></i>
+                  Consultation
+                </label>
+              </div>
+            </div>
+            <span class="contact-error-msg" id="errorService"></span>
+          </div>
+
+          <div class="contact-form-group">
+            <label for="message">Your Message</label>
+            <textarea
+              id="message"
+              name="message"
+              placeholder="Tell us about your project or inquiry..."
+              required
+            ></textarea>
+            <span class="contact-error-msg" id="errorMessage"></span>
+          </div>
+        </fieldset>
 
         <!-- Actions -->
-        <div class="form-actions">
-          <button type="reset" class="btn secondary">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M1 4v6h6"></path>
-              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-            </svg>
+        <div class="contact-form-actions">
+          <button type="reset" class="btn contact-btn-reset">
+            <i data-lucide="rotate-ccw"></i>
             Clear Form
           </button>
-          <button type="submit" class="btn">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <line x1="22" y1="2" x2="11" y2="13"></line>
-              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-            </svg>
+          <button type="submit" class="btn contact-btn-submit">
+            <i data-lucide="send"></i>
             Send Message
           </button>
         </div>
       </form>
     </main>
 
+    <!-- Footer -->
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h3>DreamSpace</h3>
+          <p>
+            Creating exceptional interiors that inspire and delight since 2010.
+          </p>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook">
+              <i data-lucide="facebook"></i>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <i data-lucide="instagram"></i>
+            </a>
+            <a href="#" aria-label="Twitter">
+              <i data-lucide="twitter"></i>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <i data-lucide="linkedin"></i>
+            </a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="./booking.html">Schedule Consultation</a></li>
+            <li><a href="./projects.html">Projects</a></li>
+            <li><a href="./products.html">Products</a></li>
+            <li><a href="./wishlist.html">Products Wishlist</a></li>
+            <li><a href="./about.html">About Us</a></li>
+            <li><a href="./contact.html">Contact Us</a></li>
+            <li><a href="./feedback.html">Share Feedback</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Services</h3>
+          <ul>
+            <li><a href="#">Residential Design</a></li>
+            <li><a href="#">Commercial Design</a></li>
+            <li><a href="#">Space Planning</a></li>
+            <li><a href="#">Renovation</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Newsletter</h3>
+          <p>Subscribe for design tips and inspiration</p>
+          <form class="newsletter-form">
+            <div class="form-group">
+              <input
+                type="email"
+                class="form-input"
+                placeholder="Enter your email"
+                required
+              />
+              <button type="submit" class="btn btn-primary">Subscribe</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 DreamSpace Interior Design. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <div id="toast" class="toast"></div>
+
     <script>
+      // Auto-fill user data if authenticated
+      document.addEventListener("DOMContentLoaded", () => {
+        const currentUser = getCurrentUser();
+
+        if (currentUser) {
+          // User is authenticated - pre-fill and disable fields
+          const nameField = document.getElementById("name");
+          const emailField = document.getElementById("email");
+
+          // Pre-fill email (preferred)
+          if (currentUser.email) {
+            emailField.value = currentUser.email;
+            emailField.disabled = true;
+            emailField.style.backgroundColor = "hsl(var(--muted))";
+            emailField.style.cursor = "not-allowed";
+            document.getElementById("autoFilledEmailBadge").style.display =
+              "inline";
+          }
+
+          // Pre-fill name if available
+          if (currentUser.name) {
+            nameField.value = currentUser.name;
+            nameField.disabled = true;
+            nameField.style.backgroundColor = "hsl(var(--muted))";
+            nameField.style.cursor = "not-allowed";
+            document.getElementById("autoFilledNameBadge").style.display =
+              "inline";
+          }
+        }
+      });
+
       // Validation helpers
-      const showError = (id, msg) => {
+      const showContactError = (id, msg) => {
         const el = document.getElementById(id);
         el.textContent = msg;
-        el.setAttribute("role", "error");
+        el.classList.add("show");
+        const inputId = id.replace("error", "").toLowerCase();
+        const inputElement = document.getElementById(inputId);
+        if (inputElement) inputElement.classList.add("contact-error");
       };
 
-      const clearError = (id) => {
+      const clearContactError = (id) => {
         const el = document.getElementById(id);
         el.textContent = "";
-        el.removeAttribute("role");
+        el.classList.remove("show");
+        const inputId = id.replace("error", "").toLowerCase();
+        const inputElement = document.getElementById(inputId);
+        if (inputElement) inputElement.classList.remove("contact-error");
       };
 
-      // Validation functions - Fixed to handle empty values
+      // Validation functions
       const validateName = (val) => {
         const trimmed = val.trim();
-        if (trimmed.length === 0) return false;
-        if (trimmed.length < 2) return false;
-        return true;
+        if (trimmed.length === 0)
+          return { valid: false, message: "Name is required" };
+        if (trimmed.length < 2)
+          return {
+            valid: false,
+            message: "Name must be at least 2 characters",
+          };
+        return { valid: true };
       };
 
-      const validateEmail = (val) => {
-        const trimmed = val.trim();
-        if (trimmed.length === 0) return false;
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed);
-      };
-
-      // Enhanced phone validation for Indian numbers - FIXED REGEX
       const validatePhone = (val) => {
         const trimmed = val.trim();
-        if (trimmed.length === 0) return false;
-
-        // Remove all spaces, dashes, parentheses
+        if (trimmed.length === 0)
+          return { valid: false, message: "Phone number is required" };
         const cleaned = trimmed.replace(/[\s\-()]/g, "");
+        const pattern1 = /^[6-9]\d{9}$/;
+        const pattern2 = /^\+91[6-9]\d{9}$/;
+        const pattern3 = /^91[6-9]\d{9}$/;
 
-        // Check for valid Indian mobile number formats:
-        // 1. 10 digits starting with 6, 7, 8, or 9
-        // 2. +91 followed by 10 digits starting with 6, 7, 8, or 9
-        // 3. 91 followed by 10 digits starting with 6, 7, 8, or 9
-        const pattern1 = /^[6-9]\d{9}$/; // 9876543210
-        const pattern2 = /^\+91[6-9]\d{9}$/; // +919876543210
-        const pattern3 = /^91[6-9]\d{9}$/; // 919876543210
-
-        return (
-          pattern1.test(cleaned) ||
-          pattern2.test(cleaned) ||
-          pattern3.test(cleaned)
-        );
+        if (
+          !(
+            pattern1.test(cleaned) ||
+            pattern2.test(cleaned) ||
+            pattern3.test(cleaned)
+          )
+        ) {
+          return {
+            valid: false,
+            message: "Enter a valid 10-digit mobile number starting with 6-9",
+          };
+        }
+        return { valid: true };
       };
 
       const validateSubject = (val) => {
-        return val !== "" && val !== null && val !== undefined;
+        if (!val) return { valid: false, message: "Please select a subject" };
+        return { valid: true };
       };
 
       const validateMessage = (val) => {
         const trimmed = val.trim();
-        if (trimmed.length === 0) return false;
-        if (trimmed.length < 10) return false;
-        return true;
+        if (trimmed.length === 0)
+          return { valid: false, message: "Message is required" };
+        if (trimmed.length < 10)
+          return {
+            valid: false,
+            message: "Message must be at least 10 characters",
+          };
+        return { valid: true };
       };
 
       const validateServiceType = () => {
-        return (
-          document.querySelector('input[name="serviceType"]:checked') !== null
-        );
+        if (!document.querySelector('input[name="serviceType"]:checked')) {
+          return { valid: false, message: "Please select a service type" };
+        }
+        return { valid: true };
       };
 
       // Real-time validation
-      ["firstName", "lastName"].forEach((field) => {
-        const input = document.getElementById(field);
-        input.addEventListener("blur", () => {
-          const value = input.value;
-          if (value.trim().length === 0) {
-            showError(
-              `error${field.charAt(0).toUpperCase() + field.slice(1)}`,
-              "This field is required"
-            );
-          } else if (!validateName(value)) {
-            showError(
-              `error${field.charAt(0).toUpperCase() + field.slice(1)}`,
-              "Must be at least 2 characters"
-            );
-          } else {
-            clearError(
-              `error${field.charAt(0).toUpperCase() + field.slice(1)}`
-            );
+      const nameField = document.getElementById("name");
+      if (nameField) {
+        nameField.addEventListener("blur", () => {
+          if (!nameField.disabled) {
+            const result = validateName(nameField.value);
+            if (!result.valid) {
+              showContactError("errorName", result.message);
+            } else {
+              clearContactError("errorName");
+            }
           }
         });
-      });
+      }
 
       document.getElementById("email").addEventListener("blur", function () {
-        const val = this.value;
-        if (val.trim().length === 0) {
-          showError("errorEmail", "Email is required");
-        } else if (!validateEmail(val)) {
-          showError("errorEmail", "Enter a valid email address");
-        } else {
-          clearError("errorEmail");
+        if (!this.disabled) {
+          const result = validateEmail(this.value);
+          if (!result.valid) {
+            showContactError("errorEmail", result.message);
+          } else {
+            clearContactError("errorEmail");
+          }
         }
       });
 
-      // Enhanced phone validation - FIXED
       document.getElementById("phone").addEventListener("input", function () {
-        // Allow only numbers, +, spaces, dashes, and parentheses
         this.value = this.value.replace(/[^0-9+\s\-()]/g, "");
       });
 
       document.getElementById("phone").addEventListener("blur", function () {
-        const val = this.value.trim();
-
-        if (val.length === 0) {
-          showError("errorPhone", "Phone number is required");
-          return;
-        }
-
-        if (!validatePhone(val)) {
-          showError(
-            "errorPhone",
-            "Enter a valid Indian mobile number (10 digits starting with 6-9)"
-          );
+        const result = validatePhone(this.value);
+        if (!result.valid) {
+          showContactError("errorPhone", result.message);
         } else {
-          clearError("errorPhone");
+          clearContactError("errorPhone");
         }
       });
 
       document
         .getElementById("subject")
         .addEventListener("change", function () {
-          if (!validateSubject(this.value)) {
-            showError("errorSubject", "Please select a subject");
+          const result = validateSubject(this.value);
+          if (!result.valid) {
+            showContactError("errorSubject", result.message);
           } else {
-            clearError("errorSubject");
+            clearContactError("errorSubject");
           }
         });
 
       document.getElementById("message").addEventListener("blur", function () {
-        const val = this.value;
-        if (val.trim().length === 0) {
-          showError("errorMessage", "Message is required");
-        } else if (!validateMessage(val)) {
-          showError("errorMessage", "Message must be at least 10 characters");
+        const result = validateMessage(this.value);
+        if (!result.valid) {
+          showContactError("errorMessage", result.message);
         } else {
-          clearError("errorMessage");
+          clearContactError("errorMessage");
         }
       });
 
-      // Form submission - FIXED to validate empty forms
+      // Form submission
       document
         .getElementById("contactForm")
         .addEventListener("submit", function (e) {
           e.preventDefault();
-          let firstErrorField = null;
           let isValid = true;
+          let firstErrorField = null;
 
-          // Reset all errors
-          document
-            .querySelectorAll(".error-msg")
-            .forEach((el) => clearError(el.id));
-
-          // Validate First Name
-          const firstName = this.firstName.value.trim();
-          if (firstName.length === 0) {
-            showError("errorFirstName", "First name is required");
-            if (!firstErrorField) firstErrorField = this.firstName;
-            isValid = false;
-          } else if (!validateName(this.firstName.value)) {
-            showError(
-              "errorFirstName",
-              "First name must be at least 2 characters"
-            );
-            if (!firstErrorField) firstErrorField = this.firstName;
-            isValid = false;
+          // Validate name
+          const nameInput = document.getElementById("name");
+          if (!nameInput.disabled) {
+            const nameResult = validateName(nameInput.value);
+            if (!nameResult.valid) {
+              showContactError("errorName", nameResult.message);
+              if (!firstErrorField) firstErrorField = nameInput;
+              isValid = false;
+            }
           }
 
-          // Validate Last Name
-          const lastName = this.lastName.value.trim();
-          if (lastName.length === 0) {
-            showError("errorLastName", "Last name is required");
-            if (!firstErrorField) firstErrorField = this.lastName;
-            isValid = false;
-          } else if (!validateName(this.lastName.value)) {
-            showError(
-              "errorLastName",
-              "Last name must be at least 2 characters"
-            );
-            if (!firstErrorField) firstErrorField = this.lastName;
-            isValid = false;
+          // Validate email
+          const emailInput = document.getElementById("email");
+          if (!emailInput.disabled) {
+            const emailResult = validateEmail(emailInput.value);
+            if (!emailResult.valid) {
+              showContactError("errorEmail", emailResult.message);
+              if (!firstErrorField) firstErrorField = emailInput;
+              isValid = false;
+            }
           }
 
-          // Validate Email
-          const email = this.email.value.trim();
-          if (email.length === 0) {
-            showError("errorEmail", "Email is required");
-            if (!firstErrorField) firstErrorField = this.email;
-            isValid = false;
-          } else if (!validateEmail(this.email.value)) {
-            showError("errorEmail", "Enter a valid email address");
-            if (!firstErrorField) firstErrorField = this.email;
-            isValid = false;
-          }
-
-          // Validate Phone
-          const phone = this.phone.value.trim();
-          if (phone.length === 0) {
-            showError("errorPhone", "Phone number is required");
-            if (!firstErrorField) firstErrorField = this.phone;
-            isValid = false;
-          } else if (!validatePhone(this.phone.value)) {
-            showError(
-              "errorPhone",
-              "Enter a valid Indian mobile number (10 digits starting with 6-9)"
-            );
+          // Validate phone
+          const phone = validatePhone(this.phone.value);
+          if (!phone.valid) {
+            showContactError("errorPhone", phone.message);
             if (!firstErrorField) firstErrorField = this.phone;
             isValid = false;
           }
 
-          // Validate Subject
-          if (!validateSubject(this.subject.value)) {
-            showError("errorSubject", "Please select a subject");
+          // Validate subject
+          const subject = validateSubject(this.subject.value);
+          if (!subject.valid) {
+            showContactError("errorSubject", subject.message);
             if (!firstErrorField) firstErrorField = this.subject;
             isValid = false;
           }
 
-          // Validate Service Type
-          if (!validateServiceType()) {
-            showError("errorService", "Please select a service type");
+          // Validate service type
+          const serviceType = validateServiceType();
+          if (!serviceType.valid) {
+            showContactError("errorService", serviceType.message);
             if (!firstErrorField)
               firstErrorField = document.getElementById("residential");
             isValid = false;
           }
 
-          // Validate Message
-          const message = this.message.value.trim();
-          if (message.length === 0) {
-            showError("errorMessage", "Message is required");
-            if (!firstErrorField) firstErrorField = this.message;
-            isValid = false;
-          } else if (!validateMessage(this.message.value)) {
-            showError("errorMessage", "Message must be at least 10 characters");
+          // Validate message
+          const message = validateMessage(this.message.value);
+          if (!message.valid) {
+            showContactError("errorMessage", message.message);
             if (!firstErrorField) firstErrorField = this.message;
             isValid = false;
           }
 
           if (isValid) {
-            // Normalize phone number before submission
-            const normalizedPhone = phone.replace(/[\s\-()]/g, "");
-            console.log("Form Data:", {
-              firstName: firstName,
-              lastName: lastName,
-              email: email,
-              phone: normalizedPhone,
+            const formData = {
+              name: this.name.value.trim(),
+              email: this.email.value.trim(),
+              phone: this.phone.value.replace(/[\s\-()]/g, ""),
               subject: this.subject.value,
               serviceType: document.querySelector(
                 'input[name="serviceType"]:checked'
               ).value,
-              message: message,
-            });
+              message: this.message.value.trim(),
+              submittedAt: new Date().toISOString(),
+              userId: getCurrentUser()?.userId || null,
+            };
 
-            // Fixed string escaping issue
+            console.log("Contact Form Data:", formData);
+
+            // Store in localStorage (optional)
+            const contacts = JSON.parse(
+              localStorage.getItem("dreamspace_contacts") || "[]"
+            );
+            contacts.push(formData);
+            localStorage.setItem(
+              "dreamspace_contacts",
+              JSON.stringify(contacts)
+            );
+
             showToast(
-              "Thank you! We'll get back to you within 24 hours.",
+              "Thank you! We'll get back to you within 24 hours. 📧",
               "success"
             );
+
+            // Reset form
             this.reset();
+
+            // Re-apply autofill after reset
+            setTimeout(() => {
+              const currentUser = getCurrentUser();
+              if (currentUser) {
+                const nameField = document.getElementById("name");
+                const emailField = document.getElementById("email");
+
+                if (currentUser.email) {
+                  emailField.value = currentUser.email;
+                  emailField.disabled = true;
+                  emailField.style.backgroundColor = "hsl(var(--muted))";
+                  emailField.style.cursor = "not-allowed";
+                }
+
+                if (currentUser.name) {
+                  nameField.value = currentUser.name;
+                  nameField.disabled = true;
+                  nameField.style.backgroundColor = "hsl(var(--muted))";
+                  nameField.style.cursor = "not-allowed";
+                }
+              }
+            }, 100);
           } else if (firstErrorField) {
             firstErrorField.focus();
           }
@@ -912,21 +851,38 @@
 
       // Reset handler
       document.getElementById("contactForm").addEventListener("reset", () => {
-        document
-          .querySelectorAll(".error-msg")
-          .forEach((el) => clearError(el.id));
-      });
+        [
+          "errorName",
+          "errorEmail",
+          "errorPhone",
+          "errorSubject",
+          "errorService",
+          "errorMessage",
+        ].forEach(clearContactError);
 
-      // Toast notification
-      function showToast(msg, type) {
-        const toast = document.createElement("div");
-        toast.className = type === "success" ? "toast success" : "toast";
-        toast.setAttribute("role", "status");
-        toast.setAttribute("aria-live", "polite");
-        toast.textContent = msg;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 4000);
-      }
+        // Re-apply autofill
+        setTimeout(() => {
+          const currentUser = getCurrentUser();
+          if (currentUser) {
+            const nameField = document.getElementById("name");
+            const emailField = document.getElementById("email");
+
+            if (currentUser.email) {
+              emailField.value = currentUser.email;
+              emailField.disabled = true;
+              emailField.style.backgroundColor = "hsl(var(--muted))";
+              emailField.style.cursor = "not-allowed";
+            }
+
+            if (currentUser.name) {
+              nameField.value = currentUser.name;
+              nameField.disabled = true;
+              nameField.style.backgroundColor = "hsl(var(--muted))";
+              nameField.style.cursor = "not-allowed";
+            }
+          }
+        }, 100);
+      });
     </script>
   </body>
 </html>

@@ -229,7 +229,7 @@
 
       /* Responsive */
       @media (max-width: 640px) {
-        .booking-container{
+        .booking-container {
           padding: 6rem 1rem 2rem;
         }
         .booking-form {
@@ -343,7 +343,7 @@
 
           <div class="form-group">
             <label for="name">
-              Full Name
+              Name
               <span id="autoFilledBadge" class="auto-fill-badge">
                 ✓ Auto-filled
               </span>
@@ -352,7 +352,7 @@
               type="text"
               id="name"
               name="name"
-              placeholder="Enter your full name"
+              placeholder="Enter your name"
               required
             />
             <span class="error-message" id="errorName"></span>
@@ -369,7 +369,7 @@
               type="email"
               id="email"
               name="email"
-              placeholder="your.email@example.com"
+              placeholder="name@example.com"
               required
             />
             <span class="error-message" id="errorEmail"></span>
@@ -417,9 +417,7 @@
             Project Details
           </legend>
 
-          <div class="radio-group-label">
-            Project Type 
-          </div>
+          <div class="radio-group-label">Project Type</div>
           <div class="radio-buttons">
             <div class="radio-button">
               <input
@@ -463,9 +461,7 @@
           </div>
           <span class="error-message" id="errorDesign"></span>
 
-          <div class="radio-group-label">
-            Add-on Services 
-          </div>
+          <div class="radio-group-label">Add-on Services</div>
           <div class="radio-buttons">
             <div class="radio-button">
               <input
@@ -505,9 +501,7 @@
           </legend>
 
           <div class="form-group">
-            <label for="budget">
-              Budget Range (₹) 
-            </label>
+            <label for="budget"> Budget Range (₹) </label>
             <select id="budget" name="budget" required>
               <option value="">Select your budget range</option>
               <option value="50000-100000">₹50,000 - ₹1,00,000</option>
@@ -532,8 +526,8 @@
         <!-- Form Actions -->
         <div class="form-actions">
           <button type="reset" class="btn btn-reset">
-            <i data-lucide="refresh-cw"></i>
-            Reset
+            <i data-lucide="rotate-ccw"></i>
+            Clear Form
           </button>
           <button type="submit" class="btn btn-submit">
             <i data-lucide="send"></i>
@@ -638,8 +632,6 @@
             nameField.style.cursor = "not-allowed";
             document.getElementById("autoFilledBadge").style.display = "inline";
           }
-
-          console.log("Form auto-filled for:", currentUser.name);
         }
       });
 
@@ -696,7 +688,7 @@
           isValid = false;
         }
 
-        // Addon validation (NOW REQUIRED)
+        // Addon validation
         const addon = document.querySelector('input[name="addon"]:checked');
         if (!addon) {
           showError("Service", "Please select an add-on service");

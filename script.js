@@ -1,5 +1,5 @@
 // Initialize Lucide icons ONCE
-// lucide.createIcons();
+lucide.createIcons();
 
 // AUTHENTICATION
 
@@ -18,10 +18,15 @@ function initStorage() {
 initStorage();
 
 // Email validation
-function validateEmail(email) {
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return re.test(email);
-}
+const validateEmail = (val) => {
+  const trimmed = val.trim();
+  if (trimmed.length === 0)
+    return { valid: false, message: "Email is required" };
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+    return { valid: false, message: "Enter a valid email address" };
+  }
+  return { valid: true };
+};
 
 // Hash password (simple - in production use bcrypt)
 function hashPassword(password) {
@@ -165,7 +170,7 @@ function updateNavigation() {
       logoutBtn.addEventListener("click", (e) => {
         e.preventDefault();
         // if (confirm("Are you sure you want to logout?")) {
-          logout();
+        logout();
         // }
       });
       logoutBtn.dataset.listenerAdded = "true";

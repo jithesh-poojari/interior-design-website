@@ -7,706 +7,680 @@
       name="description"
       content="Share your feedback with DreamSpace Interiors - We value your opinions and suggestions"
     />
-    <title>DreamSpace | Feedback</title>
-
+    <title>Feedback - DreamSpace</title>
+    <link rel="stylesheet" href="css/globals.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="./script.js"></script>
     <style>
-      :root {
-        --radius: 0.5rem;
-        --background: #f8f4ec;
-        --foreground: #2e2e2e;
-        --card: #ffffff;
-        --primary: #8b5e3c;
-        --primary-foreground: #fffaf2;
-        --secondary: #b98d68;
-        --accent: #e9d7b9;
-        --muted: #f0e5d8;
-        --muted-foreground: #5a4a3c;
-        --border: #d6c3aa;
-        --input: #fffaf2;
-        --error: #c41e3a;
-        --success: #2e8b57;
+      /* Feedback Page Specific Styles */
+      .feedback-page-container {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 6rem 1.5rem 4rem;
       }
 
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+      .feedback-page-hero {
+        text-align: center;
+        margin-bottom: 3rem;
       }
 
-      body {
-        font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
-        background: var(--background);
-        color: var(--foreground);
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        line-height: 1.5;
-      }
-
-      /* Screen reader only content */
-      .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border-width: 0;
-      }
-
-      /* Skip to main content for accessibility */
-      .skip-link {
-        position: absolute;
-        top: -40px;
-        left: 0;
-        background: var(--primary);
-        color: var(--primary-foreground);
-        padding: 0.4rem 0.8rem;
-        z-index: 100;
-        text-decoration: none;
-        border-radius: var(--radius);
-        font-weight: 600;
-      }
-
-      .skip-link:focus {
-        top: 0.5rem;
-        left: 0.5rem;
-        outline: 3px solid var(--primary-foreground);
-        outline-offset: 2px;
-      }
-
-      /* Icon styles - using Unicode symbols */
-      .icon {
-        display: inline-block;
-        width: 1em;
-        height: 1em;
-        line-height: 1;
-        font-style: normal;
-      }
-
-      header {
-        background: var(--primary);
-        color: var(--primary-foreground);
-        padding: 0.7rem 1.2rem;
-        font-size: clamp(1rem, 3.5vw, 1.4rem);
-        font-weight: 600;
+      .feedback-page-hero h1 {
+        font-size: clamp(2rem, 4vw, 2.5rem);
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        color: hsl(var(--foreground));
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        justify-content: center;
+        gap: 0.75rem;
       }
 
-      .container {
-        width: min(95%, 600px);
-        margin: 1.5rem auto;
-        flex: 1;
-        padding: 0 1rem;
+      .feedback-page-hero p {
+        color: hsl(var(--muted-foreground));
+        font-size: 1.0625rem;
       }
 
-      .hero {
-        text-align: left;
-        padding: clamp(1.2rem, 4vw, 1.8rem) 1.2rem;
-        border-radius: var(--radius);
-        background: linear-gradient(
-            rgba(139, 94, 60, 0.55),
-            rgba(139, 94, 60, 0.55)
-          ),
-          linear-gradient(135deg, #8b5e3c 0%, #b98d68 100%);
-        color: #fff;
-        animation: fadeIn 1.5s ease-in;
+      .feedback-page-form {
+        background: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
+        border-radius: calc(var(--radius) * 2);
+        padding: 2.5rem;
+        box-shadow: 0 10px 40px hsla(var(--foreground), 0.08);
       }
 
-      .hero h1 {
-        font-size: clamp(1.3rem, 4vw, 1.6rem);
-        margin-bottom: 0.3rem;
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
+      .feedback-form-group {
+        margin-bottom: 1.5rem;
       }
 
-      .hero p {
-        font-size: clamp(0.85rem, 2vw, 0.95rem);
-      }
-
-      form {
-        background: var(--card);
-        color: var(--foreground);
-        padding: clamp(1.2rem, 3vw, 1.8rem);
-        margin-top: 1.5rem;
-        border-radius: var(--radius);
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-        animation: slideUp 1s ease-in-out;
-      }
-
-      .form-group {
-        margin-bottom: 1.2rem;
-      }
-
-      label,
-      .label {
+      .feedback-form-group label {
         display: block;
-        font-weight: 500;
-        margin-bottom: 0.3rem;
-        color: var(--foreground);
-        font-size: 0.9rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: hsl(var(--foreground));
+        margin-bottom: 0.5rem;
       }
 
-      input[type="text"],
-      input[type="email"],
-      select,
-      textarea {
+      .feedback-form-group input,
+      .feedback-form-group select,
+      .feedback-form-group textarea {
         width: 100%;
-        padding: 0.5rem 0.7rem;
-        border: 1px solid var(--border);
+        padding: 0.75rem 1rem;
+        border: 1px solid hsl(var(--border));
         border-radius: var(--radius);
-        background: var(--input);
-        font-family: inherit;
-        font-size: 0.9rem;
-        transition: 0.3s;
+        background: hsl(var(--background));
+        color: hsl(var(--foreground));
+        font-size: 0.9375rem;
+        transition: all 0.2s ease;
       }
 
-      input:focus,
-      select:focus,
-      textarea:focus {
-        outline: 2px solid var(--primary);
-        border-color: var(--primary);
-        box-shadow: 0 0 0 2px rgba(139, 94, 60, 0.25);
+      .feedback-form-group input:focus,
+      .feedback-form-group select:focus,
+      .feedback-form-group textarea:focus {
+        outline: none;
+        border-color: hsl(var(--ring));
+        box-shadow: 0 0 0 3px hsl(var(--ring) / 0.1);
       }
 
-      /* Error state styling */
-      input[aria-invalid="true"],
-      select[aria-invalid="true"],
-      textarea[aria-invalid="true"] {
-        border-color: var(--error);
-      }
-
-      input[aria-invalid="true"]:focus,
-      select[aria-invalid="true"]:focus,
-      textarea[aria-invalid="true"]:focus {
-        box-shadow: 0 0 0 2px rgba(196, 30, 58, 0.25);
-      }
-
-      textarea {
-        min-height: 80px;
+      .feedback-form-group textarea {
+        min-height: 100px;
         resize: vertical;
       }
 
-      /* Rating group styles */
-      .rating-group {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-        gap: 0.4rem;
-        margin-top: 0.4rem;
+      .feedback-form-group input.feedback-error,
+      .feedback-form-group select.feedback-error {
+        border-color: hsl(0 84% 60%);
       }
 
-      .rating-group input[type="radio"] {
+      .feedback-error-msg {
+        color: hsl(0 84% 60%);
+        font-size: 0.8125rem;
+        margin-top: 0.375rem;
+        display: none;
+      }
+
+      .feedback-error-msg.show {
+        display: block;
+      }
+
+      /* Rating Buttons */
+      .feedback-rating-group-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: hsl(var(--foreground));
+        margin-bottom: 0.75rem;
+      }
+
+      .feedback-rating-buttons {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 0.75rem;
+      }
+
+      .feedback-rating-button {
+        position: relative;
+      }
+
+      .feedback-rating-button input[type="radio"] {
         position: absolute;
         opacity: 0;
-        pointer-events: none;
+        width: 0;
+        height: 0;
       }
 
-      .rating-group label {
-        background: var(--muted);
-        padding: 0.45rem 0.6rem;
-        border-radius: var(--radius);
-        cursor: pointer;
-        transition: all 0.3s;
-        font-weight: 500;
-        text-align: center;
-        border: 2px solid transparent;
-        display: block;
-        font-size: 0.85rem;
-      }
-
-      .rating-group label:hover {
-        border-color: var(--primary);
-        transform: translateY(-2px);
-      }
-
-      .rating-group input[type="radio"]:checked + label {
-        background: var(--primary);
-        color: var(--primary-foreground);
-        transform: scale(1.05);
-        border-color: var(--primary);
-      }
-
-      .rating-group input[type="radio"]:focus + label {
-        outline: 2px solid var(--primary);
-        outline-offset: 2px;
-      }
-
-      /* Checkbox group styles */
-      .checkbox-group {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 0.6rem;
-        margin-top: 0.4rem;
-      }
-
-      .checkbox-wrapper {
+      .feedback-rating-button label {
         display: flex;
-        align-items: center;
-        gap: 0.4rem;
-      }
-
-      input[type="checkbox"] {
-        accent-color: var(--primary);
-        cursor: pointer;
-        width: 18px;
-        height: 18px;
-        flex-shrink: 0;
-      }
-
-      input[type="checkbox"]:focus {
-        outline: 2px solid var(--primary);
-        outline-offset: 2px;
-      }
-
-      .checkbox-wrapper label {
-        margin: 0;
-        cursor: pointer;
-        font-weight: 400;
-        font-size: 0.85rem;
-      }
-
-      /* Buttons */
-      .btn {
-        background: var(--primary);
-        color: var(--primary-foreground);
-        border: none;
-        padding: 0.6rem 1.2rem;
-        border-radius: var(--radius);
-        cursor: pointer;
-        transition: 0.3s;
-        font-weight: 600;
-        display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 0.3rem;
-        font-size: 0.9rem;
-        min-width: 100px;
-      }
-
-      .btn:hover {
-        transform: scale(1.05);
-        background: var(--secondary);
-      }
-
-      .btn:focus {
-        outline: 2px solid var(--primary);
-        outline-offset: 2px;
-      }
-
-      .btn.secondary {
-        background: var(--accent);
-        color: var(--foreground);
-      }
-
-      .form-actions {
-        display: flex;
-        justify-content: flex-end;
-        gap: 0.8rem;
-        margin-top: 1.2rem;
-        flex-wrap: wrap;
-      }
-
-      /* Error messages */
-      .error-msg {
-        color: var(--error);
-        font-size: 0.8rem;
-        margin-top: 0.2rem;
-        font-weight: 500;
-        display: block;
-      }
-
-      /* Success messages */
-      .success-msg {
-        color: var(--success);
-        font-size: 0.8rem;
-        margin-top: 0.2rem;
-        font-weight: 500;
-        display: block;
-      }
-
-      /* Toast notification */
-      .toast {
-        position: fixed;
-        bottom: 1.2rem;
-        right: 1.2rem;
-        background: var(--primary);
-        color: var(--primary-foreground);
-        padding: 0.8rem 1.2rem;
+        gap: 0.5rem;
+        padding: 0.75rem 0.5rem;
+        border: 1px solid hsl(var(--border));
         border-radius: var(--radius);
-        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-        animation: fadeInUp 0.5s ease, fadeOut 0.5s ease 3s;
-        z-index: 1000;
-        max-width: 90%;
-        font-size: 0.9rem;
+        background: hsl(var(--background));
+        color: hsl(var(--muted-foreground));
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        text-align: center;
       }
 
-      /* Animations */
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
+      .feedback-rating-button input[type="radio"]:checked + label {
+        background: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+        border-color: hsl(var(--primary));
       }
 
-      @keyframes slideUp {
-        from {
-          transform: translateY(15px);
-          opacity: 0;
-        }
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
+      .feedback-rating-button label:hover {
+        background: hsl(var(--muted));
+        border-color: hsl(var(--primary) / 0.5);
       }
 
-      @keyframes fadeInUp {
-        from {
-          transform: translateY(8px);
-          opacity: 0;
-        }
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
+      .feedback-rating-button input[type="radio"]:checked + label:hover {
+        background: hsl(var(--primary) / 0.9);
       }
 
-      @keyframes fadeOut {
-        to {
-          opacity: 0;
-        }
+      /* Checkbox Group */
+      .feedback-checkbox-group {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        gap: 0.75rem;
       }
 
-      /* Responsive Design */
-      @media (max-width: 768px) {
-        .container {
-          width: 95%;
-          padding: 0 0.5rem;
+      .feedback-checkbox-wrapper {
+        position: relative;
+        cursor: pointer;
+      }
+
+      .feedback-checkbox-wrapper input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .feedback-checkbox-wrapper label {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        padding: 0.875rem 1rem;
+        border: 1px solid hsl(var(--border));
+        border-radius: var(--radius);
+        background: hsl(var(--background));
+        transition: all 0.2s ease;
+        margin: 0;
+        cursor: pointer;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: hsl(var(--foreground));
+        user-select: none;
+      }
+
+      .feedback-checkbox-wrapper label:before {
+        content: "";
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        min-width: 20px;
+        border: 2px solid hsl(var(--border));
+        border-radius: 4px;
+        background: hsl(var(--background));
+        transition: all 0.2s ease;
+      }
+
+      .feedback-checkbox-wrapper:hover label {
+        background: hsl(var(--muted));
+        border-color: hsl(var(--primary) / 0.5);
+      }
+
+      .feedback-checkbox-wrapper:hover label:before {
+        border-color: hsl(var(--primary));
+      }
+
+      .feedback-checkbox-wrapper input[type="checkbox"]:checked + label {
+        background: hsl(var(--primary) / 0.1);
+        border-color: hsl(var(--primary));
+      }
+
+      .feedback-checkbox-wrapper input[type="checkbox"]:checked + label:before {
+        background: hsl(var(--primary));
+        border-color: hsl(var(--primary));
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+
+      .feedback-checkbox-wrapper input[type="checkbox"]:focus + label {
+        outline: none;
+        box-shadow: 0 0 0 3px hsl(var(--ring) / 0.1);
+      }
+
+      /* Form Actions */
+      .feedback-form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        justify-content: flex-end;
+      }
+
+      .feedback-btn-reset {
+        background: hsl(var(--muted));
+        color: hsl(var(--foreground));
+        border: 1px solid hsl(var(--border));
+      }
+
+      .feedback-btn-reset:hover {
+        background: hsl(var(--muted) / 0.7);
+      }
+
+      .feedback-btn-submit {
+        background: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+      }
+
+      .feedback-btn-submit:hover {
+        background: hsl(var(--primary) / 0.9);
+      }
+
+      /* Fieldset */
+      .feedback-fieldset {
+        border: 1px solid hsl(var(--border));
+        border-radius: calc(var(--radius) * 1.5);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(
+          to bottom,
+          hsl(var(--background)),
+          hsl(var(--background) / 0.5)
+        );
+      }
+
+      .feedback-fieldset .feedback-form-group:last-of-type {
+        margin-bottom: 0;
+      }
+
+      .feedback-fieldset-legend {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+        font-weight: 700;
+        color: hsl(var(--primary));
+        padding: 0 0.75rem;
+      }
+
+      .auto-fill-badge {
+        display: none;
+        margin-left: 0.5rem;
+        font-size: 0.75rem;
+        color: hsl(var(--primary));
+        font-weight: 600;
+      }
+
+      /* Responsive */
+      @media (max-width: 640px) {
+        .feedback-page-form {
+          padding: 1.5rem;
         }
 
-        header {
-          justify-content: flex-start;
-          padding-left: 0.8rem;
-        }
-
-        .rating-group {
+        .feedback-rating-buttons {
           grid-template-columns: 1fr;
         }
 
-        .checkbox-group {
+        .feedback-checkbox-group {
           grid-template-columns: 1fr;
         }
 
-        .form-actions {
-          flex-direction: column;
-          justify-content: stretch;
+        .feedback-form-actions {
+          flex-direction: column-reverse;
         }
 
-        .btn {
+        .feedback-form-actions button {
           width: 100%;
-        }
-      }
-
-      @media (max-width: 480px) {
-        header {
-          padding: 0.6rem 0.8rem;
-          font-size: 1rem;
-        }
-
-        .hero {
-          padding: 1rem 0.8rem;
-        }
-
-        form {
-          padding: 1rem;
-        }
-
-        .rating-group label {
-          padding: 0.4rem 0.5rem;
-          font-size: 0.8rem;
-        }
-      }
-
-      /* Large screens */
-      @media (min-width: 1200px) {
-        .container {
-          max-width: 650px;
-        }
-
-        .rating-group {
-          grid-template-columns: repeat(5, 1fr);
-        }
-      }
-
-      /* Print styles */
-      @media print {
-        header,
-        footer,
-        .btn {
-          display: none;
-        }
-
-        body {
-          background: white;
-        }
-
-        form {
-          box-shadow: none;
-          border: 1px solid #ccc;
-        }
-      }
-
-      /* High contrast mode support */
-      @media (prefers-contrast: more) {
-        :root {
-          --primary: #6b4226;
-          --border: #8b6f47;
-        }
-      }
-
-      /* Reduced motion support */
-      @media (prefers-reduced-motion: reduce) {
-        *,
-        *::before,
-        *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
         }
       }
     </style>
   </head>
 
   <body>
-    <main id="main" class="container">
-      <section class="hero" aria-labelledby="hero-title">
-        <h1 id="hero-title">
-          <span class="icon" aria-hidden="true">💬</span>
-          Share Your Feedback
-        </h1>
-        <p>Your opinions matter! Help us improve our services.</p>
-      </section>
+    <header class="top-header">
+      <nav class="nav-container">
+        <a class="logo" href="./index.html">DreamSpace</a>
 
-      <form id="feedbackForm" novalidate aria-label="Feedback Form">
-        <div class="form-group">
-          <label for="name">Full Name</label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            placeholder="e.g. Riya"
-            required
-            aria-required="true"
-            aria-describedby="errorName"
-            autocomplete="name"
-          />
-          <span
-            id="errorName"
-            class="error-msg"
-            role="alert"
-            aria-live="polite"
-          ></span>
-        </div>
+        <!-- Menu Toggle with Lucide Icons -->
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+          <i data-lucide="menu" class="menu-icon"></i>
+          <i data-lucide="x" class="close-icon"></i>
+        </button>
 
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="e.g. riya@email.com"
-            required
-            aria-required="true"
-            aria-describedby="errorEmail"
-            autocomplete="email"
-          />
-          <span
-            id="errorEmail"
-            class="error-msg"
-            role="alert"
-            aria-live="polite"
-          ></span>
-        </div>
-
-        <div
-          class="form-group"
-          role="radiogroup"
-          aria-required="true"
-          aria-describedby="errorRating"
-        >
-          <div class="label">Overall Experience</div>
-          <div class="rating-group">
-            <input type="radio" id="rate5" name="rating" value="5" />
-            <label for="rate5">Excellent</label>
-
-            <input type="radio" id="rate4" name="rating" value="4" />
-            <label for="rate4">Good</label>
-
-            <input type="radio" id="rate3" name="rating" value="3" />
-            <label for="rate3">Average</label>
-
-            <input type="radio" id="rate2" name="rating" value="2" />
-            <label for="rate2">Poor</label>
-
-            <input type="radio" id="rate1" name="rating" value="1" />
-            <label for="rate1">Very Poor</label>
-          </div>
-          <span
-            id="errorRating"
-            class="error-msg"
-            role="alert"
-            aria-live="polite"
-          ></span>
-        </div>
-
-        <div class="form-group">
-          <label for="serviceType">Service You Used</label>
-          <select
-            id="serviceType"
-            name="serviceType"
-            required
-            aria-required="true"
-            aria-describedby="errorService"
-          >
-            <option value="">Select a service</option>
-            <option value="consultation">Consultation</option>
-            <option value="home-design">Home Design</option>
-            <option value="office-design">Office Design</option>
-            <option value="renovation">Renovation</option>
-            <option value="3d-design">3D Design</option>
-            <option value="custom-furniture">Custom Furniture</option>
-          </select>
-          <span
-            id="errorService"
-            class="error-msg"
-            role="alert"
-            aria-live="polite"
-          ></span>
-        </div>
-
-        <div class="form-group">
-          <p class="label">What Did You Like?</p>
-          <div
-            class="checkbox-group"
-            role="group"
-            aria-describedby="errorLikes"
-          >
-            <div class="checkbox-wrapper">
-              <input
-                type="checkbox"
-                id="quality"
-                name="likes"
-                value="quality"
-              />
-              <label for="quality">Quality of Work</label>
+        <ul class="nav-links" id="navLinks">
+          <!-- User Welcome (Mobile Only - Shows at top when authenticated) -->
+          <li class="user-welcome" id="userWelcome">
+            <div class="user-welcome-content">
+              <span class="welcome-text">Welcome,</span>
+              <span class="user-name-display" id="userNameMobile"></span>
             </div>
-            <div class="checkbox-wrapper">
-              <input
-                type="checkbox"
-                id="professionalism"
-                name="likes"
-                value="professionalism"
-              />
-              <label for="professionalism">Professionalism</label>
-            </div>
-            <div class="checkbox-wrapper">
-              <input
-                type="checkbox"
-                id="communication"
-                name="likes"
-                value="communication"
-              />
-              <label for="communication">Communication</label>
-            </div>
-            <div class="checkbox-wrapper">
-              <input
-                type="checkbox"
-                id="timeliness"
-                name="likes"
-                value="timeliness"
-              />
-              <label for="timeliness">Timeliness</label>
-            </div>
-            <div class="checkbox-wrapper">
-              <input
-                type="checkbox"
-                id="creativity"
-                name="likes"
-                value="creativity"
-              />
-              <label for="creativity">Creativity</label>
-            </div>
-          </div>
-          <span
-            id="errorLikes"
-            class="error-msg"
-            role="alert"
-            aria-live="polite"
-          ></span>
-        </div>
+          </li>
 
-        <div class="form-group">
-          <label for="comments">Additional Comments (optional)</label>
-          <textarea
-            id="comments"
-            name="comments"
-            placeholder="Share your feedback..."
-            aria-describedby="comments-hint"
-          ></textarea>
-          <span id="comments-hint" class="sr-only"
-            >Optional field for additional feedback</span
-          >
-        </div>
+          <!-- Navigation Links -->
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./booking.html">Consultation</a></li>
+          <li><a href="./projects.html">Projects</a></li>
+          <li><a href="./products.html">Products</a></li>
+          <li><a href="./services.html">Services</a></li>
 
-        <div class="form-actions">
-          <button type="reset" class="btn secondary" aria-label="Reset form">
-            <span class="icon" aria-hidden="true">↺</span>
-            Reset
-          </button>
-          <button type="submit" class="btn" aria-label="Submit feedback form">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
+          <!-- Theme Toggle -->
+          <li>
+            <button
+              class="theme-toggle"
+              id="themeToggle"
+              aria-label="Toggle theme"
             >
-              <line x1="22" y1="2" x2="11" y2="13"></line>
-              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-            </svg>
+              <i
+                data-lucide="moon"
+                class="theme-icon moon-icon"
+                id="moonIcon"
+              ></i>
+              <i data-lucide="sun" class="theme-icon sun-icon" id="sunIcon"></i>
+              <span class="theme-text" id="themeText">Dark Mode</span>
+            </button>
+          </li>
+
+          <!-- Auth Section - Login/Signup (Hidden when authenticated) -->
+          <li class="auth-section" id="authSection" style="display: none">
+            <a href="./login.html" class="btn btn-outline auth-btn">
+              <i data-lucide="log-in"></i>
+              Login
+            </a>
+            <a href="./sign-up.html" class="btn btn-primary auth-btn">
+              <i data-lucide="user-plus"></i>
+              Sign Up
+            </a>
+          </li>
+
+          <!-- User Section - Name & Logout (Hidden when not authenticated) -->
+          <li class="user-section" id="userSection" style="display: none">
+            <button class="btn btn-primary" id="logoutBtn">
+              <i data-lucide="log-out"></i>
+              Logout
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="feedback-page-container">
+      <div class="feedback-page-hero">
+        <h1>Share Your Feedback</h1>
+        <p>Your opinions matter! Help us improve our services.</p>
+      </div>
+
+      <form class="feedback-page-form" id="feedbackForm" novalidate>
+        <!-- Personal Information -->
+        <fieldset class="feedback-fieldset">
+          <legend class="feedback-fieldset-legend">
+            <i data-lucide="user"></i>
+            Your Information
+          </legend>
+
+          <div class="feedback-form-group">
+            <label for="name"
+              >Name<span id="autoFilledNameBadge" class="auto-fill-badge">
+                ✓ Auto-filled
+              </span></label
+            >
+            <input
+              id="name"
+              name="name"
+              type="text"
+              placeholder="Enter your name"
+              required
+            />
+            <span class="feedback-error-msg" id="errorName"></span>
+          </div>
+
+          <div class="feedback-form-group">
+            <label for="email"
+              >Email<span id="autoFilledEmailBadge" class="auto-fill-badge">
+                ✓ Auto-filled
+              </span></label
+            >
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="name@example.com"
+              required
+            />
+            <span class="feedback-error-msg" id="errorEmail"></span>
+          </div>
+        </fieldset>
+
+        <!-- Feedback Details -->
+        <fieldset class="feedback-fieldset">
+          <legend class="feedback-fieldset-legend">
+            <i data-lucide="star"></i>
+            Your Experience
+          </legend>
+
+          <div class="feedback-form-group">
+            <div class="feedback-rating-group-label">Overall Experience</div>
+            <div class="feedback-rating-buttons">
+              <div class="feedback-rating-button">
+                <input type="radio" id="rate5" name="rating" value="5" />
+                <label for="rate5">Excellent</label>
+              </div>
+              <div class="feedback-rating-button">
+                <input type="radio" id="rate4" name="rating" value="4" />
+                <label for="rate4">Good</label>
+              </div>
+              <div class="feedback-rating-button">
+                <input type="radio" id="rate3" name="rating" value="3" />
+                <label for="rate3">Average</label>
+              </div>
+              <div class="feedback-rating-button">
+                <input type="radio" id="rate2" name="rating" value="2" />
+                <label for="rate2">Poor</label>
+              </div>
+              <div class="feedback-rating-button">
+                <input type="radio" id="rate1" name="rating" value="1" />
+                <label for="rate1">Very Poor</label>
+              </div>
+            </div>
+            <span class="feedback-error-msg" id="errorRating"></span>
+          </div>
+
+          <div class="feedback-form-group">
+            <label for="serviceType">Service You Used</label>
+            <select id="serviceType" name="serviceType" required>
+              <option value="">Select a service</option>
+              <option value="consultation">Consultation</option>
+              <option value="home-design">Home Design</option>
+              <option value="office-design">Office Design</option>
+              <option value="renovation">Renovation</option>
+              <option value="custom-furniture">Custom Furniture</option>
+            </select>
+            <span class="feedback-error-msg" id="errorService"></span>
+          </div>
+
+          <div class="feedback-form-group">
+            <div class="feedback-rating-group-label">What Did You Like?</div>
+            <div class="feedback-checkbox-group">
+              <div class="feedback-checkbox-wrapper">
+                <input
+                  type="checkbox"
+                  id="quality"
+                  name="likes"
+                  value="quality"
+                />
+                <label for="quality">Quality of Work</label>
+              </div>
+              <div class="feedback-checkbox-wrapper">
+                <input
+                  type="checkbox"
+                  id="professionalism"
+                  name="likes"
+                  value="professionalism"
+                />
+                <label for="professionalism">Professionalism</label>
+              </div>
+              <div class="feedback-checkbox-wrapper">
+                <input
+                  type="checkbox"
+                  id="communication"
+                  name="likes"
+                  value="communication"
+                />
+                <label for="communication">Communication</label>
+              </div>
+              <div class="feedback-checkbox-wrapper">
+                <input
+                  type="checkbox"
+                  id="timeliness"
+                  name="likes"
+                  value="timeliness"
+                />
+                <label for="timeliness">Timeliness</label>
+              </div>
+              <div class="feedback-checkbox-wrapper">
+                <input
+                  type="checkbox"
+                  id="creativity"
+                  name="likes"
+                  value="creativity"
+                />
+                <label for="creativity">Creativity</label>
+              </div>
+            </div>
+            <span class="feedback-error-msg" id="errorLikes"></span>
+          </div>
+
+          <div class="feedback-form-group">
+            <label for="comments">Additional Comments (Optional)</label>
+            <textarea
+              id="comments"
+              name="comments"
+              placeholder="Share your feedback..."
+            ></textarea>
+          </div>
+        </fieldset>
+
+        <!-- Actions -->
+        <div class="feedback-form-actions">
+          <button type="reset" class="btn feedback-btn-reset">
+            <i data-lucide="rotate-ccw"></i>
+            Clear Form
+          </button>
+          <button type="submit" class="btn feedback-btn-submit">
+            <i data-lucide="send"></i>
             Submit Feedback
           </button>
         </div>
       </form>
     </main>
 
+    <!-- Footer -->
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h3>DreamSpace</h3>
+          <p>
+            Creating exceptional interiors that inspire and delight since 2010.
+          </p>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook">
+              <i data-lucide="facebook"></i>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <i data-lucide="instagram"></i>
+            </a>
+            <a href="#" aria-label="Twitter">
+              <i data-lucide="twitter"></i>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <i data-lucide="linkedin"></i>
+            </a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="./booking.html">Schedule Consultation</a></li>
+            <li><a href="./projects.html">Projects</a></li>
+            <li><a href="./products.html">Products</a></li>
+            <li><a href="./wishlist.html">Products Wishlist</a></li>
+            <li><a href="./about.html">About Us</a></li>
+            <li><a href="./contact.html">Contact Us</a></li>
+            <li><a href="./feedback.html">Share Feedback</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Services</h3>
+          <ul>
+            <li><a href="#">Residential Design</a></li>
+            <li><a href="#">Commercial Design</a></li>
+            <li><a href="#">Space Planning</a></li>
+            <li><a href="#">Renovation</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Newsletter</h3>
+          <p>Subscribe for design tips and inspiration</p>
+          <form class="newsletter-form">
+            <div class="form-group">
+              <input
+                type="email"
+                class="form-input"
+                placeholder="Enter your email"
+                required
+              />
+              <button type="submit" class="btn btn-primary">Subscribe</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 DreamSpace Interior Design. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <div id="toast" class="toast"></div>
+
     <script>
-      // Form and field references
-      const form = document.getElementById("feedbackForm");
-      const fields = {
-        name: document.getElementById("name"),
-        email: document.getElementById("email"),
-        serviceType: document.getElementById("serviceType"),
-        rating: document.getElementsByName("rating"),
-        likes: document.getElementsByName("likes"),
-        comments: document.getElementById("comments"),
+      // Auto-fill user data if authenticated
+      document.addEventListener("DOMContentLoaded", () => {
+        const currentUser = getCurrentUser();
+
+        if (currentUser) {
+          // User is authenticated - pre-fill and disable fields
+          const nameField = document.getElementById("name");
+          const emailField = document.getElementById("email");
+
+          // Pre-fill email (preferred)
+          if (currentUser.email) {
+            emailField.value = currentUser.email;
+            emailField.disabled = true;
+            emailField.style.backgroundColor = "hsl(var(--muted))";
+            emailField.style.cursor = "not-allowed";
+            document.getElementById("autoFilledEmailBadge").style.display =
+              "inline";
+          }
+
+          // Pre-fill name if available
+          if (currentUser.name) {
+            nameField.value = currentUser.name;
+            nameField.disabled = true;
+            nameField.style.backgroundColor = "hsl(var(--muted))";
+            nameField.style.cursor = "not-allowed";
+            document.getElementById("autoFilledNameBadge").style.display =
+              "inline";
+          }
+        }
+      });
+
+      // Validation helpers
+      const showFeedbackError = (id, msg) => {
+        const el = document.getElementById(id);
+        el.textContent = msg;
+        el.classList.add("show");
+        const inputId = id.replace("error", "").toLowerCase();
+        const inputElement = document.getElementById(inputId);
+        if (inputElement) inputElement.classList.add("feedback-error");
+      };
+
+      const clearFeedbackError = (id) => {
+        const el = document.getElementById(id);
+        el.textContent = "";
+        el.classList.remove("show");
+        const inputId = id.replace("error", "").toLowerCase();
+        const inputElement = document.getElementById(inputId);
+        if (inputElement) inputElement.classList.remove("feedback-error");
       };
 
       // Validation functions
-      const validateName = (name) => {
+      const validateFeedbackName = (name) => {
         const trimmedName = name.trim();
         if (trimmedName.length < 2) {
           return {
@@ -724,21 +698,7 @@
         return { valid: true };
       };
 
-      const validateEmail = (email) => {
-        const trimmedEmail = email.trim();
-        if (!trimmedEmail) {
-          return { valid: false, message: "Email is required" };
-        }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
-          return {
-            valid: false,
-            message: "Please enter a valid email address",
-          };
-        }
-        return { valid: true };
-      };
-
-      const validateRating = () => {
+      const validateFeedbackRating = () => {
         const ratingSelected = document.querySelector(
           'input[name="rating"]:checked'
         );
@@ -748,14 +708,14 @@
         return { valid: true };
       };
 
-      const validateService = (service) => {
+      const validateFeedbackService = (service) => {
         if (!service) {
           return { valid: false, message: "Please select a service" };
         }
         return { valid: true };
       };
 
-      const validateLikes = () => {
+      const validateFeedbackLikes = () => {
         const likesSelected =
           document.querySelectorAll('input[name="likes"]:checked').length > 0;
         if (!likesSelected) {
@@ -764,96 +724,50 @@
         return { valid: true };
       };
 
-      // Error handling functions
-      const showError = (id, msg) => {
-        const errorElement = document.getElementById(id);
-        errorElement.textContent = msg;
-
-        // Add error styling to the input
-        const inputId = id.replace("error", "").toLowerCase();
-        const inputElement = document.getElementById(inputId);
-        if (inputElement) {
-          inputElement.setAttribute("aria-invalid", "true");
-        }
-      };
-
-      const clearError = (id) => {
-        const errorElement = document.getElementById(id);
-        errorElement.textContent = "";
-
-        // Remove error styling from the input
-        const inputId = id.replace("error", "").toLowerCase();
-        const inputElement = document.getElementById(inputId);
-        if (inputElement) {
-          inputElement.setAttribute("aria-invalid", "false");
-        }
-      };
-
       // Real-time validation
-      form.name.addEventListener("blur", () => {
-        const result = validateName(form.name.value);
-        if (!result.valid) {
-          showError("errorName", result.message);
-        } else {
-          clearError("errorName");
-        }
-      });
+      const form = document.getElementById("feedbackForm");
 
-      form.name.addEventListener("input", () => {
-        if (form.name.value.trim().length > 0) {
-          const result = validateName(form.name.value);
-          if (result.valid) {
-            clearError("errorName");
-          }
+      form.name.addEventListener("blur", () => {
+        const result = validateFeedbackName(form.name.value);
+        if (!result.valid) {
+          showFeedbackError("errorName", result.message);
+        } else {
+          clearFeedbackError("errorName");
         }
       });
 
       form.email.addEventListener("blur", () => {
         const result = validateEmail(form.email.value);
         if (!result.valid) {
-          showError("errorEmail", result.message);
+          showFeedbackError("errorEmail", result.message);
         } else {
-          clearError("errorEmail");
+          clearFeedbackError("errorEmail");
         }
       });
 
-      form.email.addEventListener("input", () => {
-        if (form.email.value.trim().length > 0) {
-          const result = validateEmail(form.email.value);
-          if (result.valid) {
-            clearError("errorEmail");
-          }
-        }
-      });
-
-      // Add validation for radio buttons
-      const ratingInputs = document.querySelectorAll('input[name="rating"]');
-      ratingInputs.forEach((input) => {
+      document.querySelectorAll('input[name="rating"]').forEach((input) => {
         input.addEventListener("change", () => {
-          const result = validateRating();
+          const result = validateFeedbackRating();
           if (result.valid) {
-            clearError("errorRating");
+            clearFeedbackError("errorRating");
           }
         });
       });
 
-      // Add validation for service dropdown
       form.serviceType.addEventListener("change", () => {
-        const result = validateService(form.serviceType.value);
+        const result = validateFeedbackService(form.serviceType.value);
         if (!result.valid) {
-          showError("errorService", result.message);
+          showFeedbackError("errorService", result.message);
         } else {
-          clearError("errorService");
+          clearFeedbackError("errorService");
         }
       });
 
-      // Add validation for checkboxes
-      const likeCheckboxes = document.querySelectorAll('input[name="likes"]');
-      likeCheckboxes.forEach((checkbox) => {
+      document.querySelectorAll('input[name="likes"]').forEach((checkbox) => {
         checkbox.addEventListener("change", () => {
-          const result = validateLikes();
+          const result = validateFeedbackLikes();
           if (result.valid) {
-            clearError("errorLikes");
+            clearFeedbackError("errorLikes");
           }
         });
       });
@@ -862,50 +776,48 @@
       form.addEventListener("submit", (e) => {
         e.preventDefault();
 
-        // Validate all fields
-        const nameResult = validateName(form.name.value);
+        const nameResult = validateFeedbackName(form.name.value);
         const emailResult = validateEmail(form.email.value);
-        const ratingResult = validateRating();
-        const serviceResult = validateService(form.serviceType.value);
-        const likesResult = validateLikes();
+        const ratingResult = validateFeedbackRating();
+        const serviceResult = validateFeedbackService(form.serviceType.value);
+        const likesResult = validateFeedbackLikes();
 
         let valid = true;
         let firstErrorField = null;
 
         if (!nameResult.valid) {
-          showError("errorName", nameResult.message);
+          showFeedbackError("errorName", nameResult.message);
           if (!firstErrorField) firstErrorField = form.name;
           valid = false;
         }
 
         if (!emailResult.valid) {
-          showError("errorEmail", emailResult.message);
+          showFeedbackError("errorEmail", emailResult.message);
           if (!firstErrorField) firstErrorField = form.email;
           valid = false;
         }
 
         if (!ratingResult.valid) {
-          showError("errorRating", ratingResult.message);
+          showFeedbackError("errorRating", ratingResult.message);
           if (!firstErrorField)
             firstErrorField = document.getElementById("rate5");
           valid = false;
         }
 
         if (!serviceResult.valid) {
-          showError("errorService", serviceResult.message);
+          showFeedbackError("errorService", serviceResult.message);
           if (!firstErrorField) firstErrorField = form.serviceType;
           valid = false;
         }
 
         if (!likesResult.valid) {
-          showError("errorLikes", likesResult.message);
+          showFeedbackError("errorLikes", likesResult.message);
           if (!firstErrorField)
             firstErrorField = document.getElementById("quality");
           valid = false;
         }
 
         if (valid) {
-          // Collect form data
           const formData = {
             name: form.name.value.trim(),
             email: form.email.value.trim(),
@@ -918,46 +830,34 @@
             comments: form.comments.value.trim(),
           };
 
-          // Show success message
-          showToast("Thank you for your feedback! We appreciate your input.");
-
-          // Reset form
+          console.log("Feedback Data:", formData);
+          showToast(
+            "Thank you for your feedback! We appreciate your input. 🎉",
+            "success"
+          );
           form.reset();
-
-          // Clear all error messages
           [
             "errorName",
             "errorEmail",
             "errorRating",
             "errorService",
             "errorLikes",
-          ].forEach(clearError);
-        } else {
-          // Focus on first error field
-          if (firstErrorField) {
-            firstErrorField.focus();
-          }
+          ].forEach(clearFeedbackError);
+        } else if (firstErrorField) {
+          firstErrorField.focus();
         }
       });
 
-      // Toast notification
-      function showToast(msg) {
-        const existingToast = document.querySelector(".toast");
-        if (existingToast) existingToast.remove();
-
-        const toast = document.createElement("div");
-        toast.className = "toast";
-        toast.setAttribute("role", "status");
-        toast.setAttribute("aria-live", "polite");
-        toast.textContent = msg;
-        document.body.appendChild(toast);
-
-        setTimeout(() => {
-          if (toast.parentNode) {
-            toast.parentNode.removeChild(toast);
-          }
-        }, 3500);
-      }
+      // Reset handler
+      form.addEventListener("reset", () => {
+        [
+          "errorName",
+          "errorEmail",
+          "errorRating",
+          "errorService",
+          "errorLikes",
+        ].forEach(clearFeedbackError);
+      });
     </script>
   </body>
 </html>
