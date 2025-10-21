@@ -123,14 +123,15 @@
 
       /* Radio Button Groups as Buttons */
       .radio-buttons {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        display: flex;
+        flex-wrap: wrap;
         gap: 0.75rem;
         margin-bottom: 1.5rem;
       }
 
       .radio-button {
         position: relative;
+        flex-grow: 1;
       }
 
       .radio-button input[type="radio"] {
@@ -414,35 +415,35 @@
         <fieldset class="form-fieldset">
           <legend class="fieldset-legend">
             <i data-lucide="briefcase"></i>
-            Project Details
+            Service Details
           </legend>
 
-          <div class="radio-group-label">Project Type</div>
+          <div class="radio-group-label">Service Type</div>
           <div class="radio-buttons">
             <div class="radio-button">
               <input
                 type="radio"
-                id="designHome"
+                id="designResidential"
                 name="designType"
-                value="Home"
+                value="Residential Design"
                 required
               />
-              <label for="designHome">
+              <label for="designResidential">
                 <i data-lucide="home"></i>
-                Home
+                Residential
               </label>
             </div>
             <div class="radio-button">
               <input
                 type="radio"
-                id="designOffice"
+                id="designCommercial"
                 name="designType"
-                value="Office"
+                value="Commercial Design"
                 required
               />
-              <label for="designOffice">
+              <label for="designCommercial">
                 <i data-lucide="briefcase"></i>
-                Office
+                Commercial
               </label>
             </div>
             <div class="radio-button">
@@ -461,32 +462,58 @@
           </div>
           <span class="error-message" id="errorDesign"></span>
 
-          <div class="radio-group-label">Add-on Services</div>
+          <div class="radio-group-label">Specific Service</div>
           <div class="radio-buttons">
             <div class="radio-button">
               <input
                 type="radio"
-                id="addonColor"
+                id="addonConsultation"
                 name="addon"
-                value="Color Consultation"
+                value="Consultation Only"
                 required
               />
-              <label for="addonColor">
-                <i data-lucide="palette"></i>
-                Color Consultation
+              <label for="addonConsultation">
+                <i data-lucide="calendar"></i>
+                Consultation
               </label>
             </div>
             <div class="radio-button">
               <input
                 type="radio"
-                id="addonLayout"
+                id="addonKitchen"
                 name="addon"
-                value="Layout Planning"
+                value="Modular Kitchen"
                 required
               />
-              <label for="addonLayout">
-                <i data-lucide="layout"></i>
-                Layout Planning
+              <label for="addonKitchen">
+                <i data-lucide="chef-hat"></i>
+                Modular Kitchen
+              </label>
+            </div>
+            <div class="radio-button">
+              <input
+                type="radio"
+                id="addonFurniture"
+                name="addon"
+                value="Custom Furniture"
+                required
+              />
+              <label for="addonFurniture">
+                <i data-lucide="sofa"></i>
+                Custom Furniture
+              </label>
+            </div>
+            <div class="radio-button">
+              <input
+                type="radio"
+                id="addonComplete"
+                name="addon"
+                value="Complete Interior"
+                required
+              />
+              <label for="addonComplete">
+                <i data-lucide="home"></i>
+                Complete Design
               </label>
             </div>
           </div>
@@ -575,10 +602,22 @@
         <div class="footer-section">
           <h3>Services</h3>
           <ul>
-            <li><a href="#">Residential Design</a></li>
-            <li><a href="#">Commercial Design</a></li>
-            <li><a href="#">Space Planning</a></li>
-            <li><a href="#">Renovation</a></li>
+            <li>
+              <a href="./services.html#personalized-design"
+                >Personalized Design</a
+              >
+            </li>
+            <li><a href="./services.html#wall-painting">Wall Painting</a></li>
+            <li>
+              <a href="./services.html#furniture-design">Custom Furniture</a>
+            </li>
+            <li>
+              <a href="./services.html#lighting-decor">Lighting & Décor</a>
+            </li>
+            <li>
+              <a href="./services.html#modular-kitchen">Modular Kitchen</a>
+            </li>
+            <li><a href="./services.html#space-planning">Space Planning</a></li>
           </ul>
         </div>
         <div class="footer-section">
