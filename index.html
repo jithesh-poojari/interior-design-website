@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DreamSpace</title>
-    <link rel="stylesheet" href="css/globals.css" />
+
     <link
       rel="preload"
       href="./assets/fonts/Inter-VariableFont.woff2"
@@ -17,6 +17,7 @@
       as="font"
       type="font/woff2"
     />
+    <link rel="stylesheet" href="css/globals.css" />
 
     <script src="https://unpkg.com/lucide@latest"></script>
     <script defer src="./script.js"></script>
@@ -527,12 +528,16 @@
         border-radius: var(--radius);
         padding: 2rem;
         text-align: center;
-        transition: all 0.2s ease;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: block;
+        cursor: pointer;
       }
 
       .contact-item:hover {
-        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
-          0 2px 4px -2px rgb(0 0 0 / 0.1);
+        box-shadow: 0 10px 20px -5px rgb(0 0 0 / 0.15);
+        transform: translateY(-5px);
+        border-color: hsl(var(--primary));
       }
 
       .contact-item-icon {
@@ -545,7 +550,13 @@
         align-items: center;
         justify-content: center;
         margin-bottom: 1rem;
-        transition: all 0.4s ease;
+        transition: all 0.3s ease;
+      }
+
+      .contact-item:hover .contact-item-icon {
+        background: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+        transform: scale(1.1);
       }
 
       .contact-item h4 {
@@ -556,16 +567,19 @@
         transition: color 0.4s ease;
       }
 
-      .contact-item a,
       .contact-item p {
         color: hsl(var(--muted-foreground));
         font-size: 0.875rem;
-        transition: color 0.4s ease;
-        text-decoration: none;
+        transition: color 0.3s ease;
+        margin: 0;
       }
 
-      .contact-item a:hover {
-        text-decoration: underline;
+      .contact-item:hover h4 {
+        color: hsl(var(--primary));
+      }
+
+      .contact-item:hover p {
+        color: hsl(var(--foreground));
       }
 
       .contact-cta {
@@ -656,6 +670,10 @@
 
         .ba-image-wrapper {
           height: 200px;
+        }
+
+        .contact-item {
+          padding: 1.5rem;
         }
       }
     </style>
@@ -1150,36 +1168,42 @@
         <div class="section-header">
           <h2>Let's Design Your Dream Space</h2>
           <p>
-            We’re just a call or visit away — reach out and let’s begin your
+            We're just a call or visit away — reach out and let's begin your
             transformation
           </p>
         </div>
         <div class="contact-grid">
-          <div class="contact-item">
+          <!-- Phone Card -->
+          <a href="tel:+918762684336" class="contact-item">
             <div class="contact-item-icon">
               <i data-lucide="phone"></i>
             </div>
             <h4>Call Us</h4>
-            <a href="tel:+918762684336">+91 8762684336</a>
-          </div>
-          <div class="contact-item">
+            <p>+91 8762684336</p>
+          </a>
+
+          <!-- Email Card -->
+          <a href="mailto:hello@dreamspace.com" class="contact-item">
             <div class="contact-item-icon">
               <i data-lucide="mail"></i>
             </div>
             <h4>Email Us</h4>
-            <a href="mailto:hello@dreamspace.com">hello@dreamspace.com</a>
-          </div>
-          <div class="contact-item">
+            <p>hello@dreamspace.com</p>
+          </a>
+
+          <!-- Location Card -->
+          <a
+            href="https://www.google.com/maps/place/Arise+Studio/@13.3507555,74.7875712,20.5z/data=!4m6!3m5!1s0x3bbca5005543bc03:0xa0041dbb3ca8dea0!8m2!3d13.3508191!4d74.7875864!16s%2Fg%2F11w42kr50z?entry=ttu&g_ep=EgoyMDI1MTAxMi4wIKXMDSoASAFQAw%3D%3D"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="contact-item"
+          >
             <div class="contact-item-icon">
               <i data-lucide="map-pin"></i>
             </div>
             <h4>Visit Us</h4>
-            <a
-              href="https://www.google.com/maps/place/Arise+Studio/@13.3507555,74.7875712,20.5z/data=!4m6!3m5!1s0x3bbca5005543bc03:0xa0041dbb3ca8dea0!8m2!3d13.3508191!4d74.7875864!16s%2Fg%2F11w42kr50z?entry=ttu&g_ep=EgoyMDI1MTAxMi4wIKXMDSoASAFQAw%3D%3D"
-              target="_blank"
-              >DreamSpace, 1st floor, Arise Studio, Manipal 57104</a
-            >
-          </div>
+            <p>DreamSpace, 1st floor, Arise Studio, Manipal 57104</p>
+          </a>
         </div>
         <div class="contact-cta">
           <a href="./booking.html" class="btn btn-primary"

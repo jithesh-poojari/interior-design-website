@@ -28,9 +28,9 @@ const validateEmail = (val) => {
   return { valid: true };
 };
 
-// Hash password (simple - in production use bcrypt)
+// Hash password
 function hashPassword(password) {
-  // Simple hash for demo - USE PROPER HASHING IN PRODUCTION
+  // Simple hash for demo
   let hash = 0;
   for (let i = 0; i < password.length; i++) {
     const char = password.charCodeAt(i);
@@ -196,63 +196,7 @@ function updateNavigation() {
   lucide.createIcons();
 }
 
-// AUTHORIZATION
-const PUBLIC_PAGES = ["index.html", "login.html", "signup.html"];
-
-function isPublicPage() {
-  const currentPath = window.location.pathname;
-  const currentFile = currentPath.split("/").pop() || "index.html";
-  return PUBLIC_PAGES.includes(currentFile);
-}
-
 updateNavigation();
-
-// Prevent infinite redirect loop
-// let redirecting = false;
-
-// Auto-run on every page
-// document.addEventListener("DOMContentLoaded", () => {
-//   // Prevent running multiple times
-//   if (redirecting) return;
-
-//   const isAuth = isAuthenticated();
-//   const isPublic = isPublicPage();
-
-//   console.log("Page Check:", {
-//     currentPage: window.location.pathname,
-//     isAuthenticated: isAuth,
-//     isPublicPage: isPublic,
-//   });
-
-//   // Redirect logic with safety
-//   if (!isAuth && !isPublic) {
-//     // Not authenticated and trying to access protected page
-//     console.log("Redirecting to login...");
-//     redirecting = true;
-//     sessionStorage.setItem("redirectAfterLogin", window.location.pathname);
-//     setTimeout(() => {
-//       window.location.href = "./login.html";
-//     }, 100);
-//     return;
-//   }
-
-//   if (isAuth && isPublic) {
-//     // Authenticated and on login/signup page
-//     console.log("Already logged in, redirecting to home...");
-//     redirecting = true;
-//     const redirect = sessionStorage.getItem("redirectAfterLogin");
-//     sessionStorage.removeItem("redirectAfterLogin");
-//     setTimeout(() => {
-//       window.location.href = redirect || "./index.html";
-//     }, 100);
-//     return;
-//   }
-
-//   // Update navigation (only if not redirecting)
-//   if (!redirecting) {
-//     updateNavigation();
-//   }
-// });
 
 // Toast notification
 function showToast(message, type = "success") {
