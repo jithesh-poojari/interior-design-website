@@ -22,6 +22,13 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script defer src="./script.js"></script>
     <style>
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+
       /* Header */
       .header {
         text-align: center;
@@ -50,6 +57,7 @@
         flex-wrap: wrap;
         justify-content: center;
         margin-bottom: 2.5rem;
+        padding: 0 1.5rem;
       }
 
       .filter-tab {
@@ -212,27 +220,6 @@
         font-size: 0.75rem;
       }
 
-      .project-link {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        padding: 0.625rem 1rem;
-        background: hsl(var(--primary));
-        color: hsl(var(--primary-foreground));
-        text-decoration: none;
-        border-radius: var(--radius);
-        font-size: 0.875rem;
-        font-weight: 500;
-        transition: all 0.2s ease;
-        margin-top: 0.5rem;
-      }
-
-      .project-link:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px hsla(var(--primary), 0.3);
-      }
-
       /* Responsive */
       @media (max-width: 768px) {
         .projects-grid {
@@ -246,60 +233,46 @@
         .project-specs {
           grid-template-columns: 1fr;
         }
-      }
 
-      /* Loading Animation */
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          display: none;
-          transform: translateY(20px);
+        .header {
+          padding: 5rem 1.5rem 3rem;
         }
-        to {
-          opacity: 1;
-          display: flex;
-          transform: translateY(0);
+
+        .filter-tabs {
+          padding: 0 1rem;
         }
       }
 
-      @keyframes fadeOut {
-        from {
-          opacity: 1;
-          transform: translateY(0);
+      @media (max-width: 480px) {
+        .container {
+          padding: 0 1rem;
         }
-        to {
-          opacity: 0;
-          transform: translateY(-10px);
+
+        .header {
+          padding: 4.5rem 1rem 2.5rem;
+        }
+
+        .filter-tabs {
+          gap: 0.375rem;
+        }
+
+        .filter-tab {
+          padding: 0.375rem 1rem;
+          font-size: 0.8125rem;
+        }
+
+        .project-image {
+          height: 180px;
+        }
+
+        .project-content {
+          padding: 1rem;
         }
       }
-
-      /* .project-card {
-        animation: fadeIn 2s ease;
-      }
-
-      .project-card:nth-child(1) {
-        animation-delay: 0.05s;
-      }
-      .project-card:nth-child(2) {
-        animation-delay: 0.1s;
-      }
-      .project-card:nth-child(3) {
-        animation-delay: 0.15s;
-      }
-      .project-card:nth-child(4) {
-        animation-delay: 0.2s;
-      }
-      .project-card:nth-child(5) {
-        animation-delay: 0.25s;
-      }
-      .project-card:nth-child(6) {
-        animation-delay: 0.3s;
-      } */
     </style>
   </head>
   <body>
-    <!-- Navigation -->
-    <heade class="top-header">
+    <header class="top-header">
       <nav class="nav-container">
         <a class="logo" href="./index.html">DreamSpace</a>
 
@@ -310,29 +283,61 @@
         </button>
 
         <ul class="nav-links" id="navLinks">
+          <!-- User Welcome (Mobile Only - Shows at top when authenticated) -->
+          <li class="user-welcome" id="userWelcome">
+            <div class="user-welcome-content">
+              <span class="welcome-text">Welcome,</span>
+              <span class="user-name-display" id="userNameMobile"></span>
+            </div>
+          </li>
+
+          <!-- Navigation Links -->
           <li><a href="./index.html">Home</a></li>
-          <li><a href="./index.html#about">About</a></li>
+          <li><a href="./booking.html">Consultation</a></li>
           <li><a href="./projects.html">Projects</a></li>
+          <li><a href="./products.html">Products</a></li>
           <li><a href="./services.html">Services</a></li>
-          <li><a href="./index.html#contact">Contact</a></li>
+
+          <!-- Theme Toggle -->
           <li>
             <button
               class="theme-toggle"
               id="themeToggle"
               aria-label="Toggle theme"
             >
-              <span class="theme-icon moon-icon" id="moonIcon">
-                <i data-lucide="moon"></i>
-              </span>
-              <span class="theme-icon sun-icon" id="sunIcon">
-                <i data-lucide="sun"></i>
-              </span>
+              <i
+                data-lucide="moon"
+                class="theme-icon moon-icon"
+                id="moonIcon"
+              ></i>
+              <i data-lucide="sun" class="theme-icon sun-icon" id="sunIcon"></i>
               <span class="theme-text" id="themeText">Dark Mode</span>
+            </button>
+          </li>
+
+          <!-- Auth Section - Login/Signup (Hidden when authenticated) -->
+          <li class="auth-section" id="authSection" style="display: none">
+            <a href="./login.html" class="btn btn-outline auth-btn">
+              <i data-lucide="log-in"></i>
+              Login
+            </a>
+            <a href="./sign-up.html" class="btn btn-primary auth-btn">
+              <i data-lucide="user-plus"></i>
+              Sign Up
+            </a>
+          </li>
+
+          <!-- User Section - Name & Logout (Hidden when not authenticated) -->
+          <li class="user-section" id="userSection" style="display: none">
+            <button class="btn btn-primary" id="logoutBtn">
+              <i data-lucide="log-out"></i>
+              Logout
             </button>
           </li>
         </ul>
       </nav>
-    </heade>
+    </header>
+
     <div class="container">
       <header class="header">
         <h1 class="header-title">Our Projects</h1>
@@ -401,8 +406,6 @@
               detail exceeded our expectations.
               <div class="feedback-author">— Priya & Rajesh Sharma</div>
             </div>
-
-            <a href="#" class="project-link">View Gallery →</a>
           </div>
         </article>
 
@@ -453,8 +456,6 @@
               increased by 200% after the renovation.
               <div class="feedback-author">— Arun Kumar, Café Owner</div>
             </div>
-
-            <a href="#" class="project-link">View Gallery →</a>
           </div>
         </article>
 
@@ -505,8 +506,6 @@
               beach house vision perfectly.
               <div class="feedback-author">— Meera & Karthik Rao</div>
             </div>
-
-            <a href="#" class="project-link">View Gallery →</a>
           </div>
         </article>
 
@@ -557,8 +556,6 @@
               comfortable for modern living.
               <div class="feedback-author">— Shenoy Family</div>
             </div>
-
-            <a href="#" class="project-link">View Gallery →</a>
           </div>
         </article>
 
@@ -609,8 +606,6 @@
               definitely helped in growing our practice.
               <div class="feedback-author">— Dr. Suresh Bhat</div>
             </div>
-
-            <a href="#" class="project-link">View Gallery →</a>
           </div>
         </article>
 
@@ -661,8 +656,6 @@
               value for money.
               <div class="feedback-author">— Ananya, Medical Student</div>
             </div>
-
-            <a href="#" class="project-link">View Gallery →</a>
           </div>
         </article>
       </div>
@@ -694,11 +687,13 @@
         <div class="footer-section">
           <h3>Quick Links</h3>
           <ul>
-            <li><a href="./about.html">About Us</a></li>
+            <li><a href="./booking.html">Schedule Consultation</a></li>
             <li><a href="./projects.html">Projects</a></li>
-            <li><a href="./booking.html">Book Consultation</a></li>
-            <li><a href="./feedback.html">Feedback</a></li>
+            <li><a href="./products.html">Products</a></li>
+            <li><a href="./wishlist.html">Products Wishlist</a></li>
+            <li><a href="./about.html">About Us</a></li>
             <li><a href="./contact.html">Contact Us</a></li>
+            <li><a href="./feedback.html">Share Feedback</a></li>
           </ul>
         </div>
         <div class="footer-section">
@@ -756,28 +751,15 @@
           filterTabs.forEach((t) => t.classList.remove("active"));
           tab.classList.add("active");
 
-          // Filter projects with smooth animation
-          projectCards.forEach((card, index) => {
+          // Filter projects
+          projectCards.forEach((card) => {
             const cardType = card.getAttribute("data-type");
             const shouldShow = filter === "all" || filter === cardType;
 
             if (shouldShow) {
-              // Show the card
               card.style.display = "flex";
-              // Force reflow to restart animation
-              // void card.offsetWidth;
-              // card.style.animation = "none";
-              // // setTimeout(() => {
-              //   card.style.animation = `fadeIn 2s ease forwards ${
-              //     index * 0.05
-              //   }s`;
-              // // }, 10);
             } else {
-              // Hide the card with fade out
-              // card.style.animation = "fadeOut 2s ease forwards";
-              // setTimeout(() => {
               card.style.display = "none";
-              // }, 300);
             }
           });
         });
