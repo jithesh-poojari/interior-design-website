@@ -301,3 +301,15 @@ function showToast(message, type = "success") {
     toast.classList.remove("show");
   }, 3000);
 }
+
+// Newsletter form
+document
+  .querySelector(".newsletter-form")
+  .addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = e.target.querySelector('input[type="email"]').value;
+
+    // Simulate API call
+    showToast("Successfully subscribed to newsletter!", "success");
+    e.target.reset();
+  });
