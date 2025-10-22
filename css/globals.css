@@ -22,24 +22,25 @@
 
 /* Light Mode */
 :root {
-  --background: 20 70% 97%;
-  --foreground: 200 20% 15%;
+  --background: 0 0% 100%;
+  --foreground: 210 15% 10%;
+
   --card: 0 0% 100%;
-  --card-foreground: 200 20% 15%;
+  --card-foreground: 210 15% 10%;
 
   --primary: 16 44% 45%;
-  --secondary: 351 50% 85%;
-  --accent: 351 50% 85%;
+  --secondary: 351 70% 35%;
+  --accent: 200 85% 35%;
 
-  --primary-foreground: 20 70% 97%;
-  --secondary-foreground: 20 70% 97%;
-  --accent-foreground: 200 20% 15%;
+  --primary-foreground: 0 0% 100%;
+  --secondary-foreground: 0 0% 100%;
+  --accent-foreground: 0 0% 100%;
 
-  --muted: 20 20% 90%;
-  --muted-foreground: 16 10% 40%;
+  --muted: 0 0% 93%;
+  --muted-foreground: 210 10% 25%;
 
-  --border: 20 15% 85%;
-  --input: 20 15% 85%;
+  --border: 0 0% 75%;
+  --input: 0 0% 80%;
   --ring: 16 44% 45%;
 
   --radius: 0.5rem;
@@ -47,25 +48,26 @@
 
 /* Dark Mode */
 [data-theme="dark"] {
-  --background: 200 20% 10%;
-  --foreground: 20 70% 95%;
-  --card: 200 20% 13%;
-  --card-foreground: 20 70% 95%;
+  --background: 210 25% 8%;
+  --foreground: 0 0% 100%;
 
-  --primary: 16 44% 50%;
-  --secondary: 351 45% 70%;
-  --accent: 351 45% 70%;
+  --card: 210 25% 12%;
+  --card-foreground: 0 0% 100%;
 
-  --primary-foreground: 20 70% 97%;
-  --secondary-foreground: 20 70% 97%;
-  --accent-foreground: 200 20% 10%;
+  --primary: 16 44% 45%;
+  --secondary: 351 60% 55%;
+  --accent: 200 70% 60%;
 
-  --muted: 200 20% 15%;
-  --muted-foreground: 20 15% 75%;
+  --primary-foreground: 0 0% 100%;
+  --secondary-foreground: 0 0% 100%;
+  --accent-foreground: 210 25% 8%;
 
-  --border: 200 20% 18%;
-  --input: 200 20% 18%;
-  --ring: 16 44% 50%;
+  --muted: 210 20% 18%;
+  --muted-foreground: 0 0% 90%;
+
+  --border: 210 20% 25%;
+  --input: 210 20% 25%;
+  --ring: 16 44% 45%;
 }
 
 /* Smooth theme transitions */
@@ -79,6 +81,7 @@ body {
   color: hsl(var(--foreground));
   background-color: hsl(var(--background));
   transition: background-color 0.4s ease, color 0.4s ease;
+  min-width: 200px;
 }
 
 h1,
@@ -642,7 +645,7 @@ footer {
   .nav-links {
     position: fixed;
     top: 0;
-    right: -100%;
+    right: -180%;
     width: 280px;
     height: 100vh;
     background: hsl(var(--background));
