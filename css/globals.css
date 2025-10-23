@@ -273,16 +273,6 @@ option {
   white-space: nowrap;
 }
 
-.btn-outline {
-  background: transparent;
-  color: hsl(var(--foreground));
-  border: 1px solid hsl(var(--border));
-}
-
-.btn-outline:hover {
-  background: hsl(var(--muted));
-}
-
 /* User Section Styling */
 .user-section {
   display: flex;
@@ -346,6 +336,16 @@ option {
 
 .btn-primary:hover {
   background: hsl(var(--primary) / 0.9);
+}
+
+.btn-outline {
+  background: transparent;
+  color: hsl(var(--foreground));
+  border: 1px solid hsl(var(--border));
+}
+
+.btn-outline:hover {
+  background: hsl(var(--muted));
 }
 
 /* Footer */
